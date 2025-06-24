@@ -3,9 +3,9 @@
 /workspace.xml
 
 # Папки сборки (Gradle/Kotlin)
-ScheduleApp//build/
-ScheduleApp//.gradle/
-ScheduleApp//out/
+ScheduleApp/build/
+ScheduleApp/.gradle/
+ScheduleApp/out/
 
 # Папки IDE
 .idea/
@@ -29,3 +29,6 @@ ScheduleApp/androidApp/.gradle/
 # iOS
 ScheduleApp/iosApp/build/
 ScheduleApp/iosApp/DerivedData/
+
+# shared
+ScheduleApp/shared/build
