@@ -3,16 +3,16 @@
 /workspace.xml
 
 # Папки сборки (Gradle/Kotlin)
-/build/
-/.gradle/
-/out/
+ScheduleApp//build/
+ScheduleApp//.gradle/
+ScheduleApp//out/
 
 # Папки IDE
 .idea/
 *.iml
 
 # Локальные настройки
-local.properties
+ScheduleApp/local.properties
 
 # Папки с кэшами и временными файлами
 *.log
@@ -20,12 +20,12 @@ local.properties
 *.kts~
 
 # Папки сгенерированного кода
-/generated/
+/ScheduleApp/generated/
 
 # Android
-androidApp/build/
-androidApp/.gradle/
+ScheduleApp/androidApp/build/
+ScheduleApp/androidApp/.gradle/
 
 # iOS
-iosApp/build/
-iosApp/DerivedData/
+ScheduleApp/iosApp/build/
+ScheduleApp/iosApp/DerivedData/
