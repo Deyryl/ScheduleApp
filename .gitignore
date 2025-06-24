@@ -8,7 +8,7 @@ ScheduleApp/.gradle/
 ScheduleApp/out/
 
 # Папки IDE
-.idea/
+ScheduleApp/.idea/
 *.iml
 
 # Локальные настройки
