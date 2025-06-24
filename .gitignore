@@ -1,0 +1,31 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Папки сборки (Gradle/Kotlin)
+/build/
+/.gradle/
+/out/
+
+# Папки IDE
+.idea/
+*.iml
+
+# Локальные настройки
+local.properties
+
+# Папки с кэшами и временными файлами
+*.log
+*.swp
+*.kts~
+
+# Папки сгенерированного кода
+/generated/
+
+# Android
+androidApp/build/
+androidApp/.gradle/
+
+# iOS
+iosApp/build/
+iosApp/DerivedData/
