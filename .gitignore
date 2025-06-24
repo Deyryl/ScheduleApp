@@ -6,6 +6,7 @@
 ScheduleApp/build/
 ScheduleApp/.gradle/
 ScheduleApp/out/
+ScheduleApp/.kotlin/
 
 # Папки IDE
 ScheduleApp/.idea/
