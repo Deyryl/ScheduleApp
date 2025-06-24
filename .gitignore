@@ -9,7 +9,7 @@ ScheduleApp/out/
 
 # Папки IDE
 ScheduleApp/.idea/
-*.iml
+ScheduleApp/*.iml
 
 # Локальные настройки
 ScheduleApp/local.properties
