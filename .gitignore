@@ -15,9 +15,9 @@ ScheduleApp/*.iml
 ScheduleApp/local.properties
 
 # Папки с кэшами и временными файлами
-*.log
-*.swp
-*.kts~
+ScheduleApp/*.log
+ScheduleApp/*.swp
+ScheduleApp/*.kts~
 
 # Папки сгенерированного кода
 /ScheduleApp/generated/
