@@ -42,5 +42,11 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.1")
+    implementation("androidx.navigation:navigation-compose:2.9.0")
+
     debugImplementation(libs.compose.ui.tooling)
+
+
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_title">ScheduleApp</string>
+    <string name="registration_button">Регистрация</string>
+    <string name="login_button">Вход</string>
+</resources>
