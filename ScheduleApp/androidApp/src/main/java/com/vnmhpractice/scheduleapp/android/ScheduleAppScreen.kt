@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.vnmhpractice.scheduleapp.android.ui.screens.auth.LoginScreen
+import com.vnmhpractice.scheduleapp.android.ui.screens.auth.RegistrationScreen
 import com.vnmhpractice.scheduleapp.android.ui.screens.auth.StartScreen
 import com.vnmhpractice.scheduleapp.android.ui.theme.onPrimaryLight
 
@@ -15,6 +17,6 @@ fun ScheduleApp(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
     ) { innerPadding ->
-        StartScreen(modifier = Modifier.padding(innerPadding))
+        LoginScreen(modifier = Modifier.padding(innerPadding))
     }
 }
