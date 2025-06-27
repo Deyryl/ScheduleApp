@@ -12,9 +12,14 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 import com.vnmhpractice.scheduleapp.android.ui.components.IconActionButton
+import com.vnmhpractice.scheduleapp.android.ui.components.PasswordTextField
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
@@ -49,7 +55,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
-        PrimaryTextField(
+        PasswordTextField(
             value = "",
             placeholder = stringResource(R.string.password),
             imeAction = ImeAction.Next,

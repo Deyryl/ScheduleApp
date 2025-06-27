@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 import com.vnmhpractice.scheduleapp.android.ui.components.IconActionButton
+import com.vnmhpractice.scheduleapp.android.ui.components.PasswordTextField
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
 
@@ -54,7 +55,7 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
-        PrimaryTextField(
+        PasswordTextField(
             value = "",
             placeholder = stringResource(R.string.password),
             imeAction = ImeAction.Next,
@@ -63,7 +64,7 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
-        PrimaryTextField(
+        PasswordTextField(
             value = "",
             placeholder = stringResource(R.string.repeat_password),
             imeAction = ImeAction.Done,
