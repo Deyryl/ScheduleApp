@@ -1,8 +1,8 @@
-package com.vnmhpractice.scheduleapp.android.ui.screens.auth.registration
+package com.vnmhpractice.scheduleapp.android.ui.auth.registration
 
-import com.vnmhpractice.scheduleapp.android.ui.screens.auth.registration.RegistrationUiState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -59,7 +59,7 @@ class RegistrationViewModel : ViewModel() {
 
             try {
                 // Иммитация API запроса
-                kotlinx.coroutines.delay(1500)
+                delay(1500)
 
                 // Успешный вход
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }

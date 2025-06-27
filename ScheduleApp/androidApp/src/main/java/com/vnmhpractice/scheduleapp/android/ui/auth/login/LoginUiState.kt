@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.ui.screens.auth.login
+package com.vnmhpractice.scheduleapp.android.ui.auth.login
 
 data class LoginUiState(
     val email:          String  = "",

@@ -10,7 +10,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -50,8 +49,8 @@ fun PrimaryTextField(
                 IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                     Icon(
                         painter = painterResource(
-                            if (passwordVisibility) R.drawable.ic_visibility_off
-                            else R.drawable.ic_visibility
+                            if (passwordVisibility) R.drawable.ic_visibility
+                            else R.drawable.ic_visibility_off
                         ),
                         contentDescription = stringResource(R.string.password_visibility)
                     )

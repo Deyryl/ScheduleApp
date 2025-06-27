@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.ui.screens.auth.otp
+package com.vnmhpractice.scheduleapp.android.ui.auth.otp
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

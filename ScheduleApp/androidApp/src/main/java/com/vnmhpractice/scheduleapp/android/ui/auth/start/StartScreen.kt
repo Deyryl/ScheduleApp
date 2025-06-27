@@ -1,8 +1,7 @@
-package com.vnmhpractice.scheduleapp.android.ui.screens.auth.start
+package com.vnmhpractice.scheduleapp.android.ui.auth.start
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,22 +18,27 @@ import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
 
 @Composable
-fun StartScreen(modifier: Modifier = Modifier) {
+fun StartScreen(
+    onRegistrationButtonClicked: () -> Unit,
+    onLoginButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .padding(dimensionResource(R.dimen.large_padding))
-            .fillMaxSize()
     ) {
         AppTitle()
         Spacer(modifier = Modifier.height(360.dp))
         PrimaryButton(
             text = stringResource(R.string.registration_button),
+            onClick = onRegistrationButtonClicked,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryOutlinedButton(
             text = stringResource(R.string.login_button),
+            onClick = onLoginButtonClicked,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(64.dp))
@@ -44,5 +48,8 @@ fun StartScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun StartScreenPreview() {
-    StartScreen()
+    StartScreen(
+        onRegistrationButtonClicked = {},
+        onLoginButtonClicked = {}
+    )
 }

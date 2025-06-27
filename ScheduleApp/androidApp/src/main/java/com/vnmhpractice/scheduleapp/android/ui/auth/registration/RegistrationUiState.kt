@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.ui.screens.auth.registration
+package com.vnmhpractice.scheduleapp.android.ui.auth.registration
 
 data class RegistrationUiState(
     val name:               String  = "",
