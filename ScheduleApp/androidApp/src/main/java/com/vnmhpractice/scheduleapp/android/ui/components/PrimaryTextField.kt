@@ -11,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -26,16 +28,39 @@ import com.vnmhpractice.scheduleapp.android.ui.theme.primaryLight
 fun PrimaryTextField(
     value: String,
     onValueChange: (String) -> Unit = {},
-    label: String = "",
     placeholder: String = "",
     imeAction: ImeAction,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
     isError: Boolean = false,
+    isPassword: Boolean = false,
     leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
+    var passwordVisibility by rememberSaveable { mutableStateOf(false) }
+
+    val visualTransformation = when {
+        isPassword && !passwordVisibility -> PasswordVisualTransformation()
+        else -> VisualTransformation.None
+    }
+
+    val trailingIcon: @Composable (() -> Unit)? = when {
+        isPassword -> {
+            {
+                IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                    Icon(
+                        painter = painterResource(
+                            if (passwordVisibility) R.drawable.ic_visibility_off
+                            else R.drawable.ic_visibility
+                        ),
+                        contentDescription = stringResource(R.string.password_visibility)
+                    )
+                }
+            }
+        }
+        else -> null
+    }
+
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -46,6 +71,7 @@ fun PrimaryTextField(
             imeAction = imeAction,
             keyboardType = keyboardType
         ),
+        visualTransformation = visualTransformation,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedContainerColor = onPrimaryLight,
             unfocusedBorderColor = primaryLight,
@@ -63,57 +89,21 @@ fun PrimaryTextField(
 fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit = {},
-    label: String = "",
-    placeholder: String = "",
+    placeholder: String,
     imeAction: ImeAction,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    singleLine: Boolean = true,
+    modifier: Modifier = Modifier,
     isError: Boolean = false,
-    modifier: Modifier = Modifier
+    singleLine: Boolean = true
 ) {
-
-    var passwordVisibility by remember { mutableStateOf(false) }
-    var icon =
-        if (passwordVisibility) {
-            painterResource(R.drawable.ic_visibility_off)
-        } else {
-            painterResource(R.drawable.ic_visibility)
-        }
-
-    TextField(
+    PrimaryTextField(
         value = value,
         onValueChange = onValueChange,
-        singleLine = singleLine,
-        placeholder = { Text(placeholder) },
-        label = { Text(label) },
-        textStyle = MaterialTheme.typography.bodyLarge,
-        keyboardOptions = KeyboardOptions(
-            imeAction = imeAction,
-            keyboardType = keyboardType
-        ),
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = onPrimaryLight,
-            unfocusedBorderColor = primaryLight,
-            focusedContainerColor = onPrimaryLight,
-            focusedBorderColor = primaryLight
-        ),
+        placeholder = placeholder,
+        imeAction = imeAction,
+        keyboardType = KeyboardType.Password,
+        isPassword = true,
+        modifier = modifier,
         isError = isError,
-        trailingIcon = {
-            IconButton(
-                onClick = { passwordVisibility = !passwordVisibility },
-            ) {
-                Icon(
-                    painter = icon,
-                    contentDescription = "Visibility icon"
-                )
-            }
-        },
-        visualTransformation =
-            if (passwordVisibility) {
-                VisualTransformation.None
-            } else {
-                PasswordVisualTransformation()
-            },
-        modifier = modifier
+        singleLine = singleLine
     )
 }

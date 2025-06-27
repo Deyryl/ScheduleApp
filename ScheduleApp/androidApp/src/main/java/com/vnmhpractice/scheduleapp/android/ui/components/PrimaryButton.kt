@@ -1,5 +1,6 @@
 package com.vnmhpractice.scheduleapp.android.ui.components
 
+import com.vnmhpractice.scheduleapp.android.R
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -9,6 +10,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.vnmhpractice.scheduleapp.android.ui.theme.onPrimaryLight
 import com.vnmhpractice.scheduleapp.android.ui.theme.primaryLight
@@ -19,12 +21,15 @@ fun PrimaryButton(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val elevation = dimensionResource(R.dimen.btn_elevation)
+    val height = dimensionResource(R.dimen.btn_large_height)
+
     Button(
         onClick = onClick,
         shape = MaterialTheme.shapes.large,
         colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
-        elevation = ButtonDefaults.elevatedButtonElevation(3.dp),
-        modifier = modifier.height(60.dp)
+        elevation = ButtonDefaults.elevatedButtonElevation(elevation),
+        modifier = modifier.height(height)
     ) {
         Text(
             text = text,
@@ -39,6 +44,9 @@ fun PrimaryOutlinedButton(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val elevation = dimensionResource(R.dimen.btn_elevation)
+    val height = dimensionResource(R.dimen.btn_large_height)
+
     OutlinedButton(
         onClick = onClick,
         shape = MaterialTheme.shapes.large,
@@ -47,8 +55,8 @@ fun PrimaryOutlinedButton(
             containerColor = onPrimaryLight,
             contentColor = primaryLight
         ),
-        elevation = ButtonDefaults.elevatedButtonElevation(3.dp),
-        modifier = modifier.height(60.dp)
+        elevation = ButtonDefaults.elevatedButtonElevation(elevation),
+        modifier = modifier.height(height)
     ) {
         Text(
             text = text,

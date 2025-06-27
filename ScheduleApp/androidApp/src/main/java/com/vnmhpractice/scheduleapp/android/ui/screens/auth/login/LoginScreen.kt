@@ -1,5 +1,6 @@
-package com.vnmhpractice.scheduleapp.android.ui.screens.auth
+package com.vnmhpractice.scheduleapp.android.ui.screens.auth.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,10 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,12 +27,15 @@ import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 import com.vnmhpractice.scheduleapp.android.ui.components.IconActionButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PasswordTextField
-import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
+import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
-
+import com.vnmhpractice.scheduleapp.android.ui.theme.secondaryLight
 
 @Composable
-fun RegistrationScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -37,17 +43,10 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
             .padding(dimensionResource(R.dimen.large_padding))
     ) {
         AppTitle()
-        Spacer(modifier = Modifier.height(44.dp))
+        Spacer(modifier = Modifier.height(88.dp))
         PrimaryTextField(
-            value = "",
-            placeholder = stringResource(R.string.name),
-            imeAction = ImeAction.Next,
-            modifier = Modifier
-                .padding(bottom = 10.dp)
-                .width(dimensionResource(R.dimen.medium_width))
-        )
-        PrimaryTextField(
-            value = "",
+            value = email,
+            onValueChange = { email = it },
             placeholder = stringResource(R.string.email),
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email,
@@ -56,24 +55,15 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
                 .width(dimensionResource(R.dimen.medium_width))
         )
         PasswordTextField(
-            value = "",
+            value = password,
+            onValueChange = { password = it },
             placeholder = stringResource(R.string.password),
-            imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Password,
-            modifier = Modifier
-                .padding(bottom = 10.dp)
-                .width(dimensionResource(R.dimen.medium_width))
-        )
-        PasswordTextField(
-            value = "",
-            placeholder = stringResource(R.string.repeat_password),
             imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Password,
             modifier = Modifier
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(100.dp))
         Row {
             IconActionButton(
                 drawableId = R.drawable.google_icon
@@ -84,15 +74,24 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
             )
         }
         Spacer(Modifier.height(30.dp))
-        PrimaryOutlinedButton(
-            text = stringResource(R.string.create_account),
+        PrimaryButton(
+            text = stringResource(R.string.login_button),
             modifier = Modifier.width(dimensionResource(R.dimen.medium_width))
+        )
+        Spacer(Modifier.height(30.dp))
+        Text(
+            text = stringResource(R.string.forgot_the_password),
+            style = MaterialTheme.typography.labelLarge,
+            color = secondaryLight,
+            modifier = Modifier.clickable(
+                onClick = {}
+            )
         )
     }
 }
 
-    @Preview
-    @Composable
-    fun RegistrationScreenPreview() {
-        RegistrationScreen()
-    }
+@Preview
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen()
+}

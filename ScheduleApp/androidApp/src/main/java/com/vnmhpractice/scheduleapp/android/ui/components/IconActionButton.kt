@@ -30,6 +30,6 @@ fun IconActionButton(
                 contentDescription = contentDescription
             )
         },
-        modifier = modifier.size(dimensionResource(R.dimen.icon_size))
+        modifier = modifier.size(dimensionResource(R.dimen.ic_size))
     )
 }

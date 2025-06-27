@@ -11,4 +11,7 @@
     <string name="repeat_password">Повтор пароля</string>
     <string name="create_account">Создать</string>
     <string name="forgot_the_password">Забыли пароль?</string>
+    <string name="password_visibility">Видимость пароля</string>
+
+    <string name="back_button">Кнопка назад</string>
 </resources>
