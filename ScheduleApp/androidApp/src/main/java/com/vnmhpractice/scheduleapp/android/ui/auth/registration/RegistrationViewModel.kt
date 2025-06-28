@@ -40,7 +40,7 @@ class RegistrationViewModel : ViewModel() {
          */
 
         // Простейшая валидация
-        if (!isDatasBlanked()) {
+        if (!isDataBlanked()) {
             _uiState.update {
                 it.copy(errorMessage = "Заполните все поля")
             }
@@ -58,8 +58,7 @@ class RegistrationViewModel : ViewModel() {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
             try {
-                // Иммитация API запроса
-                delay(1500)
+                // TODO: функция запроса на отправку данных
 
                 // Успешный вход
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }
@@ -75,7 +74,7 @@ class RegistrationViewModel : ViewModel() {
         }
     }
 
-    private fun isDatasBlanked(): Boolean {
+    private fun isDataBlanked(): Boolean {
         val state = _uiState.value
 
         return  !state.name.isBlank() && !state.email.isBlank() &&

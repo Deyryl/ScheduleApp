@@ -7,5 +7,5 @@
     <dimen name="medium_width">272dp</dimen>
 
     <dimen name="btn_large_height">60dp</dimen>
-    <dimen name="btn_elevation">12dp</dimen>
+    <dimen name="btn_elevation">4dp</dimen>
 </resources>
