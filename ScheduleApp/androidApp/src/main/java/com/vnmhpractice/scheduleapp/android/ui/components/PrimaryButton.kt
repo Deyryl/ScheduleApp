@@ -1,6 +1,5 @@
 package com.vnmhpractice.scheduleapp.android.ui.components
 
-import com.vnmhpractice.scheduleapp.android.R
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -12,8 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import com.vnmhpractice.scheduleapp.android.ui.theme.onPrimaryLight
-import com.vnmhpractice.scheduleapp.android.ui.theme.primaryLight
+import com.vnmhpractice.scheduleapp.android.R
 
 @Composable
 fun PrimaryButton(
@@ -27,7 +25,8 @@ fun PrimaryButton(
     Button(
         onClick = onClick,
         shape = MaterialTheme.shapes.large,
-        colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
+        colors = ButtonDefaults
+            .buttonColors(containerColor = MaterialTheme.colorScheme.primary),
         elevation = ButtonDefaults.elevatedButtonElevation(elevation),
         modifier = modifier.height(height)
     ) {
@@ -50,17 +49,17 @@ fun PrimaryOutlinedButton(
     OutlinedButton(
         onClick = onClick,
         shape = MaterialTheme.shapes.large,
-        border = BorderStroke(2.dp, primaryLight),
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = onPrimaryLight,
-            contentColor = primaryLight
+            containerColor = MaterialTheme.colorScheme.background
         ),
         elevation = ButtonDefaults.elevatedButtonElevation(elevation),
         modifier = modifier.height(height)
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.headlineLarge
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.outline
         )
     }
 }

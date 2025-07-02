@@ -20,8 +20,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.vnmhpractice.scheduleapp.android.R
-import com.vnmhpractice.scheduleapp.android.ui.theme.onPrimaryLight
-import com.vnmhpractice.scheduleapp.android.ui.theme.primaryLight
 
 @Composable
 fun PrimaryTextField(
@@ -64,7 +62,12 @@ fun PrimaryTextField(
         value = value,
         onValueChange = onValueChange,
         singleLine = singleLine,
-        placeholder = { Text(placeholder) },
+        placeholder = {
+            Text(
+                text = placeholder,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         textStyle = MaterialTheme.typography.bodyLarge,
         keyboardOptions = KeyboardOptions(
             imeAction = imeAction,
@@ -72,10 +75,10 @@ fun PrimaryTextField(
         ),
         visualTransformation = visualTransformation,
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = onPrimaryLight,
-            unfocusedBorderColor = primaryLight,
-            focusedContainerColor = onPrimaryLight,
-            focusedBorderColor = primaryLight
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+            focusedContainerColor = MaterialTheme.colorScheme.background,
+            focusedBorderColor = MaterialTheme.colorScheme.outline
         ),
         isError = isError,
         leadingIcon = leadingIcon,
