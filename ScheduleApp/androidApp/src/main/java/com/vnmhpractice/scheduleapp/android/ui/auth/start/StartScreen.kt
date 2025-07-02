@@ -23,8 +23,8 @@ import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
 
 @Composable
 fun StartScreen(
-    onRegistrationButtonClicked: () -> Unit,
-    onLoginButtonClicked: () -> Unit,
+    onRegistrationClicked: () -> Unit,
+    onLoginClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -36,14 +36,14 @@ fun StartScreen(
         AppTitle()
         Spacer(modifier = Modifier.height(360.dp))
         PrimaryButton(
-            text = stringResource(R.string.registration_button),
-            onClick = onRegistrationButtonClicked,
+            text = stringResource(R.string.btn_registration),
+            onClick = onRegistrationClicked,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryOutlinedButton(
-            text = stringResource(R.string.login_button),
-            onClick = onLoginButtonClicked,
+            text = stringResource(R.string.btn_login),
+            onClick = onLoginClicked,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(64.dp))
@@ -54,7 +54,7 @@ fun StartScreen(
 @Composable
 fun StartScreenPreview() {
     StartScreen(
-        onRegistrationButtonClicked = {},
-        onLoginButtonClicked = {}
+        onRegistrationClicked = {},
+        onLoginClicked = {}
     )
 }

@@ -33,7 +33,7 @@ class RegistrationViewModel : ViewModel() {
         }
     }
 
-    fun onRegistrationClick() {
+    fun onRegistrationClicked() {
         /* Обработка события регистрации
          * отправка данных на сервер и получение ответа
          * далее вывод ошибки или успешная регистрация аккаунта

@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.ui.auth
+package com.vnmhpractice.scheduleapp.android.navigation.auth
 
 enum class AuthScreen {
     Start,

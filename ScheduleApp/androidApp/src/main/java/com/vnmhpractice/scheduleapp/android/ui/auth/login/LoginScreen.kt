@@ -29,10 +29,15 @@ import com.vnmhpractice.scheduleapp.android.ui.components.IconActionButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PasswordTextField
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
-import com.vnmhpractice.scheduleapp.android.ui.theme.secondaryLight
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    onLoginClicked: () -> Unit = {},
+    onGoogleIconClicked: () -> Unit = {},
+    onVkIconClicked: () -> Unit = {},
+    onForgotPasswordClicked: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     val viewModel: LoginViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
 
@@ -63,30 +68,34 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
-        Spacer(Modifier.height(100.dp))
+        Spacer(Modifier.height(dimensionResource(R.dimen.spacer_height_medium)))
         Row {
             IconActionButton(
+                onClick = onGoogleIconClicked,
                 drawableId = R.drawable.google_icon
             )
             Spacer(Modifier.width(12.dp))
             IconActionButton(
+                onClick = onVkIconClicked,
                 drawableId = R.drawable.vk_icon
             )
         }
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.weight(1f))
         PrimaryButton(
-            text = stringResource(R.string.login_button),
+            text = stringResource(R.string.btn_login),
+            onClick = onLoginClicked,
             modifier = Modifier.width(dimensionResource(R.dimen.medium_width))
         )
         Spacer(Modifier.height(30.dp))
         Text(
             text = stringResource(R.string.forgot_the_password),
             style = MaterialTheme.typography.labelLarge,
-            color = secondaryLight,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.clickable(
-                onClick = { /*TODO*/ }
+                onClick = onForgotPasswordClicked
             )
         )
+        Spacer(Modifier.height(20.dp))
     }
 }
 

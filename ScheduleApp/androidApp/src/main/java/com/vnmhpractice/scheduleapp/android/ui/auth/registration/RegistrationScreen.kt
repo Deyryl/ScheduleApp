@@ -28,7 +28,10 @@ import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
 import androidx.compose.runtime.getValue
 
 @Composable
-fun RegistrationScreen(modifier: Modifier = Modifier) {
+fun RegistrationScreen(
+    onRegistrationClicked: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     val viewModel: RegistrationViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
 
@@ -87,11 +90,13 @@ fun RegistrationScreen(modifier: Modifier = Modifier) {
                 drawableId = R.drawable.vk_icon
             )
         }
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.weight(1f))
         PrimaryOutlinedButton(
             text = stringResource(R.string.create_account),
+            onClick = onRegistrationClicked,
             modifier = Modifier.width(dimensionResource(R.dimen.medium_width))
         )
+        Spacer(Modifier.height(dimensionResource(R.dimen.spacer_height_medium)))
     }
 }
 

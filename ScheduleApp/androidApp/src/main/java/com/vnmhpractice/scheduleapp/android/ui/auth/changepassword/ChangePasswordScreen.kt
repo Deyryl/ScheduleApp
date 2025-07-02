@@ -23,10 +23,14 @@ import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.ui.auth.login.LoginViewModel
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 import com.vnmhpractice.scheduleapp.android.ui.components.PasswordTextField
+import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
 
 @Composable
-fun ChangePasswordScreen(modifier: Modifier = Modifier) {
+fun ChangePasswordScreen(
+    onChangePasswordClicked: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     val viewModel: ChangePasswordViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
 
@@ -38,25 +42,31 @@ fun ChangePasswordScreen(modifier: Modifier = Modifier) {
     ) {
         AppTitle()
         Spacer(modifier = Modifier.height(88.dp))
-        PrimaryTextField(
-            value = state.email,
-            //onValueChange = viewModel::onEmailChanged,
-            placeholder = stringResource(R.string.email),
-            imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email,
+        PasswordTextField(
+            value = state.password,
+            onValueChange = viewModel::onPasswordChanged,
+            placeholder = stringResource(R.string.new_password),
+            imeAction = ImeAction.Done,
             modifier = Modifier
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
         PasswordTextField(
             value = state.password,
-            //onValueChange = viewModel::onPasswordChanged,
-            placeholder = stringResource(R.string.password),
+            onValueChange = viewModel::onRepeatPasswordChanged,
+            placeholder = stringResource(R.string.repeat_password),
             imeAction = ImeAction.Done,
             modifier = Modifier
                 .padding(bottom = 10.dp)
                 .width(dimensionResource(R.dimen.medium_width))
         )
+        Spacer(Modifier.weight(1f))
+        PrimaryOutlinedButton(
+            text = stringResource(R.string.btn_change_password),
+            onClick = onChangePasswordClicked,
+            modifier = Modifier.width(dimensionResource(R.dimen.medium_width))
+        )
+        Spacer(Modifier.height(dimensionResource(R.dimen.spacer_height_medium)))
     }
 }
 

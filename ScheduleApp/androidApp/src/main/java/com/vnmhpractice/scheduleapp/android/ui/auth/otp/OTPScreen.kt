@@ -17,7 +17,7 @@ import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 
 @Composable
-fun EmailVerificationScreen(modifier: Modifier = Modifier) {
+fun OTPScreen(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -34,5 +34,5 @@ fun EmailVerificationScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun EmailVerificationScreenPreview() {
-    EmailVerificationScreen()
+    OTPScreen()
 }

@@ -16,7 +16,7 @@ val secondaryLight = Color(0xFFE3F6EF)       // Светлый акцент дл
 val onSecondaryLight = Color(0xFF207A5C)     // Тёмно-зелёный текст на secondary
 
 val outlineLight = Color(0xFF62CCA4)         // Цвет линий/границ
-val onSurfaceVariantLight = Color(0xFF757575) // Плейсхолдеры
+val onSurfaceVariantLight = Color(0xFF878787) // Плейсхолдеры
 
 // Dark Color Scheme
 val primaryDark = Color(0xFF4CAF50)          // Акцентный зелёный (основной цвет)

@@ -26,6 +26,7 @@ fun PrimaryTextField(
     value: String,
     onValueChange: (String) -> Unit = {},
     placeholder: String = "",
+    enabled: Boolean = true,
     imeAction: ImeAction,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
@@ -68,6 +69,7 @@ fun PrimaryTextField(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
+        enabled = enabled,
         textStyle = MaterialTheme.typography.bodyLarge,
         keyboardOptions = KeyboardOptions(
             imeAction = imeAction,
