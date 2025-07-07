@@ -1,14 +1,12 @@
 package com.vnmhpractice.scheduleapp.android.navigation.auth
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.vnmhpractice.scheduleapp.android.ui.auth.changepassword.ChangePasswordScreen
 import com.vnmhpractice.scheduleapp.android.ui.auth.login.LoginScreen
-import com.vnmhpractice.scheduleapp.android.ui.auth.otp.OTPScreen
+import com.vnmhpractice.scheduleapp.android.ui.auth.otp.OtpScreen
 import com.vnmhpractice.scheduleapp.android.ui.auth.registration.RegistrationScreen
 import com.vnmhpractice.scheduleapp.android.ui.auth.start.StartScreen
 
@@ -42,7 +40,7 @@ fun NavGraphBuilder.authNavigation(navController: NavHostController) {
             )
         }
         composable(route = AuthScreen.OTP.name) {
-            OTPScreen()
+            OtpScreen()
         }
         composable(route = AuthScreen.ChangePassword.name) {
             ChangePasswordScreen(
