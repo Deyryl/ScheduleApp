@@ -29,10 +29,10 @@ import androidx.compose.runtime.getValue
 
 @Composable
 fun RegistrationScreen(
-    onRegistrationClicked: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: RegistrationViewModel = viewModel(),
+    onRegistrationClicked: () -> Unit = {}
 ) {
-    val viewModel: RegistrationViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
 
     Column(

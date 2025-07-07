@@ -13,8 +13,6 @@ import com.vnmhpractice.scheduleapp.android.ui.auth.registration.RegistrationScr
 import com.vnmhpractice.scheduleapp.android.ui.auth.start.StartScreen
 
 fun NavGraphBuilder.authNavigation(navController: NavHostController) {
-    val screenModifier = Modifier.fillMaxSize()
-
     navigation(startDestination = AuthScreen.Start.name, route = "Auth") {
         composable(route = AuthScreen.Start.name) {
             StartScreen(
@@ -23,16 +21,14 @@ fun NavGraphBuilder.authNavigation(navController: NavHostController) {
                 },
                 onLoginClicked = {
                     navController.navigate(route = AuthScreen.Login.name)
-                },
-                modifier = screenModifier
+                }
             )
         }
         composable(route = AuthScreen.Registration.name) {
             RegistrationScreen(
                 onRegistrationClicked = {
                     navController.navigate(route = AuthScreen.OTP.name)
-                },
-                modifier = screenModifier
+                }
             )
         }
         composable(route = AuthScreen.Login.name) {
@@ -42,19 +38,17 @@ fun NavGraphBuilder.authNavigation(navController: NavHostController) {
 //                    onVkIconClicked = TODO(),
                 onForgotPasswordClicked = {
                     navController.navigate(AuthScreen.ChangePassword.name)
-                },
-                modifier = screenModifier
+                }
             )
         }
         composable(route = AuthScreen.OTP.name) {
-            OTPScreen(screenModifier)
+            OTPScreen()
         }
         composable(route = AuthScreen.ChangePassword.name) {
             ChangePasswordScreen(
                 onChangePasswordClicked = {
                     navController.popBackStack(route = AuthScreen.Start.name, inclusive = false)
-                },
-                modifier = screenModifier
+                }
             )
         }
     }

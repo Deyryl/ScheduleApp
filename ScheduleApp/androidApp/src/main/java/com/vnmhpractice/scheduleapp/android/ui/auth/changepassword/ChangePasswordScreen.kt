@@ -28,10 +28,10 @@ import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
 
 @Composable
 fun ChangePasswordScreen(
-    onChangePasswordClicked: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ChangePasswordViewModel = viewModel(),
+    onChangePasswordClicked: () -> Unit = {}
 ) {
-    val viewModel: ChangePasswordViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
 
     Column(

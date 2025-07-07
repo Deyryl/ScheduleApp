@@ -32,13 +32,13 @@ import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
 
 @Composable
 fun LoginScreen(
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = viewModel(),
     onLoginClicked: () -> Unit = {},
     onGoogleIconClicked: () -> Unit = {},
     onVkIconClicked: () -> Unit = {},
-    onForgotPasswordClicked: () -> Unit = {},
-    modifier: Modifier = Modifier
+    onForgotPasswordClicked: () -> Unit = {}
 ) {
-    val viewModel: LoginViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
 
     Column(

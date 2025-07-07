@@ -16,6 +16,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryButton
@@ -23,9 +24,10 @@ import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryOutlinedButton
 
 @Composable
 fun StartScreen(
+    modifier: Modifier = Modifier,
+    viewModel: StartViewModel = viewModel(),
     onRegistrationClicked: () -> Unit,
-    onLoginClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onLoginClicked: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

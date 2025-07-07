@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.vnmhpractice.scheduleapp.android"
-    compileSdk = 35
+    compileSdk = 36
     defaultConfig {
         applicationId = "com.vnmhpractice.scheduleapp.android"
         minSdk = 24
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 }
 
@@ -44,8 +44,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation("androidx.core:core-ktx:1.16.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.1")
-    implementation("androidx.navigation:navigation-compose:2.9.0")
-
+    implementation("androidx.navigation:navigation-compose:2.9.1")
+    implementation("androidx.compose.material:material-icons-extended:<version>")
 
     debugImplementation(libs.compose.ui.tooling)
 

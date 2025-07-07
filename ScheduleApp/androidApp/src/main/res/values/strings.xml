@@ -15,9 +15,14 @@
     <string name="btn_login">Вход</string>
     <string name="btn_back">Кнопка назад</string>
     <string name="btn_change_password">Сменить</string>
-    
+    <string name="btn_add">+ Добавить</string>
+
     <string name="search">Поиск</string>
     <string name="schedule">Расписания</string>
     <string name="calendar">Календарь</string>
     <string name="menu">Меню</string>
+
+    <string name="lack_of_image">Отсутствие изображения</string>
+    <string name="project_image">Изображение проекта</string>
+    <string name="card_menu">Меню карточки</string>
 </resources>
