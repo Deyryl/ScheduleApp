@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,7 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		8F5A166CF8B4D2FB7CFF1E92 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4372D84001341F8FAC782917 /* Pods_iosApp.framework */; };
-		CE4F943B2E1BBD710032EB6E /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F94372E1BBD710032EB6E /* MainScreenView.swift */; };
+		CE4F943B2E1BBD710032EB6E /* StartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F94372E1BBD710032EB6E /* StartScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,13 +24,46 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE4F94372E1BBD710032EB6E /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		CE4F94372E1BBD710032EB6E /* StartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenView.swift; sourceTree = "<group>"; };
 		D7DD2FC32AEF389790DB203C /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CEEBD7B62E1BCB8700DE0980 /* RegisterScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = RegisterScreen; sourceTree = "<group>"; };
-		CEEBD7B72E1BCB9300DE0980 /* LoginScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LoginScreen; sourceTree = "<group>"; };
+		CE5A9B102E1D12BC002CAA80 /* Main */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CE7D5D3E2E1C0D0E00682214 /* ForgetPasswordSheet */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ForgetPasswordSheet;
+			sourceTree = "<group>";
+		};
+		CE7D5D522E1C0F0400682214 /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		CE80DE732E1C1F2100FC60E2 /* OTPScreen */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = OTPScreen;
+			sourceTree = "<group>";
+		};
+		CEEBD7B62E1BCB8700DE0980 /* RegisterScreen */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RegisterScreen;
+			sourceTree = "<group>";
+		};
+		CEEBD7B72E1BCB9300DE0980 /* LoginScreen */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		CEEBD7BE2E1BD8DF00DE0980 /* Helpers */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +118,10 @@
 			children = (
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
-				CE4F943A2E1BBD710032EB6E /* auth */,
+				CEEBD7BE2E1BD8DF00DE0980 /* Helpers */,
+				CE4F943A2E1BBD710032EB6E /* Authentification */,
 				7555FF8C242A565B00829871 /* Info.plist */,
+				CE5A9B102E1D12BC002CAA80 /* Main */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
@@ -101,22 +136,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CE4F94392E1BBD710032EB6E /* MainScreen */ = {
+		CE4F94392E1BBD710032EB6E /* StartScreen */ = {
 			isa = PBXGroup;
 			children = (
-				CE4F94372E1BBD710032EB6E /* MainScreenView.swift */,
+				CE4F94372E1BBD710032EB6E /* StartScreenView.swift */,
 			);
-			path = MainScreen;
+			path = StartScreen;
 			sourceTree = "<group>";
 		};
-		CE4F943A2E1BBD710032EB6E /* auth */ = {
+		CE4F943A2E1BBD710032EB6E /* Authentification */ = {
 			isa = PBXGroup;
 			children = (
+				CE80DE732E1C1F2100FC60E2 /* OTPScreen */,
+				CE7D5D522E1C0F0400682214 /* Components */,
 				CEEBD7B72E1BCB9300DE0980 /* LoginScreen */,
 				CEEBD7B62E1BCB8700DE0980 /* RegisterScreen */,
-				CE4F94392E1BBD710032EB6E /* MainScreen */,
+				CE4F94392E1BBD710032EB6E /* StartScreen */,
+				CE7D5D3E2E1C0D0E00682214 /* ForgetPasswordSheet */,
 			);
-			path = auth;
+			path = Authentification;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,8 +174,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				CE5A9B102E1D12BC002CAA80 /* Main */,
+				CE7D5D3E2E1C0D0E00682214 /* ForgetPasswordSheet */,
+				CE7D5D522E1C0F0400682214 /* Components */,
+				CE80DE732E1C1F2100FC60E2 /* OTPScreen */,
 				CEEBD7B62E1BCB8700DE0980 /* RegisterScreen */,
 				CEEBD7B72E1BCB9300DE0980 /* LoginScreen */,
+				CEEBD7BE2E1BD8DF00DE0980 /* Helpers */,
 			);
 			name = iosApp;
 			productName = iosApp;
@@ -161,7 +204,6 @@
 				};
 			};
 			buildConfigurationList = 7555FF76242A565900829871 /* Build configuration list for PBXProject "iosApp" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -169,6 +211,7 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -220,7 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4F943B2E1BBD710032EB6E /* MainScreenView.swift in Sources */,
+				CE4F943B2E1BBD710032EB6E /* StartScreenView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
