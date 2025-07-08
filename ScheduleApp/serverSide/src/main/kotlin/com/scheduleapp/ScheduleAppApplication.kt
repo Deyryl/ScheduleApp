@@ -1,4 +1,4 @@
-package com.scheduleAppOrg
+package com.scheduleapp
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 

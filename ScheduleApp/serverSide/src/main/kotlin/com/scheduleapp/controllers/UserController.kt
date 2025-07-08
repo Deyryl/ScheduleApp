@@ -1,7 +1,7 @@
-package com.scheduleAppOrg.controllers
+package com.scheduleapp.controllers
 
-import com.scheduleAppOrg.database.model.User
-import com.scheduleAppOrg.database.repository.UserRepository
+import com.scheduleapp.database.model.User
+import com.scheduleapp.database.repository.UserRepository
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
