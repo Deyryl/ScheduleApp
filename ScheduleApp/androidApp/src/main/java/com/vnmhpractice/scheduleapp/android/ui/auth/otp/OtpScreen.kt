@@ -40,7 +40,6 @@ import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
 import com.vnmhpractice.scheduleapp.android.ui.components.rememberShakingState
 import com.vnmhpractice.scheduleapp.android.ui.components.shakable
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun OtpScreen(
