@@ -25,4 +25,7 @@
     <string name="lack_of_image">Отсутствие изображения</string>
     <string name="project_image">Изображение проекта</string>
     <string name="card_menu">Меню карточки</string>
+    <string name="btn_account">Аккаунт</string>
+    <string name="btn_info">Информация</string>
+    <string name="theme">Тема</string>
 </resources>

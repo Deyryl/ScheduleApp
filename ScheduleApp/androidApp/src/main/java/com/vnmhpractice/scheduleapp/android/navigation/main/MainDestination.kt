@@ -1,11 +1,13 @@
 package com.vnmhpractice.scheduleapp.android.navigation.main
 
-import androidx.compose.ui.res.stringResource
-import com.vnmhpractice.scheduleapp.android.R
-
-enum class MainScreen(title: String) {
+enum class MainDestination(title: String) {
     Search(title = "Поиск"),
     Schedule(title = "Мои расписания"),
     Calendar(title = "Календарь"),
     Menu(title = "Меню")
+}
+
+enum class ScheduleDestination {
+    Project,
+    InfoAboutProject
 }

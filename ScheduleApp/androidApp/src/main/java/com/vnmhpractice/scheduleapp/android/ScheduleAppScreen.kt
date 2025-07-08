@@ -37,7 +37,7 @@ import com.vnmhpractice.scheduleapp.android.navigation.main.mainNavigation
 @Composable
 fun ScheduleApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    val isUserLoggedIn = false
+    val isUserLoggedIn = true
 
     val currentRoute = currentRoute(navController)
     val currentScreen = bottomNavItems.find { it.route == currentRoute }

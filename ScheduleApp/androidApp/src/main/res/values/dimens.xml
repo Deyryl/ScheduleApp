@@ -8,6 +8,7 @@
     <dimen name="medium_width">272dp</dimen>
 
     <dimen name="btn_large_height">60dp</dimen>
+    <dimen name="btn_medium_height">50dp</dimen>
     <dimen name="btn_elevation">4dp</dimen>
     <dimen name="spacer_height_medium">80dp</dimen>
 </resources>

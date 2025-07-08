@@ -17,14 +17,14 @@ val onSecondaryLight = Color(0xFF207A5C)     // Тёмно-зелёный тек
 
 val outlineLight = Color(0xFF62CCA4)         // Цвет линий/границ
 val onSurfaceVariantLight = Color(0xFF878787) // Плейсхолдеры
+
 // Dark Color Scheme
 val primaryDark = Color(0xFF6750a4)     // Акцентный зелёный (основной цвет)
-
 val onPrimaryDark = Color(0xFF000000)
 val backgroundDark = Color(0xFF1C1C1E)       // Основной фон
 
 val onBackgroundDark = Color(0xFFEAEAEA)     // Основной текст
-val surfaceDark = Color(0xFF1C1C1E)          // Поверхности (карточки, поля)
+val surfaceDark = Color(0xFF343438)          // Поверхности (карточки, поля)
 
 val onSurfaceDark = Color(0xFFEAEAEA)        // Текст на surface
 val secondaryDark = Color(0xFF1C312F)        // Цвет кнопок, менее акцентный

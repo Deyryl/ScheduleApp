@@ -21,7 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vnmhpractice.scheduleapp.android.R
 
 @Composable
-fun MainScreen(
+fun ScheduleScreen(
     modifier: Modifier = Modifier,
     onAddClicked: () -> Unit = {},
     viewModel: MainViewModel = viewModel()
@@ -59,48 +59,6 @@ fun MainScreen(
 
 @Preview
 @Composable
-fun MainScreenPreview() {
-    val schedules = listOf(
-        ScheduleItem(
-            id = 0,
-            title = "First project"
-        ),
-        ScheduleItem(
-            id = 1,
-            title = "Second project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        ),
-        ScheduleItem(
-            id = 2,
-            title = "Third project"
-        )
-    )
-    MainScreen()
+fun ScheduleScreenPreview() {
+    ScheduleScreen()
 }

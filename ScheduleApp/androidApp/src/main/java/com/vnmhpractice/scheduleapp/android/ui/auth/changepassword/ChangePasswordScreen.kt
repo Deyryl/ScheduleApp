@@ -52,7 +52,7 @@ fun ChangePasswordScreen(
                 .width(dimensionResource(R.dimen.medium_width))
         )
         PasswordTextField(
-            value = state.password,
+            value = state.repeatPassword,
             onValueChange = viewModel::onRepeatPasswordChanged,
             placeholder = stringResource(R.string.repeat_password),
             imeAction = ImeAction.Done,

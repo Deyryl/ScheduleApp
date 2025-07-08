@@ -56,8 +56,8 @@ class OtpViewModel : ViewModel() {
     }
 
     private fun updateValidOtp() {
-        validOtp = (1000..9999).random().toString()
-        Log.d("New otp", validOtp)
+        // MARK: Code to complete
+        validOtp = "1234"
     }
 
     private fun startCountdown(from: Int = 60) {

@@ -1,6 +1,6 @@
 package com.vnmhpractice.scheduleapp.android.navigation.auth
 
-enum class AuthScreen {
+enum class AuthDestination {
     Start,
     Login,
     Registration,

@@ -11,41 +11,41 @@ import com.vnmhpractice.scheduleapp.android.ui.auth.registration.RegistrationScr
 import com.vnmhpractice.scheduleapp.android.ui.auth.start.StartScreen
 
 fun NavGraphBuilder.authNavigation(navController: NavHostController) {
-    navigation(startDestination = AuthScreen.Start.name, route = "Auth") {
-        composable(route = AuthScreen.Start.name) {
+    navigation(startDestination = AuthDestination.Start.name, route = "Auth") {
+        composable(route = AuthDestination.Start.name) {
             StartScreen(
                 onRegistrationClicked = {
-                    navController.navigate(route = AuthScreen.Registration.name)
+                    navController.navigate(route = AuthDestination.Registration.name)
                 },
                 onLoginClicked = {
-                    navController.navigate(route = AuthScreen.Login.name)
+                    navController.navigate(route = AuthDestination.Login.name)
                 }
             )
         }
-        composable(route = AuthScreen.Registration.name) {
+        composable(route = AuthDestination.Registration.name) {
             RegistrationScreen(
                 onRegistrationClicked = {
-                    navController.navigate(route = AuthScreen.OTP.name)
+                    navController.navigate(route = AuthDestination.OTP.name)
                 }
             )
         }
-        composable(route = AuthScreen.Login.name) {
+        composable(route = AuthDestination.Login.name) {
             LoginScreen(
 //                    onLoginClicked = TODO(),
 //                    onGoogleIconClicked = TODO(),
 //                    onVkIconClicked = TODO(),
                 onForgotPasswordClicked = {
-                    navController.navigate(AuthScreen.ChangePassword.name)
+                    navController.navigate(AuthDestination.ChangePassword.name)
                 }
             )
         }
-        composable(route = AuthScreen.OTP.name) {
+        composable(route = AuthDestination.OTP.name) {
             OtpScreen()
         }
-        composable(route = AuthScreen.ChangePassword.name) {
+        composable(route = AuthDestination.ChangePassword.name) {
             ChangePasswordScreen(
                 onChangePasswordClicked = {
-                    navController.popBackStack(route = AuthScreen.Start.name, inclusive = false)
+                    navController.popBackStack(route = AuthDestination.Start.name, inclusive = false)
                 }
             )
         }

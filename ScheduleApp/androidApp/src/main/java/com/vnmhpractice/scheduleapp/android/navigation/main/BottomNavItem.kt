@@ -12,22 +12,22 @@ data class BottomNavItem(
 
 val bottomNavItems = listOf<BottomNavItem>(
     BottomNavItem(
-        route   = MainScreen.Search.name,
+        route   = MainDestination.Search.name,
         title   = R.string.search,
         icon    = R.drawable.ic_search
     ),
     BottomNavItem(
-        route   = MainScreen.Schedule.name,
+        route   = MainDestination.Schedule.name,
         title   = R.string.schedule,
         icon    = R.drawable.ic_schedule
     ),
     BottomNavItem(
-        route   = MainScreen.Calendar.name,
+        route   = MainDestination.Calendar.name,
         title   = R.string.calendar,
         icon    = R.drawable.ic_calendar
     ),
     BottomNavItem(
-        route   = MainScreen.Menu.name,
+        route   = MainDestination.Menu.name,
         title   = R.string.menu,
         icon    = R.drawable.ic_menu
     )
