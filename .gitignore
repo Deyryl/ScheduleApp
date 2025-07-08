@@ -31,5 +31,9 @@ ScheduleApp/androidApp/.gradle/
 ScheduleApp/iosApp/build/
 ScheduleApp/iosApp/DerivedData/
 
+# ServerSide
+ScheduleApp/serverSide/build
+ScheduleApp/serverSide/test
+
 # shared
 ScheduleApp/shared/build
