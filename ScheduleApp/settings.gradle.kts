@@ -5,6 +5,10 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
+    plugins {
+        id("org.jetbrains.kotlin.jvm") version "2.1.0"
+        id("org.jetbrains.kotlin.multiplatform") version "2.1.0"
+    }
 }
 
 dependencyResolutionManagement {
@@ -16,4 +20,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ScheduleApp"
 include(":androidApp")
+include(":serverSide")
 include(":shared")
