@@ -1,6 +1,6 @@
 package com.scheduleapp.controllers
 
-import com.scheduleapp.database.model.User
+import com.scheduleapp.database.models.UserEntity
 import com.scheduleapp.database.repository.UserRepository
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,17 +27,17 @@ class UserController(private val repository: UserRepository) {
         val projectsID: List<Int>
     )
 
-    @PostMapping
-    fun addUser(body: UserRequest): UserResponse {
-        val user = repository.save(
-            User(
-                userId = body.userID?.let
-                username = body.username,
-                email = body.email,
-                imageURL = body.imageURL,
-                projectsID = body.projectsID.toList(),
-                hashedPassword = body.hashedPassword
-            )
-        )
-    }
+//    @PostMapping
+//    fun addUser(body: UserRequest): UserResponse {
+//        val user = repository.save(
+//            UserEntity(
+//                //userId = body.userID?.let
+//                username = body.username,
+//                email = body.email,
+//                imageURL = body.imageURL,
+//                projectsID = body.projectsID.toList(),
+//                hashedPassword = body.hashedPassword
+//            )
+//        )
+//    }
 }
