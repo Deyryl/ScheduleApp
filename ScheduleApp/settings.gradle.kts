@@ -19,6 +19,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ScheduleApp"
+//includeBuild("../shared")
 include(":androidApp")
 include(":serverSide")
 include(":shared")
