@@ -5,7 +5,7 @@ import com.vnmhpractice.scheduleapp.android.R
 
 enum class MainScreen(title: String) {
     Search(title = "Поиск"),
-    Schedule(title = "Расписания"),
+    Schedule(title = "Мои расписания"),
     Calendar(title = "Календарь"),
     Menu(title = "Меню")
 }

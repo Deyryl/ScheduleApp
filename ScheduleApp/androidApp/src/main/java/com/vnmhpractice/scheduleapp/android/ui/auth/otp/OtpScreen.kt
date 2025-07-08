@@ -1,7 +1,7 @@
 package com.vnmhpractice.scheduleapp.android.ui.auth.otp
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -36,7 +37,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vnmhpractice.scheduleapp.android.ui.components.AppTitle
+import com.vnmhpractice.scheduleapp.android.ui.components.rememberShakingState
+import com.vnmhpractice.scheduleapp.android.ui.components.shakable
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun OtpScreen(
@@ -45,6 +49,8 @@ fun OtpScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val focusRequester = remember { FocusRequester() }
+    val shakeState = rememberShakingState()
+    val scope = rememberCoroutineScope()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,13 +59,48 @@ fun OtpScreen(
             .verticalScroll(rememberScrollState())
     ) {
         AppTitle()
-        Spacer(modifier = Modifier.height(88.dp))
+        Spacer(modifier = Modifier.height(22.dp))
+        Text(
+            text = "Введите код из письма, присланного на ${state.email}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(44.dp))
         OtpInputField(
             otpText = state.otpText,
             shouldShowCursor = true,
+            typingState = state.isCorrectOtp,
             onOtpModified = viewModel::updateOtp,
-            modifier = Modifier.focusRequester(focusRequester)
+            modifier = Modifier
+                .focusRequester(focusRequester)
+                .shakable(shakeState)
         )
+        LaunchedEffect(state.isCorrectOtp) {
+            if (state.isCorrectOtp == TypingState.Invalid && state.otpText.length == 4) {
+                shakeState.shake(animationDuration = 40)
+            }
+        }
+        Spacer(Modifier.height(32.dp))
+        if (state.isCountingDown) {
+            Text(
+                text = "Отправить повторно через ${state.secondsLeft} сек",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        } else {
+            Text(
+                text = "Отправить код повторно",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .clickable(
+                        onClick = {
+                            viewModel.sendOtp()
+                        }
+                    )
+            )
+        }
     }
 }
 
@@ -69,6 +110,7 @@ fun OtpInputField(
     otpText: String,
     otpLength: Int = 4,
     shouldShowCursor: Boolean,
+    typingState: TypingState,
     onOtpModified: (String) -> Unit
 ) {
     BasicTextField(
@@ -93,7 +135,8 @@ fun OtpInputField(
                     val isFocused = index == otpText.length && otpText.length != otpLength
                     CharacterContainer(
                         character = char,
-                        showCursor = shouldShowCursor && isFocused
+                        showCursor = shouldShowCursor && isFocused,
+                        typingState = typingState
                     )
                 }
             }
@@ -101,12 +144,18 @@ fun OtpInputField(
     )
 }
 
-
 @Composable
 fun CharacterContainer(
     character: String,
-    showCursor: Boolean
+    showCursor: Boolean,
+    typingState: TypingState
 ) {
+    val outlineColor = when (typingState) {
+        TypingState.Typing -> MaterialTheme.colorScheme.onBackground
+        TypingState.Correct -> MaterialTheme.colorScheme.primary
+        TypingState.Invalid -> MaterialTheme.colorScheme.error
+    }
+
     Box(
         modifier = Modifier
             .width(48.dp)
@@ -127,9 +176,9 @@ fun CharacterContainer(
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .height(2.dp)
+                .height(3.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.outline)
+                .background(outlineColor)
         )
     }
 }
