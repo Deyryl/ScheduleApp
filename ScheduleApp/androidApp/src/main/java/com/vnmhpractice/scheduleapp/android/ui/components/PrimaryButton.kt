@@ -9,9 +9,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import com.vnmhpractice.scheduleapp.android.ui.theme.onPrimaryLight
-import com.vnmhpractice.scheduleapp.android.ui.theme.primaryLight
+import com.vnmhpractice.scheduleapp.android.R
 
 @Composable
 fun PrimaryButton(
@@ -19,12 +19,16 @@ fun PrimaryButton(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val elevation = dimensionResource(R.dimen.btn_elevation)
+    val height = dimensionResource(R.dimen.btn_large_height)
+
     Button(
         onClick = onClick,
         shape = MaterialTheme.shapes.large,
-        colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
-        elevation = ButtonDefaults.elevatedButtonElevation(3.dp),
-        modifier = modifier.height(60.dp)
+        colors = ButtonDefaults
+            .buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+        elevation = ButtonDefaults.elevatedButtonElevation(elevation),
+        modifier = modifier.height(height)
     ) {
         Text(
             text = text,
@@ -39,20 +43,23 @@ fun PrimaryOutlinedButton(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val elevation = dimensionResource(R.dimen.btn_elevation)
+    val height = dimensionResource(R.dimen.btn_large_height)
+
     OutlinedButton(
         onClick = onClick,
         shape = MaterialTheme.shapes.large,
-        border = BorderStroke(2.dp, primaryLight),
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = onPrimaryLight,
-            contentColor = primaryLight
+            containerColor = MaterialTheme.colorScheme.background
         ),
-        elevation = ButtonDefaults.elevatedButtonElevation(3.dp),
-        modifier = modifier.height(60.dp)
+        elevation = ButtonDefaults.elevatedButtonElevation(elevation),
+        modifier = modifier.height(height)
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.headlineLarge
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.outline
         )
     }
 }

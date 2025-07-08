@@ -6,15 +6,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.vnmhpractice.scheduleapp.android.R
 
 @Composable
 fun AppTitle(modifier: Modifier = Modifier) {
-    Spacer(modifier = Modifier.height(160.dp))
+    Spacer(modifier = Modifier.height(100.dp))
     Text(
-        text = stringResource(R.string.app_name),
+        text = buildAnnotatedString {
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onBackground)) {
+                    append("Schedule")
+                }
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                    append("App")
+                }
+            },
         style = MaterialTheme.typography.displayLarge,
+        modifier = modifier
     )
 }

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
+    kotlin("plugin.serialization") version "1.9.23"
 }
 
 kotlin {
@@ -11,7 +12,7 @@ kotlin {
         compilations.all {
             compileTaskProvider.configure {
                 compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_1_8)
+                    jvmTarget.set(JvmTarget.JVM_21)
                 }
             }
         }
@@ -34,7 +35,8 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -44,12 +46,12 @@ kotlin {
 
 android {
     namespace = "com.vnmhpractice.scheduleapp"
-    compileSdk = 35
+    compileSdk = 36
     defaultConfig {
         minSdk = 24
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
