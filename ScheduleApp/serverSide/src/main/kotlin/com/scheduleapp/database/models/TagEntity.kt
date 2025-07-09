@@ -11,6 +11,6 @@ import java.util.*
 data class TagEntity(
     @Id val tagID: UUID = UUID.randomUUID(),
     val title: String,
-    @Column(name = "tagDescription") val description: UserEntity,
+    @Column(name = "tagDescription") val description: String,
     val color: Long
 )

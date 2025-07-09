@@ -8,6 +8,15 @@ plugins {
 }
 
 kotlin {
+    jvm {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_21)
+                }
+            }
+        }
+    }
     androidTarget {
         compilations.all {
             compileTaskProvider.configure {
@@ -38,6 +47,9 @@ kotlin {
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+        }
+        jvmMain.dependencies {
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
