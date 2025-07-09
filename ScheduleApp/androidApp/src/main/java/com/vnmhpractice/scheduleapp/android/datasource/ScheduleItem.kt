@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.ui.main.schedule.main
+package com.vnmhpractice.scheduleapp.android.datasource
 
 import androidx.annotation.DrawableRes
 

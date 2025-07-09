@@ -17,7 +17,7 @@ class MainViewModel : ViewModel() {
     private fun loadSchedules() {
         // MARK: Code to complete
         // Замена на вызов с помощью API и др
-        val listOfSchedules = FakeScheduleDataSource.schedules.toMutableList()
+        val listOfSchedules = schedules.toMutableList()
         _uiState.value = MainUiState(schedules = listOfSchedules)
     }
 }

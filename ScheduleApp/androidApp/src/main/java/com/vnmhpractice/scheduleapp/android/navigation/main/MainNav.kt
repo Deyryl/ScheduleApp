@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.vnmhpractice.scheduleapp.android.ui.main.calendar.CalendarScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.MenuScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.menu.account.AccountScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.menu.information.InformationScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ScheduleScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.search.SearchScreen
 
@@ -23,6 +25,9 @@ fun NavGraphBuilder.mainNavigation(navController: NavHostController) {
         composable(route = ScheduleDestination.Project.name) {
 
         }
+        composable(route = ScheduleDestination.ProjectDetails.name) {
+
+        }
 
         // Окно календаря и вложенные окна
         composable(route = MainDestination.Calendar.name) {
@@ -31,7 +36,16 @@ fun NavGraphBuilder.mainNavigation(navController: NavHostController) {
 
         // Окно меню и вложенные окна
         composable(route = MainDestination.Menu.name) {
-            MenuScreen()
+            MenuScreen(
+                onAccountClick = { navController.navigate(MenuDestination.Account.name) },
+                onInfoClick = { navController.navigate(MenuDestination.Information.name) }
+            )
+        }
+        composable(route = MenuDestination.Account.name) {
+            AccountScreen()
+        }
+        composable(route = MenuDestination.Information.name) {
+            InformationScreen()
         }
     }
 }

@@ -9,5 +9,13 @@ enum class MainDestination(title: String) {
 
 enum class ScheduleDestination {
     Project,
-    InfoAboutProject
+    ProjectDetails,
+    CreateTask,
+    CreateTag,
+
+}
+
+enum class MenuDestination(val title: String) {
+    Account("Аккаунт"),
+    Information("Информация")
 }
