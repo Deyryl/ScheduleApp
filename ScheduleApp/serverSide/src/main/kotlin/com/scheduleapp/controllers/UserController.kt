@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val repository: UserRepository) {
 
     data class UserRequest(
-        val userID: Int?,
+        val id: Int?,
         val username: String,
         val email: String,
         val imageURL: String,
@@ -21,7 +21,7 @@ class UserController(private val repository: UserRepository) {
     )
 
     data class UserResponse(
-        val userID: Int,
+        val id: Int,
         val username: String,
         val email: String,
         val imageURL: String,

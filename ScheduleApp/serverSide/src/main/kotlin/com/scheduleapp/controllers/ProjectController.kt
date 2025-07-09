@@ -16,38 +16,38 @@ class ProjectController(
     private val userRepository: UserRepository
 ) {
     data class ProjectRequest(
-        val projectID: String? = null,
+        val id: String? = null,
         val title: String,
-        val ownerID: String,
-        val moderatorIDs: List<String>,
-        val memberIDs: List<String>,
+        val ownerId: String,
+        val moderatorIds: List<String>,
+        val memberIds: List<String>,
         val imageURL: String? = null,
     )
 
     data class ProjectResponse(
-        val projectID: String,
+        val id: String,
         val title: String,
-        val ownerID: String,
-        val moderatorIDs: List<String>,
-        val memberIDs: List<String>,
+        val ownerId: String,
+        val moderatorIds: List<String>,
+        val memberIds: List<String>,
         val imageURL: String? = null,
     )
 
     @PostMapping
     fun save(@RequestBody body: ProjectRequest): ProjectResponse {
 
-        val ownerID: UUID = UUID.fromString(body.ownerID)
-        val moderatorIDs: List<UUID> = body.moderatorIDs.map { UUID.fromString(it) }
-        val memberIDs: List<UUID> = body.memberIDs.map { UUID.fromString(it) }
+        val ownerId: String = body.ownerId
+        val moderatorIds: List<String> = body.moderatorIds
+        val memberIds: List<String> = body.memberIds
 
-        val owner: UserEntity = userRepository.findByIdOrNull(ownerID)!! //УБРАТЬ !!
-        val moderators: List<UserEntity> = userRepository.findAllById(moderatorIDs)
-        val members: List<UserEntity> = userRepository.findAllById(memberIDs)
+        val owner: String = userRepository.findByIdOrNull(ownerId)?.id ?: "testId" //УБРАТЬ !!
+        val moderators: List<UserEntity> = userRepository.findAllById(moderatorIds)
+        val members: List<UserEntity> = userRepository.findAllById(memberIds)
 
         val savedProject = repository.save(ProjectEntity(
-            projectID = body.projectID?.let(UUID::fromString) ?: UUID.randomUUID(),
+            id = body.id ?: UUID.randomUUID().toString(),
             title = body.title,
-            owner = owner,
+            ownerId = owner,
             moderators = moderators,
             members = members,
             imageURL = body.imageURL
@@ -57,18 +57,22 @@ class ProjectController(
     }
 
     @GetMapping
-    fun findByOwnerID(@RequestParam ownerID: String): List<ProjectResponse> {
-        val ownerUuid = UUID.fromString(ownerID)
-        return repository.findByOwnerID(ownerUuid).map { it.toResponse() }
+    fun findByOwnerID(@RequestParam ownerId: String): List<ProjectResponse> {
+        return repository.findByOwnerId(ownerId).map { it.toResponse() }
+    }
+
+    @DeleteMapping(path = ["/{id}"])
+    fun deleteById(@PathVariable id: String) {
+        repository.deleteById(id)
     }
 
     private fun ProjectEntity.toResponse(): ProjectResponse {
         return ProjectResponse(
-            projectID = projectID.toString(),
+            id = id,
             title = title,
-            ownerID = owner.userID.toString(),
-            moderatorIDs = moderators.map { it.userID.toString() },
-            memberIDs = members.map { it.userID.toString() },
+            ownerId = ownerId,
+            moderatorIds = moderators.map { it.id },
+            memberIds = members.map { it.id },
             imageURL = imageURL
         )
     }

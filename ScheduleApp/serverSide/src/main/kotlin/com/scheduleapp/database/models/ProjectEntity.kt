@@ -6,14 +6,14 @@ import java.util.*
 @Entity
 @Table(name = "Projects")
 data class ProjectEntity(
-    @Id
-    val projectID: UUID = UUID.randomUUID(),
+    @Id @Column(name = "ProjectID")
+    val id: String = UUID.randomUUID().toString(),
 
     val title: String,
-
-    @ManyToOne
-    @JoinColumn(name = "OwnerID", nullable = false)
-    val owner: UserEntity,
+//    @ManyToOne
+//    @JoinColumn(name = "OwnerID", nullable = false)
+    //val owner: UserEntity,
+    val ownerId: String = UUID.randomUUID().toString(),
 
     @ManyToMany
     @JoinTable(
@@ -33,9 +33,9 @@ data class ProjectEntity(
 
     val imageURL: String?,
 
-    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val tasks: List<TaskEntity> = listOf(),
-
-    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val tags: List<TagEntity> = listOf(),
+//    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
+//    val tasks: List<TaskEntity> = listOf(),
+//
+//    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
+//    val tags: List<TagEntity> = listOf(),
 )

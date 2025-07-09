@@ -1,6 +1,7 @@
 plugins {
 	kotlin("jvm")
 	kotlin("plugin.spring") version "2.1.0"
+	kotlin("plugin.jpa") version "2.1.0"
 	id("org.springframework.boot") version "3.5.3"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("java")
@@ -10,6 +11,10 @@ java {
 	toolchain {
 		languageVersion.set(JavaLanguageVersion.of(21))
 	}
+}
+
+noArg {
+	annotation("jakarta.persistence.Entity")
 }
 
 repositories {
