@@ -47,6 +47,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.1")
     implementation("androidx.compose.material:material-icons-extended:<version>")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
     debugImplementation(libs.compose.ui.tooling)
 
