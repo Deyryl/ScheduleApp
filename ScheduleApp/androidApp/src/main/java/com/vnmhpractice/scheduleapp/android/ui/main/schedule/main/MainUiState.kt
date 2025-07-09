@@ -1,7 +1,7 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.schedule.main
 
-import com.vnmhpractice.scheduleapp.android.datasource.ScheduleItem
+import com.vnmhpractice.scheduleapp.android.datasource.*
 
 data class MainUiState(
-    val schedules: List<ScheduleItem> = emptyList()
+    val projects: List<Project> = emptyList()
 )

@@ -36,11 +36,14 @@ fun ScheduleScreen(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-         items(state.schedules) { schedule ->
+         items(state.projects) { project ->
             MainCard(
-                scheduleItem = schedule,
+                project = project,
                 modifier = Modifier
-                    .padding(bottom = dimensionResource(R.dimen.small_padding))
+                    .padding(bottom = dimensionResource(R.dimen.small_padding)),
+                onCardClick = {
+
+                }
             )
         }
         item {

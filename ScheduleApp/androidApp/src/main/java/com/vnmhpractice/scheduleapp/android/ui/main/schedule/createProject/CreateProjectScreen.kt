@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.ui.main.schedule.project
+package com.vnmhpractice.scheduleapp.android.ui.main.schedule.createProject
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,11 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.vnmhpractice.scheduleapp.android.datasource.Project
 
 @Composable
-fun ProjectScreen(
-    //project: Project,
+fun CreateProjectScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -19,12 +17,12 @@ fun ProjectScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Project screen")
+        Text(text = "Create project screen")
     }
 }
 
 @Preview
 @Composable
-fun ProjectScreenPreview() {
-    ProjectScreen()
+fun CreateProjectScreenPreview() {
+    CreateProjectScreen()
 }

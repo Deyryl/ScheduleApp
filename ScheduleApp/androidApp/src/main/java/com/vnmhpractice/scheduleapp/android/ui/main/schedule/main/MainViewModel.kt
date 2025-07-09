@@ -17,7 +17,6 @@ class MainViewModel : ViewModel() {
     private fun loadSchedules() {
         // MARK: Code to complete
         // Замена на вызов с помощью API и др
-        val listOfSchedules = schedules.toMutableList()
-        _uiState.value = MainUiState(schedules = listOfSchedules)
+        _uiState.value = MainUiState(projects = projects)
     }
 }

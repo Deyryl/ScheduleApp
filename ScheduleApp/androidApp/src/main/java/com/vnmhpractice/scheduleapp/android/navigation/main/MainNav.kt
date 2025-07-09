@@ -9,6 +9,8 @@ import com.vnmhpractice.scheduleapp.android.ui.main.menu.MenuScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.account.AccountScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.information.InformationScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ScheduleScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.schedule.projectDetails.ProjectDetailsScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.search.SearchScreen
 
 fun NavGraphBuilder.mainNavigation(navController: NavHostController) {
@@ -23,10 +25,12 @@ fun NavGraphBuilder.mainNavigation(navController: NavHostController) {
             ScheduleScreen()
         }
         composable(route = ScheduleDestination.Project.name) {
+            ProjectScreen(
 
+            )
         }
         composable(route = ScheduleDestination.ProjectDetails.name) {
-
+            ProjectDetailsScreen()
         }
 
         // Окно календаря и вложенные окна

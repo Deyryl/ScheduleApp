@@ -22,27 +22,33 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vnmhpractice.scheduleapp.android.datasource.ScheduleItem
+import com.vnmhpractice.scheduleapp.android.datasource.*
 
 @Composable
 fun MainCard(
-    scheduleItem: ScheduleItem,
-    modifier: Modifier = Modifier
+    project: Project,
+    modifier: Modifier = Modifier,
+    onCardClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
+        onClick = onCardClick
     ) {
         Row(
             modifier = Modifier.padding(10.dp)
         ) {
             ScheduleImage()
             Column {
+                val title = if (project.title.length > 16)
+                                project.title.substring(0, 16)+"..."
+                            else
+                                project.title
                 Text(
-                    text = scheduleItem.title,
+                    text = title,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -88,6 +94,6 @@ private fun ScheduleImage(
 @Preview
 @Composable
 fun MainCardPreview() {
-    val item = ScheduleItem(id = 0, title = "First project")
+    val item = projects[1]
     MainCard(item)
 }
