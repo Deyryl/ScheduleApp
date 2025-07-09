@@ -1,70 +1,77 @@
 package com.scheduleapp.controllers
 
 import com.scheduleapp.database.models.ProjectEntity
-import com.scheduleapp.database.models.TagEntity
-import com.scheduleapp.database.models.TaskEntity
 import com.scheduleapp.database.models.UserEntity
 import com.scheduleapp.database.repository.ProjectRepository
-import jakarta.persistence.Id
+import com.scheduleapp.database.repository.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
+
 @RestController
 @RequestMapping("/projects")
-class ProjectController(private val repository: ProjectRepository) {
-
+class ProjectController(
+    private val repository: ProjectRepository,
+    private val userRepository: UserRepository
+) {
     data class ProjectRequest(
-        val projectID: String?,
+        val projectID: String? = null,
         val title: String,
         val ownerID: String,
-        val moderators: List<UserEntity>,
-        val members: List<UserEntity>,
-        val imageURL: String?,
+        val moderatorIDs: List<String>,
+        val memberIDs: List<String>,
+        val imageURL: String? = null,
     )
 
     data class ProjectResponse(
         val projectID: String,
         val title: String,
         val ownerID: String,
-        val moderators: List<UserEntity>,
-        val members: List<UserEntity>,
-        val imageURL: String?,
+        val moderatorIDs: List<String>,
+        val memberIDs: List<String>,
+        val imageURL: String? = null,
     )
 
     @PostMapping
-    fun save(body: ProjectRequest): ProjectResponse {
-        val project = repository.save(
-            ProjectEntity(
-                projectID = body.projectID?.let {UUID.fromString(body.projectID)} ?: UUID.randomUUID(),
-                title = body.title,
-                ownerID = UUID.fromString(body.ownerID),
-                moderators = body.moderators.toList(),
-                members = body.members.toList(),
-                imageURL = body.imageURL
-            )
-        )
+    fun save(@RequestBody body: ProjectRequest): ProjectResponse {
 
-        return project.toResponse()
+        val ownerID: UUID = UUID.fromString(body.ownerID)
+        val moderatorIDs: List<UUID> = body.moderatorIDs.map { UUID.fromString(it) }
+        val memberIDs: List<UUID> = body.memberIDs.map { UUID.fromString(it) }
+
+        val owner: UserEntity = userRepository.findByIdOrNull(ownerID)!! //УБРАТЬ !!
+        val moderators: List<UserEntity> = userRepository.findAllById(moderatorIDs)
+        val members: List<UserEntity> = userRepository.findAllById(memberIDs)
+
+        val savedProject = repository.save(ProjectEntity(
+            projectID = body.projectID?.let(UUID::fromString) ?: UUID.randomUUID(),
+            title = body.title,
+            owner = owner,
+            moderators = moderators,
+            members = members,
+            imageURL = body.imageURL
+        ))
+
+        return savedProject.toResponse()
     }
 
     @GetMapping
-    fun findByOwnerID(
-        @RequestParam(required = true) ownerID: String
-    ): List<ProjectResponse> {
-        return repository.findByOwnerID(UUID.fromString(ownerID)).map {
-            it.toResponse()
-        }
+    fun findByOwnerID(@RequestParam ownerID: String): List<ProjectResponse> {
+        val ownerUuid = UUID.fromString(ownerID)
+        return repository.findByOwnerID(ownerUuid).map { it.toResponse() }
     }
 
     private fun ProjectEntity.toResponse(): ProjectResponse {
         return ProjectResponse(
             projectID = projectID.toString(),
             title = title,
-            ownerID = ownerID.toString(),
-            moderators = moderators.toList(),
-            members = members.toList(),
+            ownerID = owner.userID.toString(),
+            moderatorIDs = moderators.map { it.userID.toString() },
+            memberIDs = members.map { it.userID.toString() },
             imageURL = imageURL
         )
     }
 }
+
 
