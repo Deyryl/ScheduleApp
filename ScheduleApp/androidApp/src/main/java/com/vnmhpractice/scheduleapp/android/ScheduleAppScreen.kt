@@ -32,7 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.vnmhpractice.scheduleapp.android.navigation.auth.authNavigation
 import com.vnmhpractice.scheduleapp.android.navigation.main.BottomNavItem
 import com.vnmhpractice.scheduleapp.android.navigation.main.bottomNavItems
-import com.vnmhpractice.scheduleapp.android.navigation.main.mainNavigation
+import mainNavigation
 
 @Composable
 fun ScheduleApp(modifier: Modifier = Modifier) {

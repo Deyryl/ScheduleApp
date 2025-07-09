@@ -24,6 +24,7 @@ import com.vnmhpractice.scheduleapp.android.R
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
     onAddClicked: () -> Unit = {},
+    onProjectClick: (String) -> Unit = {},
     viewModel: MainViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -36,13 +37,13 @@ fun ScheduleScreen(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-         items(state.projects) { project ->
+        items(state.projects) { project ->
             MainCard(
                 project = project,
                 modifier = Modifier
                     .padding(bottom = dimensionResource(R.dimen.small_padding)),
                 onCardClick = {
-
+                    onProjectClick(project.id)
                 }
             )
         }

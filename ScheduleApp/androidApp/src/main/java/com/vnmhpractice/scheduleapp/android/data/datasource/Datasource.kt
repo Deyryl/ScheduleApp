@@ -1,6 +1,9 @@
-package com.vnmhpractice.scheduleapp.android.datasource
+package com.vnmhpractice.scheduleapp.android.data.datasource
 
-import com.vnmhpractice.scheduleapp.android.datasource.Project
+import com.vnmhpractice.scheduleapp.android.data.model.Tag
+import com.vnmhpractice.scheduleapp.android.data.model.Task
+import com.vnmhpractice.scheduleapp.android.data.model.User
+import com.vnmhpractice.scheduleapp.android.data.model.Project
 
 // Данные для примера
 
@@ -34,6 +37,7 @@ val task3 = Task(
 )
 
 val project1 = Project(
+    id = "0",
     title = "Design Prototype",
     members = listOf(user1, user2),
     owner = user1,
@@ -43,6 +47,7 @@ val project1 = Project(
 )
 
 val project2 = Project(
+    id = "1",
     title = "Backend Implementation",
     members = listOf(user2, user3),
     owner = user3,
@@ -52,6 +57,7 @@ val project2 = Project(
 )
 
 val project3 = Project(
+    id = "2",
     title = "Empty Project",
     members = listOf(user1),
     owner = user1,

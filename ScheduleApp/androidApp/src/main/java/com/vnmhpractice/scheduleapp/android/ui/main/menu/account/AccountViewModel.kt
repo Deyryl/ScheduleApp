@@ -1,8 +1,7 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.menu.account
 
 import androidx.lifecycle.ViewModel
-import com.vnmhpractice.scheduleapp.android.datasource.User
-import com.vnmhpractice.scheduleapp.android.datasource.users
+import com.vnmhpractice.scheduleapp.android.data.datasource.users
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

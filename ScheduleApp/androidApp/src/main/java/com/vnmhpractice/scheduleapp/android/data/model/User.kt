@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.datasource
+package com.vnmhpractice.scheduleapp.android.data.model
 
 data class User(
     val username: String,

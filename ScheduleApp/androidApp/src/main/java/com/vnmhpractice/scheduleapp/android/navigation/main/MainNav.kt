@@ -1,9 +1,11 @@
-package com.vnmhpractice.scheduleapp.android.navigation.main
-
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
+import androidx.navigation.NavType
+import com.vnmhpractice.scheduleapp.android.navigation.main.MainDestination
+import com.vnmhpractice.scheduleapp.android.navigation.main.MenuDestination
 import com.vnmhpractice.scheduleapp.android.ui.main.calendar.CalendarScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.MenuScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.account.AccountScreen
@@ -22,15 +24,40 @@ fun NavGraphBuilder.mainNavigation(navController: NavHostController) {
 
         // Окно расписаний и вложенные окна
         composable(route = MainDestination.Schedule.name) {
-            ScheduleScreen()
-        }
-        composable(route = ScheduleDestination.Project.name) {
-            ProjectScreen(
-
+            ScheduleScreen(
+                onProjectClick = { projectId ->
+                    navController.navigate("project/$projectId")
+                }
             )
         }
-        composable(route = ScheduleDestination.ProjectDetails.name) {
-            ProjectDetailsScreen()
+
+        composable(
+            route = "project/{projectId}",
+            arguments = listOf(
+                navArgument("projectId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
+            ProjectScreen(
+                projectId = projectId,
+                onNavigateToDetails = {
+                    navController.navigate("project_details/$projectId")
+                }
+            )
+        }
+
+        composable(
+            route = "project_details/{projectId}",
+            arguments = listOf(
+                navArgument("projectId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
+            //ProjectDetailsScreen(projectId = projectId)
         }
 
         // Окно календаря и вложенные окна

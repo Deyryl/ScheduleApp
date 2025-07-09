@@ -22,7 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vnmhpractice.scheduleapp.android.datasource.*
+import com.vnmhpractice.scheduleapp.android.data.datasource.projects
+import com.vnmhpractice.scheduleapp.android.data.model.Project
 
 @Composable
 fun MainCard(
