@@ -14,6 +14,6 @@ class AccountViewModel : ViewModel() {
     }
 
     private fun updateAccount() {
-        
+
     }
 }

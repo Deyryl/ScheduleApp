@@ -2,6 +2,7 @@ package com.vnmhpractice.scheduleapp.android.ui.main.menu
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +32,6 @@ import com.vnmhpractice.scheduleapp.android.R
 fun MenuScreen(
     modifier: Modifier = Modifier,
     onAccountClick: () -> Unit = {},
-    onThemeClick: () -> Unit = {},
     onInfoClick: () -> Unit = {}
 ) {
     Column(
@@ -49,21 +51,76 @@ fun MenuScreen(
                 .padding(bottom = 10.dp)
                 .fillMaxWidth()
         )
-        // Тема
-        MenuButton(
-            text = R.string.theme,
-            icon = R.drawable.ic_theme,
-            onClick = onThemeClick,
-            modifier = Modifier
-                .padding(bottom = 10.dp)
-                .fillMaxWidth()
-        )
         // Информация
         MenuButton(
             text = R.string.btn_info,
             icon = R.drawable.ic_info,
             onClick = onInfoClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 10.dp)
+                .fillMaxWidth()
+        )
+        // Тема
+        Row(
+            modifier = Modifier
+                .height(dimensionResource(R.dimen.btn_medium_height))
+                .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = MaterialTheme.shapes.medium
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(Modifier.width(24.dp))
+            MenuSwitch(
+                checked = true,
+                onCheckedChange = {}
+            )
+        }
+    }
+}
+
+@Composable
+private fun MenuSwitch(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .height(dimensionResource(R.dimen.btn_medium_height))
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.surface,
+                shape = MaterialTheme.shapes.medium
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(2.dp))
+        Icon(
+            painter = painterResource(R.drawable.ic_theme),
+            contentDescription = stringResource(R.string.theme),
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(48.dp).padding(2.dp)
+        )
+        Spacer(Modifier.width(12.dp))
+        Text(
+            text = stringResource(R.string.theme),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(Modifier.weight(1f))
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            modifier = Modifier.padding(end = 12.dp),
+            colors = SwitchDefaults.colors(
+                checkedIconColor = MaterialTheme.colorScheme.onSurface,
+                checkedThumbColor = MaterialTheme.colorScheme.surface,
+                uncheckedIconColor = MaterialTheme.colorScheme.surface,
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                uncheckedBorderColor = MaterialTheme.colorScheme.primary
+            ),
         )
     }
 }
