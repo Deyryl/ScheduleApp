@@ -1,16 +1,23 @@
 package com.scheduleapp.database.models
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.util.*
 
 @Entity
 @Table(name = "Tags")
 data class TagEntity(
-    @Id val tagID: UUID = UUID.randomUUID(),
-    val title: String,
-    @Column(name = "tagDescription") val description: String,
-    val color: Long
+    @Id val
+    tagID: UUID = UUID.randomUUID(),
+
+    val title: String = "Новая заметка",
+
+    @Column(name = "tagDescription")
+    val description: String? = null,
+
+    val color: Long = 0xFFFFF,
+
+    @ManyToOne
+    @JoinColumn(name = "ProjectID", nullable = false)
+    val project: ProjectEntity
+
 )

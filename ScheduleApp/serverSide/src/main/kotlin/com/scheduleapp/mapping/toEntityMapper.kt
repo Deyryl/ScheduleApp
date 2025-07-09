@@ -2,6 +2,8 @@ package com.scheduleapp.mapping
 
 import com.scheduleapp.database.models.*
 import com.vnmhpractice.scheduleapp.models.*
+import java.util.UUID
+
 
 fun User.toEntity(): UserEntity = UserEntity(
     userID = java.util.UUID.fromString(userID),
@@ -15,12 +17,12 @@ fun User.toEntity(): UserEntity = UserEntity(
 fun Project.toEntity(): ProjectEntity = ProjectEntity(
     projectID = java.util.UUID.fromString(projectID),
     title = title,
-    ownerID = ownerID.toEntity(),
+    ownerID = UUID.fromString(owner.userID),
     moderators = moderators.map { it.toEntity() },
     members = members.map { it.toEntity() },
     imageURL = imageURL,
-    tasks = tasks.map { it.toEntity() },
-    tags = tags.map { it.toEntity() }
+    //tasks = tasks.map { it.toEntity() },
+    //tags = tags.map { it.toEntity() }
 )
 
 fun Task.toEntity(): TaskEntity = TaskEntity(

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Project(
     val projectID: String,
     val title: String,
-    val ownerID: User,
+    val owner: User,
     val moderators: List<User>,
     val members: List<User>,
     val imageURL: String?,
