@@ -27,5 +27,5 @@
     <string name="card_menu">Меню карточки</string>
     <string name="btn_account">Аккаунт</string>
     <string name="btn_info">Информация</string>
-    <string name="theme">Тема</string>
+    <string name="theme">Смена темы</string>
 </resources>
