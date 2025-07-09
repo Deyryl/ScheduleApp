@@ -8,29 +8,9 @@
 
 import SwiftUI
 
-struct CornerRotateModifier: ViewModifier {
-    let amount: Double
-    let scale: Double
-    
-    func body(content: Content) -> some View {
-        content
-            .rotation3DEffect(.degrees(amount), axis: (x: 1, y: 0, z: 0))
-            .scaleEffect(scale)
-    }
-}
-
-extension AnyTransition {
-    static var scaleRotating: AnyTransition {
-        .modifier(
-            active: CornerRotateModifier(amount: 270, scale: 0),
-            identity: CornerRotateModifier(amount: 0, scale: 1)
-        )
-    }
-}
-
 struct MenuView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @State private var toggle = false
+    @Namespace private var iconAnimation
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         NavigationStack {
@@ -56,30 +36,23 @@ struct MenuView: View {
                                 .frame(maxWidth: .infinity, maxHeight: 44)
                             
                             HStack {
-                                Group {
-                                    if toggle {
-                                        Image(systemName: "moon")
-                                            .resizable()
-                                            .scaledToFit()
-                                    } else {
-                                        Image(systemName: "sun.lefthalf.filled")
-                                            .resizable()
-                                            .scaledToFit()
-                                    }
-                                }
-                                .frame(width: 26, height: 26)
-                                .foregroundStyle(.accent)
-                                .padding(.leading, 6)
-                                .padding(.trailing, -4)
-                                .transition(.scaleRotating)
+                                Image(systemName: viewModel.toggle ? "moon" : "sun.max.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 26, height: 26)
+                                    .foregroundStyle(.accent)
+                                    .matchedGeometryEffect(id: "icon", in: iconAnimation)
+                                    .rotationEffect(.degrees(viewModel.toggle ? 360 : 0))
+                                    .animation(.easeInOut(duration: 0.5), value: viewModel.toggle)
                                 
                                 Spacer()
                                 
-                                Toggle("Смена темы", isOn: $toggle.animation(.easeInOut(duration: 0.5)))
-//                                    .labelsHidden()
+                                Toggle("Смена темы", isOn: $viewModel.toggle)
                                     .font(.system(size: 22))
                                     .padding(.horizontal, 10)
+                                    .padding(.leading, -4)
                             }
+                            .padding(.leading, 6)
                         }
                         .padding(.horizontal, 20)
                     }
@@ -90,13 +63,13 @@ struct MenuView: View {
             }
             .navigationTitle("Меню")
             .listStyle(.plain)
-            .onChange(of: toggle) {
-                withAnimation {
-                    UserDefaults.standard.set(toggle ? "dark" : "light", forKey: "theme")
+            .onChange(of: viewModel.toggle) {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    viewModel.setTheme()
                 }
             }
             .onAppear {
-                toggle = UserDefaults.standard.string(forKey: "theme") == "dark"
+                viewModel.setupView()
             }
         }
     }
