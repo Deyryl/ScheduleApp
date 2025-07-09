@@ -17,7 +17,9 @@ repositories {
 }
 
 dependencies {
-	//implementation(project(":shared"))
+	implementation(project(":shared"))
+	implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("mysql:mysql-connector-java:8.0.33")

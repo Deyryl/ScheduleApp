@@ -1,5 +1,6 @@
 package com.scheduleapp.controllers
 
+import com.scheduleapp.database.models.ProjectEntity
 import com.scheduleapp.database.models.UserEntity
 import com.scheduleapp.database.repository.UserRepository
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,7 +16,7 @@ class UserController(private val repository: UserRepository) {
         val username: String,
         val email: String,
         val imageURL: String,
-        val projectsID: List<Int>,
+        val projects: List<ProjectEntity>,
         val hashedPassword: String
     )
 

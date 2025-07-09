@@ -11,6 +11,6 @@ data class UserEntity (
     val username: String,
     val email: String,
     val imageURL: String?,
-    val projectsID: List<Int>
+    val projects: List<ProjectEntity>
 )
 
