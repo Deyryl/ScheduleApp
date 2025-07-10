@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val repository: UserRepository) {
 
     data class UserRequest(
-        val id: Int?,
         val username: String,
         val email: String,
         val imageURL: String,

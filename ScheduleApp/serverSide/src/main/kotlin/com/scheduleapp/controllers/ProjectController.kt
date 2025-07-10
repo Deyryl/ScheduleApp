@@ -57,10 +57,11 @@ class ProjectController(
     }
 
     @GetMapping
-    fun findByOwnerID(): List<ProjectResponse> {
-        val ownerId = SecurityContextHolder.getContext().authentication.principal as String
-        return projectRepository.findByOwnerId(ownerId).map { it.toResponse() }
+    fun findByUserId(): List<ProjectResponse> {
+        val userId = SecurityContextHolder.getContext().authentication.principal as String
+        return projectRepository.findByUserId(userId).map { it.toResponse() }
     }
+
 
     @DeleteMapping(path = ["/{id}"])
     fun deleteById(@PathVariable id: String) {

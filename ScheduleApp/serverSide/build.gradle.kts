@@ -22,7 +22,6 @@ repositories {
 }
 
 dependencies {
-	implementation(project(":shared"))
 	implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
 
