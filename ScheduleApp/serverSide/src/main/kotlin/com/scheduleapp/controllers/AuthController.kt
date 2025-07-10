@@ -1,6 +1,9 @@
 package com.scheduleapp.controllers
 
 import com.scheduleapp.security.AuthService
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Pattern
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -12,8 +15,14 @@ class AuthController(
     private val authService: AuthService
 ) {
     data class AuthRequest(
+        @NotBlank
         val username: String? = null,
+        @field:Email(message = "Invalid email format.")
         val email: String,
+        @field:Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}\$",
+            message = "Weak password"
+        )
         val password: String
     )
 

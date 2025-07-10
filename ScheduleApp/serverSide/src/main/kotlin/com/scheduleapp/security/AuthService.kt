@@ -11,6 +11,9 @@ import java.util.*
 import java.time.LocalDateTime
 import com.scheduleapp.database.repository.RefreshTokenRepository
 import jakarta.transaction.Transactional
+import org.springframework.web.server.ResponseStatusException
+import org.springframework.http.HttpStatusCode
+
 
 @Service
 class AuthService(
@@ -55,17 +58,18 @@ class AuthService(
     @Transactional
     fun refresh(refreshToken: String): TokenPair {
         if(!jwtService.validateRefreshToken(refreshToken)) {
-            throw IllegalArgumentException("Invalid refresh token.")
+            throw ResponseStatusException(HttpStatusCode.valueOf(401), "Invalid refresh token.")
         }
 
         val userId = jwtService.getUserIdFromToken(refreshToken)
         val user = userRepository.findById(userId).orElseThrow() {
-            IllegalArgumentException("Invalid refresh token.")
+            ResponseStatusException(HttpStatusCode.valueOf(401), "Invalid refresh token.")
         }
 
         val hashed = hashToken(refreshToken)
         refreshTokenRepository.findByUserIdAndHashedToken(user.id, hashed)
-            ?: throw IllegalArgumentException("Refresh token not recognized.")
+            ?: throw ResponseStatusException(HttpStatusCode.valueOf(401), "Refresh token not recognized.")
+
 
         refreshTokenRepository.deleteByUserIdAndHashedToken(user.id, hashed)
 
