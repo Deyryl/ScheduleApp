@@ -33,6 +33,7 @@ ScheduleApp/iosApp/DerivedData/
 
 # ServerSide
 ScheduleApp/serverSide/build
+ScheduleApp/serverSide/.idea
 ScheduleApp/serverSide/test
 
 # shared

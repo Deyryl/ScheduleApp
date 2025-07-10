@@ -66,17 +66,6 @@ fun AccountScreen(
     }
 }
 
-//@Composable
-//fun AccountField(
-//    label: String,
-//    text: String,
-//    modifier: Modifier = Modifier
-//) {
-//    PrimaryTextField(
-//
-//    )
-//}
-
 @Preview
 @Composable
 fun AccountScreenPreview() {
