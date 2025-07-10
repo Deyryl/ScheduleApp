@@ -10,9 +10,11 @@ import SwiftUI
 
 struct CalendarView: View {
     var body: some View {
-        Text("CalendarView")
-        Button("Выход") {
-            UserDefaults.standard.set(false, forKey: "UserLogged")
+        VStack {
+            Text("CalendarView")
+            Button("Выход") {
+                UserDefaults.standard.set(false, forKey: "UserLogged")
+            }
         }
     }
 }

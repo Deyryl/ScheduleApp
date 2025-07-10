@@ -7,18 +7,16 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension MenuView {
     
     class ViewModel: ObservableObject {
-        @Published var toggle = false
+        @Published var toggle = UserDefaults.standard.string(forKey: "theme") == "dark"
+        @Published var path = NavigationPath()
 
         func setTheme() {
             UserDefaults.standard.set(toggle ? "dark" : "light", forKey: "theme")
-        }
-
-        func setupView() {
-            toggle = (UserDefaults.standard.string(forKey: "theme") == "dark")
         }
     }
 

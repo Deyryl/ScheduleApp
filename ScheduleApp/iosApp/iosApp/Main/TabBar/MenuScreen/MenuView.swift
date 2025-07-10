@@ -13,7 +13,7 @@ struct MenuView: View {
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewModel.path) {
             VStack {
                 VStack {
                     NavigationLink {
@@ -44,6 +44,9 @@ struct MenuView: View {
                                     .matchedGeometryEffect(id: "icon", in: iconAnimation)
                                     .rotationEffect(.degrees(viewModel.toggle ? 360 : 0))
                                     .animation(.easeInOut(duration: 0.5), value: viewModel.toggle)
+                                    .onLongPressGesture(minimumDuration: 4) {
+                                        viewModel.path.append("Image")
+                                    }
                                 
                                 Spacer()
                                 
@@ -58,7 +61,6 @@ struct MenuView: View {
                     }
                 }
                 .buttonStyle(.plain)
-                
                 Spacer()
             }
             .navigationTitle("Меню")
@@ -68,8 +70,8 @@ struct MenuView: View {
                     viewModel.setTheme()
                 }
             }
-            .onAppear {
-                viewModel.setupView()
+            .navigationDestination(for: String.self) { _ in
+                Pashalka()
             }
         }
     }
