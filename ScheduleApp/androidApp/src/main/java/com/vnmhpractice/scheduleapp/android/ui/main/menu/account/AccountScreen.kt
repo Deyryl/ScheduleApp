@@ -40,7 +40,7 @@ fun AccountScreen(
             Image(
                 painter = painterResource(R.drawable.ic_default),
                 contentDescription = stringResource(R.string.user_avatar),
-                modifier = Modifier.size(100.dp).padding(end = 10.dp).scale(1.3f)
+                modifier = Modifier.size(100.dp).padding(end = 10.dp)
             )
             Column(Modifier.weight(1f)) {
                 Spacer(Modifier.height(40.dp))

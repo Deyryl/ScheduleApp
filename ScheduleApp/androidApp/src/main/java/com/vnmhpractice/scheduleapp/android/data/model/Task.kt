@@ -4,5 +4,7 @@ data class Task(
     val title: String,
     val description: String?,
     val startTime: String?,
-    val endTime: String?
+    val endTime: String?,
+    val type: String,
+    val tags: MutableList<Tag> = mutableListOf()
 )

@@ -50,7 +50,7 @@ fun ScheduleScreen(
         item {
             Text(
                 text = stringResource(R.string.btn_add),
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable(onClick = onAddClicked)
             )

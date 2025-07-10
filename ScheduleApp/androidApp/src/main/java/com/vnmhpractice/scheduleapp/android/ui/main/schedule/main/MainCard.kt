@@ -45,7 +45,7 @@ fun MainCard(
             ScheduleImage()
             Column {
                 val title = if (project.title.length > 16)
-                                project.title.substring(0, 16)+"..."
+                                project.title.take(16)+"..."
                             else
                                 project.title
                 Text(
@@ -77,7 +77,7 @@ private fun ScheduleImage(
     ) {
         if (imageRes == null) {
             Icon(
-                painter = painterResource(R.drawable.ic_image),
+                painter = painterResource(R.drawable.ic_default),
                 contentDescription = stringResource(R.string.lack_of_image),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.fillMaxSize()

@@ -3,6 +3,7 @@ package com.vnmhpractice.scheduleapp.android.ui.main.schedule.project
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +29,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,13 +43,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
+import com.vnmhpractice.scheduleapp.android.data.model.Task
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.ProjectViewModel
 
 @Composable
 fun ProjectScreen(
     projectId: String,
     modifier: Modifier = Modifier,
-    onNavigateToDetails: () -> Unit = {}
+    onNavigateToDetails: () -> Unit = {},
 ) {
     val viewModel: ProjectViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
@@ -53,7 +66,10 @@ fun ProjectScreen(
             Header(
                 title = state.project.title,
                 modifier = Modifier.height(40.dp),
-                onMoreClick = {}
+                onNavigateToDetails = onNavigateToDetails,
+                onOptionClick = {},
+                onSearchClick = {},
+                onExitClick = {}
             )
             Box(
                 modifier = Modifier
@@ -61,9 +77,39 @@ fun ProjectScreen(
                     .background(MaterialTheme.colorScheme.outline)
                     .fillMaxWidth()
             )
-            TaskCard(
-                modifier = Modifier.fillMaxWidth()
-            )
+            Spacer(Modifier.height(20.dp))
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(state.project.tasks) { task ->
+                    TaskCard(
+                        task = task,
+                        modifier = Modifier
+                            .height(100.dp)
+                            .fillMaxWidth()
+                            .padding(
+                                bottom = 20.dp
+                            )
+                    )
+                }
+                item {
+                    if (state.project.tasks.isEmpty()) {
+                        Text(
+                            text = stringResource(R.string.there_are_no_tasks),
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier.padding(bottom = 20.dp)
+                        )
+                    }
+                    Text(
+                        text = stringResource(R.string.btn_add_task),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable(onClick = {})
+                    )
+                }
+            }
         } else {
             Text(
                 text = "Project not found",
@@ -79,7 +125,10 @@ private fun Header(
     title: String,
     modifier: Modifier = Modifier,
     @DrawableRes image: Int? = null,
-    onMoreClick: () -> Unit = {}
+    onNavigateToDetails: () -> Unit = {},
+    onOptionClick: () -> Unit = {},
+    onSearchClick: () -> Unit = {},
+    onExitClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier,
@@ -96,26 +145,119 @@ private fun Header(
         Text(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.clickable(onClick = onNavigateToDetails)
         )
         Spacer(Modifier.weight(1f))
-        IconButton(
-            onClick = onMoreClick
-        ) {
+        ProjectDropdownMenu(
+            onOptionClick = onOptionClick,
+            onSearchClick = onSearchClick,
+            onExitClick = onExitClick,
+        )
+    }
+}
+
+@Composable
+fun ProjectDropdownMenu(
+    onOptionClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    onExitClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Box(
+        modifier = modifier.size(32.dp)
+    ) {
+        IconButton(onClick = { expanded = !expanded }) {
             Icon(
-                painter = painterResource(R.drawable.ic_card_more),
+                Icons.Default.MoreVert,
                 contentDescription = stringResource(R.string.project_menu),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(32.dp)
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = stringResource(R.string.more_options),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                },
+                onClick = onOptionClick
+            )
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = stringResource(R.string.more_search),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                },
+                onClick = onSearchClick
+            )
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = stringResource(R.string.more_exit),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                },
+                onClick = onExitClick
             )
         }
     }
 }
 
+
 @Composable
 private fun TaskCard(
-    modifier: Modifier = Modifier
+    task: Task,
+    modifier: Modifier = Modifier,
+    onTaskClick: () -> Unit = {}
 ) {
+    val title = if (task.title.length > 24) task.title.substring(0, 24)+"..."
+                else task.title
+    val description = task.description?.length?.let {
+        if (it > 60)
+            task.description.substring(0, 60)+"..."
+        else
+            task.description
+    }
 
+    Card(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        onClick = onTaskClick
+    ) {
+        Row {
+            Column {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(10.dp)
+                )
+                Text(
+                    text = description ?: "",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .padding(
+                            start = 10.dp,
+                            end = 10.dp,
+                            bottom = 10.dp
+                        )
+                )
+            }
+        }
+    }
 }
 
 @Preview

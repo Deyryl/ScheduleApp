@@ -11,59 +11,60 @@ val user1 = User(username = "alice", email = "alice@example.com", image = null)
 
 val user2 = User(username = "bob", email = "bob@example.com", image = 1)
 val user3 = User(username = "charlie", email = "charlie@example.com", image = 2)
-val tag1 = Tag(title = "Urgent", description = "Requires immediate attention", type = "priority")
+val tag1 = Tag(id = "0", title = "Urgent", description = "Requires immediate attention")
 
-val tag2 = Tag(title = "Design", description = "Design-related tasks", type = "category")
-val tag3 = Tag(title = "Backend", description = null, type = "category")
+val tag2 = Tag(id = "1", title = "Design", description = "Design-related tasks")
+val tag3 = Tag(id = "2", title = "Backend", description = null)
 val task1 = Task(
     title = "Create wireframes",
     description = "Sketch main screen and detail view",
     startTime = "2025-07-10T09:00",
-    endTime = "2025-07-10T12:00"
+    endTime = "2025-07-10T12:00",
+    type = "COMPLETED"
 )
 
 val task2 = Task(
     title = "Set up backend",
     description = "Initialize Spring Boot project and configure database",
     startTime = "2025-07-11T10:00",
-    endTime = "2025-07-11T16:00"
+    endTime = "2025-07-11T16:00",
+    type = "IN_PROGRESS"
 )
 
 val task3 = Task(
     title = "Fix login bug",
     description = null,
     startTime = null,
-    endTime = null
+    endTime = null,
+    type = "IN_PROGRESS"
 )
 
 val project1 = Project(
     id = "0",
     title = "Design Prototype",
-    members = listOf(user1, user2),
+    members = mutableListOf(user1, user2),
     owner = user1,
-    moderators = listOf(user2),
-    tasks = listOf(task1, task3),
-    tags = listOf(tag1, tag2)
+    moderators = mutableListOf(user2),
+    tasks = mutableListOf(task1, task3),
+    tags = mutableListOf(tag1, tag2)
 )
 
 val project2 = Project(
     id = "1",
     title = "Backend Implementation",
-    members = listOf(user2, user3),
+    members = mutableListOf(user2, user3),
     owner = user3,
-    moderators = listOf(user2),
-    tasks = listOf(task2),
-    tags = listOf(tag3)
+    moderators = mutableListOf(user2),
+    tasks = mutableListOf(task2),
+    tags = mutableListOf(tag3)
 )
 
 val project3 = Project(
     id = "2",
     title = "Empty Project",
-    members = listOf(user1),
+    members = mutableListOf(user1),
     owner = user1,
-    moderators = listOf(user1),
-    tasks = null,
-    tags = null
+    moderators = mutableListOf(user1)
 )
 
 val users = listOf(user1, user2, user3)
