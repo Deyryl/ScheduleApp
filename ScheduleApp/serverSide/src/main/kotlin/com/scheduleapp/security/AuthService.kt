@@ -3,7 +3,6 @@ package com.scheduleapp.security
 import com.scheduleapp.database.models.RefreshToken
 import com.scheduleapp.database.models.UserEntity
 import com.scheduleapp.database.repository.UserRepository
-import org.antlr.v4.runtime.Token
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.stereotype.Service
 import java.security.MessageDigest
@@ -13,6 +12,8 @@ import com.scheduleapp.database.repository.RefreshTokenRepository
 import jakarta.transaction.Transactional
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.http.HttpStatusCode
+import org.springframework.http.HttpStatus
+
 
 
 @Service
@@ -27,6 +28,10 @@ class AuthService(
         val refreshToken: String
     )
     fun register(username: String, email: String, password: String): UserEntity {
+        val user = userRepository.findByEmail(email.trim())
+        if(user != null) {
+            throw ResponseStatusException(HttpStatus.CONFLICT, "A user with that email already exists")
+        }
         return userRepository.save(
             UserEntity(
                 username = username,
