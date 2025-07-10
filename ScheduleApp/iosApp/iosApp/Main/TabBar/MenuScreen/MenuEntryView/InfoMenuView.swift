@@ -40,6 +40,7 @@ struct InfoMenuView: View {
             
             Text("2025 все права защищены бля буду")
                 .font(.system(size: 13))
+                .foregroundStyle(.secondary)
         }
         .fontWeight(.medium)
     }

@@ -12,6 +12,8 @@ enum Fields: Hashable {
     case email
     case password
     case confirmPassword
+    case title
+    case description
 }
 
 struct FocusViewModifier: ViewModifier {
