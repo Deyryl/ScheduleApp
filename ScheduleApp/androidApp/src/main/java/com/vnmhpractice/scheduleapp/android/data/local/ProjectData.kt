@@ -8,7 +8,9 @@ object ProjectData {
 
     fun getAllProjects(): List<Project> = listOfProjects.toList()
 
-    fun getProjectById(id: String): Project? = listOfProjects.find { it.id == id }
+    fun getProjectById(id: String): Project {
+        return listOfProjects.find { it.id == id } ?: Project()
+    }
 
     fun addProject(project: Project) {
         listOfProjects.add(project)

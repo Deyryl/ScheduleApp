@@ -41,7 +41,7 @@ val project1 = Project(
     title = "Design Prototype",
     members = listOf(user1, user2),
     owner = user1,
-    moderators = user2,
+    moderators = listOf(user2),
     tasks = listOf(task1, task3),
     tags = listOf(tag1, tag2)
 )
@@ -51,7 +51,7 @@ val project2 = Project(
     title = "Backend Implementation",
     members = listOf(user2, user3),
     owner = user3,
-    moderators = user2,
+    moderators = listOf(user2),
     tasks = listOf(task2),
     tags = listOf(tag3)
 )
@@ -61,7 +61,7 @@ val project3 = Project(
     title = "Empty Project",
     members = listOf(user1),
     owner = user1,
-    moderators = user1,
+    moderators = listOf(user1),
     tasks = null,
     tags = null
 )
