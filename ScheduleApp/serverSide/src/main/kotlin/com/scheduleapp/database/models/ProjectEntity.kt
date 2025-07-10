@@ -1,19 +1,41 @@
 package com.scheduleapp.database.models
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.util.*
 
 @Entity
 @Table(name = "Projects")
 data class ProjectEntity(
-    @Id val projectID: UUID = UUID.randomUUID(),
+    @Id @Column(name = "ProjectID")
+    val id: String = UUID.randomUUID().toString(),
+
     val title: String,
-    val ownerID: UserEntity,
-    val moderators: List<UserEntity>,
-    val members: List<UserEntity>,
+//    @ManyToOne
+//    @JoinColumn(name = "OwnerID", nullable = false)
+    //val owner: UserEntity,
+    val ownerId: String = UUID.randomUUID().toString(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "ProjectModerators",
+        joinColumns = [JoinColumn(name = "ProjectID")],
+        inverseJoinColumns = [JoinColumn(name = "UserID")]
+    )
+    val moderators: List<UserEntity>? = emptyList(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "ProjectMembers",
+        joinColumns = [JoinColumn(name = "ProjectID")],
+        inverseJoinColumns = [JoinColumn(name = "UserID")]
+    )
+    val members: List<UserEntity>? = emptyList(),
+
     val imageURL: String?,
-    val tasks: List<TaskEntity>,
-    val tags: List<TagEntity>
+
+//    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
+//    val tasks: List<TaskEntity> = listOf(),
+//
+//    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
+//    val tags: List<TagEntity> = listOf(),
 )

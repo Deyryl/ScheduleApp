@@ -1,6 +1,7 @@
 plugins {
 	kotlin("jvm")
 	kotlin("plugin.spring") version "2.1.0"
+	kotlin("plugin.jpa") version "2.1.0"
 	id("org.springframework.boot") version "3.5.3"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("java")
@@ -12,12 +13,15 @@ java {
 	}
 }
 
+noArg {
+	annotation("jakarta.persistence.Entity")
+}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation(project(":shared"))
 	implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
 
@@ -29,6 +33,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.security:spring-security-crypto")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.data:spring-data-commons")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")

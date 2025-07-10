@@ -3,31 +3,33 @@ package com.scheduleapp.controllers
 import com.scheduleapp.database.models.ProjectEntity
 import com.scheduleapp.database.models.UserEntity
 import com.scheduleapp.database.repository.UserRepository
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
 class UserController(private val repository: UserRepository) {
 
     data class UserRequest(
-        val userID: Int?,
-        val username: String,
-        val email: String,
-        val imageURL: String,
-        val projects: List<ProjectEntity>,
-        val hashedPassword: String
+        val email: String
     )
 
     data class UserResponse(
-        val userID: Int,
         val username: String,
         val email: String,
-        val imageURL: String,
-        val projectsID: List<Int>
+        val imageURL: String?,
+        val projectsIds: List<String>?
     )
 
+    @GetMapping
+    fun getUserFromEmail(
+        @RequestParam("email") email: String
+    ): UserEntity? {
+        return repository.findByEmail(email)
+    }
+
+    @GetMapping("project/{projectId}/members")
+    fun getProjectMembers() {}
 //    @PostMapping
 //    fun addUser(body: UserRequest): UserResponse {
 //        val user = repository.save(

@@ -4,19 +4,10 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
-    kotlin("plugin.serialization") version "1.9.23"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
-    jvm {
-        compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_21)
-                }
-            }
-        }
-    }
     androidTarget {
         compilations.all {
             compileTaskProvider.configure {
@@ -42,17 +33,21 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
-        }
-        jvmMain.dependencies {
-
+            implementation(libs.bundles.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }
@@ -68,3 +63,4 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 }
+
