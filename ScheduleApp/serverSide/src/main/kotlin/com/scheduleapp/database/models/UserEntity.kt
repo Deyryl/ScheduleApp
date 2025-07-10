@@ -15,7 +15,7 @@ data class UserEntity (
 
     val email: String,
 
-    val imageURL: String?,
+    val imageURL: String? = null,
 
     @ManyToMany(mappedBy = "members")
     val projects: List<ProjectEntity> = listOf(),

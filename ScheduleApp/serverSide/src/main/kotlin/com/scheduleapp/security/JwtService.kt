@@ -1,5 +1,6 @@
 package com.scheduleapp.security
 
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class JwtService(@Value("JWT_SK_BASE64") private val jwtSecret: String) {
+class JwtService(@Value("\${jwt.secret}") private val jwtSecret: String) {
     private val secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtSecret))
     private val accessTokenValidityMs = 15L * 60L * 1000L
     val refreshTokenValidityMs = 30L * 24L * 60L * 60L * 1000L
@@ -34,4 +35,36 @@ class JwtService(@Value("JWT_SK_BASE64") private val jwtSecret: String) {
     fun generateRefreshToken(userId: String): String {
         return generateToken(userId, "access", refreshTokenValidityMs)
     }
+
+    fun validateAccessToken(token: String): Boolean {
+        val claims = parserAllClaims(token) ?: return false
+        val tokenType = claims["type"] as? String ?: return false
+        return tokenType == "access"
+    }
+    fun validateRefreshToken(token: String): Boolean {
+        val claims = parserAllClaims(token) ?: return false
+        val tokenType = claims["type"] as? String ?: return false
+        return tokenType == "refresh"
+    }
+
+    fun getUserIdFromToken(token: String): String {
+        val claims = parserAllClaims(token) ?: throw IllegalArgumentException("Invalid token.")
+        return claims.subject
+    }
+
+    private fun parserAllClaims(token: String): Claims? {
+        val rawToken = if(token.startsWith("Bearer ")) {
+            token.removePrefix("Bearer ")
+        } else token
+        return try {
+            Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .payload
+        } catch(e: Exception) {
+            null
+        }
+    }
+
 }

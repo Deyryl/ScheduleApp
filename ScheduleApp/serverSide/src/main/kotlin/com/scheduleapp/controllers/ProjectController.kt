@@ -5,6 +5,7 @@ import com.scheduleapp.database.models.UserEntity
 import com.scheduleapp.database.repository.ProjectRepository
 import com.scheduleapp.database.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -12,13 +13,12 @@ import java.util.*
 @RestController
 @RequestMapping("/projects")
 class ProjectController(
-    private val repository: ProjectRepository,
+    private val projectRepository: ProjectRepository,
     private val userRepository: UserRepository
 ) {
     data class ProjectRequest(
         val id: String? = null,
         val title: String,
-        val ownerId: String,
         val moderatorIds: List<String>,
         val memberIds: List<String>,
         val imageURL: String? = null,
@@ -35,8 +35,7 @@ class ProjectController(
 
     @PostMapping
     fun save(@RequestBody body: ProjectRequest): ProjectResponse {
-
-        val ownerId: String = body.ownerId
+        val ownerId = SecurityContextHolder.getContext().authentication.principal as String
         val moderatorIds: List<String> = body.moderatorIds
         val memberIds: List<String> = body.memberIds
 
@@ -44,7 +43,8 @@ class ProjectController(
         val moderators: List<UserEntity> = userRepository.findAllById(moderatorIds)
         val members: List<UserEntity> = userRepository.findAllById(memberIds)
 
-        val savedProject = repository.save(ProjectEntity(
+
+        val savedProject = projectRepository.save(ProjectEntity(
             id = body.id ?: UUID.randomUUID().toString(),
             title = body.title,
             ownerId = owner,
@@ -57,13 +57,20 @@ class ProjectController(
     }
 
     @GetMapping
-    fun findByOwnerID(@RequestParam ownerId: String): List<ProjectResponse> {
-        return repository.findByOwnerId(ownerId).map { it.toResponse() }
+    fun findByOwnerID(): List<ProjectResponse> {
+        val ownerId = SecurityContextHolder.getContext().authentication.principal as String
+        return projectRepository.findByOwnerId(ownerId).map { it.toResponse() }
     }
 
     @DeleteMapping(path = ["/{id}"])
     fun deleteById(@PathVariable id: String) {
-        repository.deleteById(id)
+        val project = projectRepository.findById(id).orElseThrow {
+            IllegalArgumentException("Project not found")
+        }
+        val ownerId = SecurityContextHolder.getContext().authentication.principal as String
+        if (project.ownerId == ownerId) {
+            projectRepository.deleteById(id)
+        }
     }
 
     private fun ProjectEntity.toResponse(): ProjectResponse {
