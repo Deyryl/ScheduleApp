@@ -13,6 +13,7 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import com.vnmhpractice.scheduleapp.models.TokenStorage
 import io.ktor.client.request.*
+import io.ktor.http.ContentType.Application.Json
 
 fun createHttpClient(engine: HttpClientEngine, tokenStorage: TokenStorage): HttpClient {
     return HttpClient(engine) {

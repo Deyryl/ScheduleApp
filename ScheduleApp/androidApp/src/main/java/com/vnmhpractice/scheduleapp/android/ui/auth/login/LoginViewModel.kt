@@ -33,8 +33,7 @@ class LoginViewModel : ViewModel() {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
             try {
-                // Иммитация API запроса
-                delay(1500)
+
 
                 // Успешный вход
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }

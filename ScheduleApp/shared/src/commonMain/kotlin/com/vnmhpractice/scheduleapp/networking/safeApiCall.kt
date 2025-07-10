@@ -6,6 +6,7 @@ import kotlinx.serialization.SerializationException
 import util.NetworkError
 import util.Result
 
+
 suspend fun <T> safeApiCall(
     block: suspend () -> T
 ): Result<T, NetworkError> = try {

@@ -21,5 +21,4 @@ dependencyResolutionManagement {
 rootProject.name = "ScheduleApp"
 include(":androidApp")
 include(":iosApp")
-include(":serverSide")
 include(":shared")
