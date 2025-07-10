@@ -18,10 +18,10 @@ data class UserEntity (
     val imageURL: String? = null,
 
     @ManyToMany(mappedBy = "members")
-    val projects: List<ProjectEntity> = listOf(),
+    val projectIds: List<String>? = listOf(),
 
-    @ManyToMany(mappedBy = "moderators")
-    val moderatedProjects: List<ProjectEntity> = listOf()
+//    @ManyToMany(mappedBy = "moderators")
+//    val moderatedProjects: List<ProjectEntity> = listOf()
 )
 
 

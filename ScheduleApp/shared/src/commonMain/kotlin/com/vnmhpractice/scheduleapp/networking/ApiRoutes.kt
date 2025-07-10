@@ -16,5 +16,6 @@ object ApiRoutes {
 
     object Users {
         const val PROFILE = "$BASE_URL/users/profile"
+        const val ALL = "$BASE_URL/users"
     }
 }

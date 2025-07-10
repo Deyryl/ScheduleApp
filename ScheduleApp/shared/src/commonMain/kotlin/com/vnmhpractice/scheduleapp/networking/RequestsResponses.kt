@@ -39,20 +39,11 @@ data class ProjectResponse(
     val imageURL: String?,
 )
 
-@Serializable
-data class AuthRequest(
-    val username: String? = null,
-    val email: String,
-    val password: String
-)
+
 
 @Serializable
 data class RefreshRequest(
     val refreshToken: String
 )
 
-@Serializable
-data class TokenPair(
-    val accessToken: String,
-    val refreshToken: String
-)
+

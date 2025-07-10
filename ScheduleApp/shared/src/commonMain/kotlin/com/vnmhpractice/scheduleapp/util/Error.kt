@@ -1,0 +1,4 @@
+package util
+
+interface Error
+

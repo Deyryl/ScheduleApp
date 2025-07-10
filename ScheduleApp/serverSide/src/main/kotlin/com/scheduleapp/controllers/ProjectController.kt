@@ -59,7 +59,7 @@ class ProjectController(
     @GetMapping
     fun findByUserId(): List<ProjectResponse> {
         val userId = SecurityContextHolder.getContext().authentication.principal as String
-        return projectRepository.findByUserId(userId).map { it.toResponse() }
+        return projectRepository.findByOwnerId(userId).map { it.toResponse() }
     }
 
 

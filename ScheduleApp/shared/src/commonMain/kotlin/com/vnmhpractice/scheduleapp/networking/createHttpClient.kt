@@ -1,5 +1,6 @@
 package com.vnmhpractice.scheduleapp.networking
 
+import com.vnmhpractice.scheduleapp.models.TokenPair
 import io.ktor.client.*
 import io.ktor.http.*
 import io.ktor.client.call.*
@@ -37,15 +38,15 @@ fun createHttpClient(engine: HttpClientEngine, tokenStorage: TokenStorage): Http
                     val response = try {
                         val currentRefreshToken = tokenStorage.load()?.refreshToken ?: return@refreshTokens null
 
-                        val refreshed = client.post(ApiRoutes.Auth.REFRESH) {
+                        val tokenPair = client.post(ApiRoutes.Auth.REFRESH) {
                             contentType(ContentType.Application.Json)
                             setBody(RefreshRequest(refreshToken = currentRefreshToken))
                         }.body<TokenPair>()
 
-                        tokenStorage.save(refreshed)
+                        tokenStorage.save(tokenPair)
                         BearerTokens(
-                            accessToken = refreshed.accessToken,
-                            refreshToken = refreshed.refreshToken
+                            accessToken = tokenPair.accessToken,
+                            refreshToken = tokenPair.refreshToken
                         )
                     } catch (e: Exception) {
                         println("Invalid token")

@@ -17,7 +17,7 @@ class AuthController(
 ) {
     data class AuthRequest(
         @field:NotBlank
-        val username: String? = null,
+        val username: String?,
         @field:Email(message = "Invalid email format.")
         val email: String,
         @field:Pattern(
@@ -34,8 +34,14 @@ class AuthController(
     @PostMapping("/register")
     fun register(
         @Valid @RequestBody body: AuthRequest
-    ) {
-        authService.register(body.username!!, body.email, body.password)
+    ): UserController.UserResponse {
+        val userEntity = authService.register(body.username!!, body.email, body.password)
+        return UserController.UserResponse(
+            username = userEntity.username,
+            email = userEntity.email,
+            imageURL = userEntity.imageURL,
+            projectsIds = userEntity.projectIds
+        )
     }
 
     @PostMapping("/login")

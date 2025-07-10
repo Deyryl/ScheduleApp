@@ -1,9 +1,14 @@
 package com.vnmhpractice.scheduleapp.models
+import kotlinx.serialization.Serializable
 
-import com.vnmhpractice.scheduleapp.networking.TokenPair
+@Serializable
+data class TokenPair(
+    val accessToken: String,
+    val refreshToken: String
+)
 
 interface TokenStorage {
-    suspend fun load(): TokenPair?
-    suspend fun save(tokens: TokenPair)
-    suspend fun clear()
+    suspend fun load(): TokenPair? //Достать токены
+    suspend fun save(tokens: TokenPair) //Загрузить токены в память
+    suspend fun clear() //Очистить токены из памяти
 }
