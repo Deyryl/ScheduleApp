@@ -113,7 +113,23 @@ fun MainNavGraph(navController: NavHostController) {
                     }
                 )
             }
-
+            composable(
+                route = "edit_project/{projectId}",
+                arguments = listOf(
+                    navArgument("projectId") {
+                        type = NavType.StringType
+                    }
+                )
+            ) { backStackEntry ->
+                val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
+                EditProjectScreen(
+                    projectId = projectId,
+                    onCancelClick = { navController.popBackStack() },
+                    onSaveClick = {
+                        navController.navigate("project_details/$projectId")
+                    }
+                )
+            }
             composable(
                 route = "project_details/{projectId}",
                 arguments = listOf(
