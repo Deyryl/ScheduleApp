@@ -36,6 +36,7 @@ import com.vnmhpractice.scheduleapp.android.ui.main.calendar.CalendarScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.MenuScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.account.AccountScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.information.InformationScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.EditProjectScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ScheduleScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.search.SearchScreen

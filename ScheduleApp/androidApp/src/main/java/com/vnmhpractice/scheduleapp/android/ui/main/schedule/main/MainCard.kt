@@ -41,6 +41,7 @@ fun MainCard(
     project: Project,
     modifier: Modifier = Modifier,
     onEditClick: () -> Unit = {},
+    onPinClick: () -> Unit = {},
     onCardClick: () -> Unit = {}
 ) {
     val title = if (project.title.length > 16)
@@ -60,15 +61,24 @@ fun MainCard(
             modifier = Modifier.padding(10.dp)
         ) {
             ScheduleImage()
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            Column {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    text = "Участники: ${project.members.size}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
             Spacer(Modifier.weight(1f))
             Column(horizontalAlignment = Alignment.End) {
                 MoreButton(
                     onEditClick = onEditClick,
-                    onPinClick = {},
+                    onPinClick = onPinClick,
                     isPinned = project.isPinned
                 )
                 Spacer(Modifier.weight(1f))
@@ -89,7 +99,7 @@ fun MainCard(
 private fun ScheduleImage(
     modifier: Modifier = Modifier,
     @DrawableRes imageRes: Int? = null
-) {
+) {// я хуесос
     Box(
         modifier = modifier
             .size(90.dp)

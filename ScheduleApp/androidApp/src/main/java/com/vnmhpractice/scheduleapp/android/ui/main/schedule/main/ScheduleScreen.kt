@@ -25,6 +25,8 @@ fun ScheduleScreen(
     modifier: Modifier = Modifier,
     onAddClicked: () -> Unit = {},
     onProjectClick: (String) -> Unit = {},
+    onEditClick: () -> Unit = {},
+    onPinClick: () -> Unit = {},
     viewModel: MainViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -42,6 +44,8 @@ fun ScheduleScreen(
                 project = project,
                 modifier = Modifier
                     .padding(bottom = dimensionResource(R.dimen.small_padding)),
+                onEditClick = onEditClick,
+                onPinClick = onPinClick,
                 onCardClick = {
                     onProjectClick(project.id)
                 }
