@@ -18,7 +18,7 @@ struct TabBar: View {
                 }
                 .toolbarBackground(.visible, for: .tabBar)
             
-            ScheduleView()
+            MySchedulesView()
                 .tabItem {
                     Label("Расписание", systemImage: "note.text")
                 }
