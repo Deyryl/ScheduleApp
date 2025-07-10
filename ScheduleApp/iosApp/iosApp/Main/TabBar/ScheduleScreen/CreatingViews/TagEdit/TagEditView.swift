@@ -12,11 +12,18 @@ import SwiftUI
 struct TagEditView: View {
     @State private var viewModel: ViewModel
     @Environment(\.dismiss) var dismiss
+    @FocusState private var focusField: Fields?
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                BasicsAddingView(navigationTitle: "Тег", textFieldTitle: "Название тега", textViewTitle: "Описание", title: $viewModel.tagTitle, description: $viewModel.description)
+                Text("Тег")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                
+                BasicsAddingView(textFieldTitle: "Название тега", textViewTitle: "Описание", title: $viewModel.tagTitle, description: $viewModel.description)
+                    .focused($focusField, equals: .tag)
+
                 
                 VStack(alignment: .leading) {
                     Text("Выбор цвета")

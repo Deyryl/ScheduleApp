@@ -11,82 +11,91 @@ import SwiftUI
 struct TaskEditView: View {
     @State private var viewModel = ViewModel()
     @Environment(\.dismiss) var dismiss
+    @FocusState private var focusField: Fields?
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                BasicsAddingView(navigationTitle: "Задача🥹", textFieldTitle: "Название задачи", textViewTitle: "Описание", title: $viewModel.title, description: $viewModel.description)
-                
-                VStack(alignment: .leading) {
-                    Text("Время")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                    Picker("Диапазон", selection: $viewModel.timeType) {
-                        ForEach(TimeType.allCases, id: \.self) { type in
-                            Text(type.rawValue)
-                                .tag(type)
+                Text("Задача🥹")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                ScrollView {
+                    BasicsAddingView(textFieldTitle: "Название задачи", textViewTitle: "Описание", title: $viewModel.title, description: $viewModel.description)
+                        .focused($focusField, equals: .task)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Время")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        Picker("Диапазон", selection: $viewModel.timeType) {
+                            ForEach(TimeType.allCases, id: \.self) { type in
+                                Text(type.rawValue)
+                                    .tag(type)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    .accessibilityElement()
+                    .accessibilityLabel("Тип времени")
+                    .accessibilityHint(viewModel.timeType.rawValue)
+                    
+                    VStack(spacing: 15) {
+                        
+                        if viewModel.timeType == .endsAt ||
+                            viewModel.timeType == .range{
+                            DatePicker("Выберите начальную дату",
+                                       selection: $viewModel.startDate.withDefault(),
+                                       in: Date()...,
+                                       displayedComponents: [.date, .hourAndMinute]
+                            )
+                            .foregroundStyle(.accent)
+                            .labelsHidden()
+                            .transition(.opacity)
+                        }
+                        
+                        if  viewModel.timeType == .deadline || viewModel.timeType == .range {
+                            DatePicker("Выберите конечную дату",
+                                       selection: $viewModel.endDate.withDefault(),
+                                       in: Date()...,
+                                       displayedComponents: [.date, .hourAndMinute]
+                            )
+                            .foregroundStyle(.accent)
+                            .labelsHidden()
+                            .transition(.opacity)
                         }
                     }
-                    .pickerStyle(.segmented)
-                }
-                .accessibilityElement()
-                .accessibilityLabel("Тип времени")
-                .accessibilityHint(viewModel.timeType.rawValue)
-                
-                VStack(spacing: 15) {
-                    if  viewModel.timeType == .deadline{
-                        DatePicker("Выберите конечную дату",
-                                   selection: $viewModel.endDate.withDefault(),
-                                   in: Date()...,
-                                   displayedComponents: [.date, .hourAndMinute]
-                        )
-                        .foregroundStyle(.accent)
-                        .labelsHidden()
-                    } else if viewModel.timeType == .endsAt {
-                        DatePicker("Выберите начальную дату",
-                                   selection: $viewModel.startDate.withDefault(),
-                                   in: Date()...,
-                                   displayedComponents: [.date, .hourAndMinute]
-                        )
-                        .foregroundStyle(.accent)
-                        .labelsHidden()
-                    } else {
-                        DatePicker("Выберите начальную дату",
-                                   selection: $viewModel.startDate.withDefault(),
-                                   in: Date()...,
-                                   displayedComponents: [.date, .hourAndMinute]
-                        )
-                        .foregroundStyle(.accent)
-                        .labelsHidden()
-                        DatePicker("Выберите конечную дату",
-                                   selection: $viewModel.endDate.withDefault(),
-                                   in: (viewModel.startDate ?? Date())...,
-                                   displayedComponents: [.date, .hourAndMinute]
-                        )
-                        .foregroundStyle(.accent)
-                        .labelsHidden()
-                    }
-                }
-                .padding(.vertical, 20)
-                
-                VStack(alignment: .leading) {
-                    Text("Теги")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 10)
                     
-                    ForEach(viewModel.tags) { tag in
-                        TagInTaskView(tag: tag)
+                    VStack(alignment: .leading) {
+                        Text("Теги")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        
+                        List {
+                            ForEach(viewModel.tags) { tag in
+                                TagInTaskView(tag: tag)
+                                    .listRowSeparator(.hidden)
+                                    .swipeActions(edge: .trailing) {
+                                        Button("Удалить", systemImage: "trash", role: .destructive) {
+                                            viewModel.tags.removeAll(where: { $0.id == tag.id })
+                                        }
+                                        .tint(.red)
+                                    }
+                                    .onTapGesture {
+                                        viewModel.tag = tag
+                                    }
+                            }
+                        }
+                        .frame(height: CGFloat((viewModel.tags.count * 65) + (viewModel.tags.count < 4 ? 200 : 0)), alignment: .top)
+                        .listStyle(.inset)
                     }
+                    Spacer()
                 }
-                
-                Button("Добавить тег +") {
-                    viewModel.tag = Tag(title: "", description: "", color: Color.white)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                
-                Spacer()
             }
+            .animation(.easeInOut, value: viewModel.timeType)
             .padding(.horizontal, 20)
+            .addFocusToKeyboard(focusState: _focusField)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Сохранить") {
@@ -102,43 +111,21 @@ struct TaskEditView: View {
                 }
             }
             .fullScreenCover(item: $viewModel.tag) { tag in
-                TagEditView(tag: tag) {
-                    viewModel.tags.append($0)
+                TagEditView(tag: tag) { savingTag in
+                    viewModel.saveTag(savingTag: savingTag)
                 }
+            }
+            .overlay(alignment: .bottom) {
+                Button("Добавить тег +") {
+                    viewModel.tag = Tag(title: "", description: "", color: Color.white)
+                }
+                .buttonStyle(.borderedProminent)
             }
         }
         .tint(.accent)
     }
 }
 
-struct TagInTaskView: View {
-    var tag: Tag
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Rectangle()
-                    .fill(tag.color)
-                    .frame(width: 20, height: 20)
-                
-                Text(tag.title)
-                    .foregroundStyle(tag.color)
-                    .frame(width: 100, alignment: .leading)
-                
-                Text(tag.description)
-                    .frame(width: .infinity, height: 40, alignment: .leading)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.leading)
-                
-            }
-            .font(.system(size: 16))
-            
-            Divider()
-                .frame(width: .infinity, height: 1)
-                .background(Color.accent)
-        }
-    }
-}
 #Preview {
     TaskEditView()
 }

@@ -9,47 +9,38 @@
 import SwiftUI
 
 struct BasicsAddingView: View {
-    @State private var viewModel: ViewModel
-    @FocusState private var focusField: Fields?
+    var textFieldTitle: String
+    var textViewTitle: String
+    @Binding var title: String
+    @Binding var description: String
     
     var body: some View {
         Group {
-            Text(viewModel.navigationTitle)
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            
             Spacer()
                 .frame(maxHeight: 20)
             
             VStack(alignment: .leading) {
-                Text(viewModel.textFieldTitle)
+                Text(textFieldTitle)
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
-                UnderScoredTextFieldView(name: "", text: $viewModel.title)
+                UnderScoredTextFieldView(name: "", text: $title)
                     .labelsHidden()
-                    .focused($focusField, equals: .title)
             }
             .accessibilityElement()
-            .accessibilityLabel(viewModel.textFieldTitle)
+            .accessibilityLabel(textFieldTitle)
             .padding(.bottom, 20)
             
             VStack(alignment: .leading) {
-                Text(viewModel.textViewTitle)
+                Text(textViewTitle)
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                 
-                UnderScoredTextFieldView(name: "", text: $viewModel.description, axis: .vertical)
+                UnderScoredTextFieldView(name: "", text: $description, axis: .vertical)
                     .lineLimit(2...)
-                    .focused($focusField, equals: .description)
             }
             .accessibilityElement()
-            .accessibilityLabel(viewModel.textViewTitle)
+            .accessibilityLabel(textViewTitle)
             .padding(.bottom, 20)
         }
-        .addFocusToKeyboard(focusState: _focusField)
-    }
-    
-    init(navigationTitle: String, textFieldTitle: String, textViewTitle: String, title: Binding<String>, description: Binding<String>) {
-        self.viewModel = ViewModel(navigationTitle: navigationTitle, textFieldTitle: textFieldTitle, textViewTitle: textViewTitle, title: title, description: description)
     }
 }

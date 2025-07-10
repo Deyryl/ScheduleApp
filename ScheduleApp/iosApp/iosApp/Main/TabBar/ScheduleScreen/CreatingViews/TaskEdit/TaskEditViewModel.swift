@@ -54,6 +54,14 @@ extension TaskEditView {
         func saveTask() {
             
         }
+        
+        func saveTag(savingTag: Tag) {
+            if let index = tags.firstIndex(where: {savingTag.id == $0.id}) {
+                tags[index] = savingTag
+            } else {
+                tags.append(savingTag)
+            }
+        }
     }
     
     enum TimeType: String, CaseIterable  {
