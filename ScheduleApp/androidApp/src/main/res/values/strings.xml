@@ -35,4 +35,7 @@
     <string name="more_exit">Выйти</string>
     <string name="there_are_no_tasks">Задачи отсутствуют</string>
     <string name="btn_add_task">Создать задачу</string>
+    <string name="my_schedule">Мои расписания</string>
+    <string name="account">Аккаунт</string>
+    <string name="information">Информация</string>
 </resources>

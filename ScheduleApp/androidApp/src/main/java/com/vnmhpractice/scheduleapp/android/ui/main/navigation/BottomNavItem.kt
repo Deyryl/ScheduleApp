@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.navigation.main
+package com.vnmhpractice.scheduleapp.android.ui.main.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -12,22 +12,22 @@ data class BottomNavItem(
 
 val bottomNavItems = listOf<BottomNavItem>(
     BottomNavItem(
-        route   = MainDestination.Search.name,
+        route   = "Search",
         title   = R.string.search,
         icon    = R.drawable.ic_search
     ),
     BottomNavItem(
-        route   = MainDestination.Schedule.name,
+        route   = "Schedule",
         title   = R.string.schedule,
         icon    = R.drawable.ic_schedule
     ),
     BottomNavItem(
-        route   = MainDestination.Calendar.name,
+        route   = "Calendar",
         title   = R.string.calendar,
         icon    = R.drawable.ic_calendar
     ),
     BottomNavItem(
-        route   = MainDestination.Menu.name,
+        route   = "Menu",
         title   = R.string.menu,
         icon    = R.drawable.ic_menu
     )
