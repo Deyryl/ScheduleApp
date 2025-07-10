@@ -24,6 +24,9 @@ import com.vnmhpractice.scheduleapp.android.R
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
     onAddClicked: () -> Unit = {},
+    onProjectClick: (String) -> Unit = {},
+    onEditClick: () -> Unit = {},
+    onPinClick: () -> Unit = {},
     viewModel: MainViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -36,17 +39,22 @@ fun ScheduleScreen(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-         items(state.schedules) { schedule ->
+        items(state.projects) { project ->
             MainCard(
-                scheduleItem = schedule,
+                project = project,
                 modifier = Modifier
-                    .padding(bottom = dimensionResource(R.dimen.small_padding))
+                    .padding(bottom = dimensionResource(R.dimen.small_padding)),
+                onEditClick = onEditClick,
+                onPinClick = onPinClick,
+                onCardClick = {
+                    onProjectClick(project.id)
+                }
             )
         }
         item {
             Text(
                 text = stringResource(R.string.btn_add),
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable(onClick = onAddClicked)
             )

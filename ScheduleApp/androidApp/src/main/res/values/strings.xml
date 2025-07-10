@@ -27,5 +27,15 @@
     <string name="card_menu">Меню карточки</string>
     <string name="btn_account">Аккаунт</string>
     <string name="btn_info">Информация</string>
-    <string name="theme">Смена темы</string>
+    <string name="theme">Тема</string>
+    <string name="user_avatar">Аватар пользователя</string>
+    <string name="project_menu">Меню проекта</string>
+    <string name="more_options">Настройки</string>
+    <string name="more_search">Поиск</string>
+    <string name="more_exit">Выйти</string>
+    <string name="there_are_no_tasks">Задачи отсутствуют</string>
+    <string name="btn_add_task">Создать задачу</string>
+    <string name="my_schedule">Мои расписания</string>
+    <string name="account">Аккаунт</string>
+    <string name="information">Информация</string>
 </resources>

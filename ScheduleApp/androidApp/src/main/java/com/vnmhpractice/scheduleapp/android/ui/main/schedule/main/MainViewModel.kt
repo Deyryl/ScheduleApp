@@ -1,23 +1,25 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.schedule.main
 
 import androidx.lifecycle.ViewModel
+import com.vnmhpractice.scheduleapp.android.data.datasource.projects
+import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import com.vnmhpractice.scheduleapp.android.datasource.*
+import kotlinx.coroutines.flow.update
 
 class MainViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
-        loadSchedules()
+        loadProjects()
     }
 
-    private fun loadSchedules() {
+    private fun loadProjects() {
         // MARK: Code to complete
         // Замена на вызов с помощью API и др
-        val listOfSchedules = FakeScheduleDataSource.schedules.toMutableList()
-        _uiState.value = MainUiState(schedules = listOfSchedules)
+        ProjectData.initTestData()
+        _uiState.update {  it.copy(projects = ProjectData.getAllProjects()) }
     }
 }

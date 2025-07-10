@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.android.navigation.auth
+package com.vnmhpractice.scheduleapp.android.ui.auth.navigation
 
 enum class AuthDestination {
     Start,

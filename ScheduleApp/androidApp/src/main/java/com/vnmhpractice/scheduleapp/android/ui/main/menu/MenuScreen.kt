@@ -84,8 +84,8 @@ fun MenuScreen(
         ) {
             Spacer(Modifier.width(24.dp))
             MenuSwitch(
-                checked = state.isDarkTheme,
-                onCheckedChange = viewModel::updateTheme
+                checked = true,
+                onCheckedChange = {}
             )
         }
     }
@@ -98,7 +98,7 @@ private fun MenuSwitch(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .height(dimensionResource(R.dimen.btn_medium_height))
             .fillMaxWidth()
             .background(

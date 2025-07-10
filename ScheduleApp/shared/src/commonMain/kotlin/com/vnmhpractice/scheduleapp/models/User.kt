@@ -8,5 +8,5 @@ data class User (
     val username: String,
     val email: String,
     val imageURL: String?,
-    val projectIds: List<String>?
+    val projects: List<Project>
 )
