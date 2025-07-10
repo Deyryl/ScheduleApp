@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin.serialization)
+    //kotlin("plugin.serialization") version "2.1.0"
+
 }
 
 kotlin {
@@ -20,7 +22,6 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    jvm()
 
     cocoapods {
         summary = "Some description for the Shared Module"
@@ -39,7 +40,6 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(libs.bundles.ktor)
         }
