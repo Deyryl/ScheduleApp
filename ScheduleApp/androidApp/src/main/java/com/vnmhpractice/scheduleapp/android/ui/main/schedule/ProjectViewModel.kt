@@ -14,6 +14,60 @@ class ProjectViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ProjectUiState())
     val uiState: StateFlow<ProjectUiState> = _uiState.asStateFlow()
 
+    private val _editingTask = MutableStateFlow<Task?>(null)
+    val editingTask: StateFlow<Task?> = _editingTask.asStateFlow()
+
+    fun startEditingTask(task: Task) {
+        _editingTask.value = task.copy()
+    }
+
+    fun updateEditingTask(
+        title: String = _editingTask.value?.title ?: "",
+        description: String? = _editingTask.value?.description,
+        startTime: String? = _editingTask.value?.startTime,
+        endTime: String? = _editingTask.value?.endTime,
+        type: String = _editingTask.value?.type ?: "default"
+    ) {
+        _editingTask.update { current ->
+            current?.copy(
+                title = title,
+                description = description,
+                startTime = startTime,
+                endTime = endTime,
+                type = type
+            )
+        }
+    }
+
+    fun saveTaskChanges() {
+        _editingTask.value?.let { updatedTask ->
+            _uiState.update { currentState ->
+                val updatedTasks = currentState.project.tasks.toMutableList().apply {
+                    val index = indexOfFirst { it.title == updatedTask.title }
+                    if (index != -1) {
+                        set(index, updatedTask)
+                    } else {
+                        add(updatedTask)
+                    }
+                }
+                currentState.copy(
+                    project = currentState.project.copy(tasks = updatedTasks)
+                )
+            }
+            _editingTask.value = null
+        }
+    }
+
+    fun cancelEditing() {
+        _editingTask.value = null
+    }
+
+    fun addTagToTask(tag: Tag) {
+        _editingTask.update { current ->
+            current?.copy(tags = (current.tags + tag).toMutableList())
+        }
+    }
+
     fun updateProject(project: Project) {
         _uiState.update { it.copy(project = project) }
     }
