@@ -81,9 +81,9 @@ class AuthService(
     }
 
     private fun storeRefreshToken(userId: String, rawRefreshToken: String) {
-        val hashed = hashEncoder.encode(rawRefreshToken)
+        val hashed = hashToken(rawRefreshToken)
         val expiryMs = jwtService.refreshTokenValidityMs
-        val expiresAt = LocalDateTime.now().plusNanos(expiryMs*10*10*10*10*10*10)
+        val expiresAt = LocalDateTime.now().plusSeconds(expiryMs/1000)
         refreshTokenRepository.save(
             RefreshToken(
                 userId = userId,

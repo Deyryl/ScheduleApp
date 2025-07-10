@@ -17,31 +17,31 @@ class ProjectController(
     private val userRepository: UserRepository
 ) {
     data class ProjectRequest(
-        val id: String? = null,
+        val id: String?,
         val title: String,
-        val moderatorIds: List<String>,
-        val memberIds: List<String>,
-        val imageURL: String? = null,
+        val moderatorIds: List<String>?,
+        val memberIds: List<String>?,
+        val imageURL: String?,
     )
 
     data class ProjectResponse(
         val id: String,
         val title: String,
         val ownerId: String,
-        val moderatorIds: List<String>,
-        val memberIds: List<String>,
-        val imageURL: String? = null,
+        val moderatorIds: List<String>?,
+        val memberIds: List<String>?,
+        val imageURL: String?,
     )
 
     @PostMapping
     fun save(@RequestBody body: ProjectRequest): ProjectResponse {
         val ownerId = SecurityContextHolder.getContext().authentication.principal as String
-        val moderatorIds: List<String> = body.moderatorIds
-        val memberIds: List<String> = body.memberIds
+        val moderatorIds: List<String>? = body.moderatorIds
+        val memberIds: List<String>? = body.memberIds
 
-        val owner: String = userRepository.findByIdOrNull(ownerId)?.id ?: "testId" //УБРАТЬ !!
-        val moderators: List<UserEntity> = userRepository.findAllById(moderatorIds)
-        val members: List<UserEntity> = userRepository.findAllById(memberIds)
+        val owner: String = userRepository.findByIdOrNull(ownerId)?.id ?: "testId"
+        val moderators: List<UserEntity>? = if (moderatorIds != null) userRepository.findAllById(moderatorIds) else null
+        val members: List<UserEntity>? = if (memberIds != null) userRepository.findAllById(memberIds) else null
 
 
         val savedProject = projectRepository.save(ProjectEntity(
@@ -78,8 +78,8 @@ class ProjectController(
             id = id,
             title = title,
             ownerId = ownerId,
-            moderatorIds = moderators.map { it.id },
-            memberIds = members.map { it.id },
+            moderatorIds = moderators?.map { it.id },
+            memberIds = members?.map { it.id },
             imageURL = imageURL
         )
     }

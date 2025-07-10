@@ -21,7 +21,7 @@ data class ProjectEntity(
         joinColumns = [JoinColumn(name = "ProjectID")],
         inverseJoinColumns = [JoinColumn(name = "UserID")]
     )
-    val moderators: List<UserEntity> = listOf(),
+    val moderators: List<UserEntity>? = emptyList(),
 
     @ManyToMany
     @JoinTable(
@@ -29,7 +29,7 @@ data class ProjectEntity(
         joinColumns = [JoinColumn(name = "ProjectID")],
         inverseJoinColumns = [JoinColumn(name = "UserID")]
     )
-    val members: List<UserEntity> = listOf(),
+    val members: List<UserEntity>? = emptyList(),
 
     val imageURL: String?,
 

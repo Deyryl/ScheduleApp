@@ -33,7 +33,7 @@ class JwtService(@Value("\${jwt.secret}") private val jwtSecret: String) {
         return generateToken(userId, "access", accessTokenValidityMs)
     }
     fun generateRefreshToken(userId: String): String {
-        return generateToken(userId, "access", refreshTokenValidityMs)
+        return generateToken(userId, "refresh", refreshTokenValidityMs)
     }
 
     fun validateAccessToken(token: String): Boolean {
@@ -60,7 +60,7 @@ class JwtService(@Value("\${jwt.secret}") private val jwtSecret: String) {
             Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(rawToken)
                 .payload
         } catch(e: Exception) {
             null
