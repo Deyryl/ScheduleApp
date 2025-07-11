@@ -7,10 +7,10 @@ import com.vnmhpractice.scheduleapp.android.data.model.Project
 
 // Данные для примера
 
-val user1 = User(username = "alice", email = "alice@example.com", image = null)
+val user1 = User(username = "alice", email = "alice@example.com")
 
-val user2 = User(username = "bob", email = "bob@example.com", image = 1)
-val user3 = User(username = "charlie", email = "charlie@example.com", image = 2)
+val user2 = User(username = "bob", email = "bob@example.com")
+val user3 = User(username = "charlie", email = "charlie@example.com")
 val tag1 = Tag(id = "0", title = "Urgent", description = "Requires immediate attention")
 
 val tag2 = Tag(id = "1", title = "Design", description = "Design-related tasks")

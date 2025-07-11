@@ -38,6 +38,7 @@ import com.vnmhpractice.scheduleapp.android.ui.main.menu.information.Information
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ProjectManageScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ScheduleScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.schedule.projectDetails.ProjectDetailsScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.search.SearchScreen
 
 @Composable
@@ -115,7 +116,7 @@ fun MainNavGraph(navController: NavHostController) {
                 ProjectScreen(
                     projectId = projectId,
                     onNavigateToDetails = {
-                        navController.navigate("project_details/$projectId")
+                        navController.navigate("ProjectDetails/$projectId")
                     }
                 )
             }
@@ -142,7 +143,7 @@ fun MainNavGraph(navController: NavHostController) {
             composableAnimated(
                 route = "CreateProject",
                 isHierarchical = true
-            ) { 
+            ) {
                 ProjectManageScreen(
                     onCancelClick = { navController.popBackStack() },
                     onSaveClick = {
@@ -153,15 +154,20 @@ fun MainNavGraph(navController: NavHostController) {
                 )
             }
             composableAnimated(
-                route = "project_details/{projectId}",
+                route = "ProjectDetails/{projectId}",
                 arguments = listOf(
                     navArgument("projectId") {
                         type = NavType.StringType
                     }
-                )
+                ),
+                isHierarchical = true
             ) { backStackEntry ->
                 val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
-                //ProjectDetailsScreen(projectId = projectId)
+                ProjectDetailsScreen(
+                    projectId = projectId,
+                    onSearchClick = {},
+                    onExitClick = {}
+                )
             }
 
             // Окно календаря и вложенные окна

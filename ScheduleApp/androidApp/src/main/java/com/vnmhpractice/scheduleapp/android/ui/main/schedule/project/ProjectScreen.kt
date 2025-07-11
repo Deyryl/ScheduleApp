@@ -1,8 +1,6 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.schedule.project
 
 import android.net.Uri
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,7 +79,7 @@ fun ProjectScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(state.project.tasks) { task ->
+                items(state.project.tasks.filter { it.type != "COMPLETED" }) { task ->
                     TaskCard(
                         task = task,
                         modifier = Modifier
@@ -226,11 +224,11 @@ private fun TaskCard(
     modifier: Modifier = Modifier,
     onTaskClick: () -> Unit = {}
 ) {
-    val title = if (task.title.length > 24) task.title.substring(0, 24)+"..."
+    val title = if (task.title.length > 24) task.title.take(24)+"..."
                 else task.title
     val description = task.description?.length?.let {
         if (it > 60)
-            task.description.substring(0, 60)+"..."
+            task.description.take(60)+"..."
         else
             task.description
     }
