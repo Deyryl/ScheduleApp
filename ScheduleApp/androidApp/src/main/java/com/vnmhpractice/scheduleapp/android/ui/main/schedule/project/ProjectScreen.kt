@@ -54,7 +54,7 @@ fun ProjectScreen(
 ) {
     val viewModel: ProjectViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
-    viewModel.updateProject(ProjectData.getProjectById(projectId))
+    viewModel.updateProject(ProjectData.getProjectById(projectId)!!)
 
     Column(
         modifier = modifier

@@ -45,8 +45,8 @@ fun EditProjectScreen(
     val state by viewModel.uiState.collectAsState()
     val project = viewModel.getProjectById(projectId)
 
-    var title by rememberSaveable { mutableStateOf(project.title) }
-    var selectedImageUri by rememberSaveable { mutableStateOf(project.image) }
+    var title by rememberSaveable { mutableStateOf(project!!.title) }
+    var selectedImageUri by rememberSaveable { mutableStateOf(project!!.image) }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -71,7 +71,7 @@ fun EditProjectScreen(
                     EditingText(
                         text = "Сохранить",
                         onClick = {
-                            val editProject = project.copy(title = title, image = selectedImageUri)
+                            val editProject = project!!.copy(title = title, image = selectedImageUri)
                             viewModel.saveProjectChanges(editProject)
                             onSaveClick()
                         }

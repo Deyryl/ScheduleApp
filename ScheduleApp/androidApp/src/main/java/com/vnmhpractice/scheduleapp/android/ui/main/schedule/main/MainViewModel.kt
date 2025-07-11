@@ -21,45 +21,41 @@ class MainViewModel : ViewModel() {
 
     init {
         loadProjects()
-        sortProjects()
     }
 
-    fun getProjectById(id: String): Project {
+    fun getProjectById(id: String): Project? {
         return ProjectData.getProjectById(id)
     }
 
     fun saveProjectChanges(project: Project) {
         ProjectData.updateProject(project)
+        loadProjects()
     }
 
     fun pinProject(id: String) {
-        val project = getProjectById(id)
+        val project = getProjectById(id) ?: return
         val editProject = project.copy(isPinned = !project.isPinned)
         saveProjectChanges(editProject)
-        sortProjects()
     }
 
-    private fun sortProjects() {
-        viewModelScope.launch {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    projects = currentState.projects.sortedWith(
-                        compareBy<Project> { !it.isPinned }
-                            .thenBy { it.title }
-                    ).toMutableList()
-                )
-            }
-        }
+    private fun sortProjects(projects: List<Project>): List<Project> {
+        return projects.sortedWith(
+            compareBy<Project> { !it.isPinned }
+                .thenBy { it.title }
+        )
     }
 
     private fun loadProjects() {
-        // MARK: Code to complete
-        // Замена на вызов с помощью API и др
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             ProjectData.initTestData()
-            val projects = ProjectData.getAllProjects().toMutableList()
-            _uiState.update { it.copy(projects = projects, isLoading = false) }
+            val projects = ProjectData.getAllProjects()
+            _uiState.update {
+                it.copy(
+                    projects = sortProjects(projects).toMutableList(),
+                    isLoading = false
+                )
+            }
         }
     }
 }

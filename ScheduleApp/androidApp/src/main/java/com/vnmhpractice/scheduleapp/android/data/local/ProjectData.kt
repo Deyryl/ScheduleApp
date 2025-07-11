@@ -1,15 +1,15 @@
 package com.vnmhpractice.scheduleapp.android.data.local
 
-import com.vnmhpractice.scheduleapp.android.data.model.Project
 import com.vnmhpractice.scheduleapp.android.data.datasource.projects
+import com.vnmhpractice.scheduleapp.android.data.model.Project
 
 object ProjectData {
     private val listOfProjects = mutableListOf<Project>()
 
     fun getAllProjects(): List<Project> = listOfProjects.toList()
 
-    fun getProjectById(id: String): Project {
-        return listOfProjects.find { it.id == id } ?: Project()
+    fun getProjectById(id: String): Project? {
+        return listOfProjects.find { it.id == id }
     }
 
     fun addProject(project: Project) {
