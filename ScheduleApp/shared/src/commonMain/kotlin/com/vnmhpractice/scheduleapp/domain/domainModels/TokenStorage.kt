@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.models
+package com.vnmhpractice.scheduleapp.domain.domainModels
 import kotlinx.serialization.Serializable
 
 @Serializable

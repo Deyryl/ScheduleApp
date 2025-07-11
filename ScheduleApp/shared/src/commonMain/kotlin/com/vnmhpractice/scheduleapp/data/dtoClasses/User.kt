@@ -1,10 +1,9 @@
-package com.vnmhpractice.scheduleapp.models
+package com.vnmhpractice.scheduleapp.data.dtoClasses
 
 import kotlinx.serialization.Serializable
-import kotlinx.datetime.Instant
 
 @Serializable
-data class User (
+data class UserDTO (
     val username: String,
     val email: String,
     val imageURL: String?,

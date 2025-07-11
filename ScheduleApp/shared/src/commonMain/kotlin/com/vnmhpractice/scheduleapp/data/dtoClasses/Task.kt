@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.models
+package com.vnmhpractice.scheduleapp.data.dtoClasses
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable

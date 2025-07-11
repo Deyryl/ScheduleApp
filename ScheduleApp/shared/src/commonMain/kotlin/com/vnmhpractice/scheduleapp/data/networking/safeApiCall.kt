@@ -1,6 +1,7 @@
-package com.vnmhpractice.scheduleapp.networking
+package com.vnmhpractice.scheduleapp.data.networking
 
 import io.ktor.client.plugins.*
+import io.ktor.http.*
 import io.ktor.utils.io.errors.*
 import kotlinx.serialization.SerializationException
 import util.NetworkError

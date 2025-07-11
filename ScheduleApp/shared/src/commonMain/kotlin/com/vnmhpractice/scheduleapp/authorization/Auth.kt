@@ -1,8 +1,9 @@
 package com.vnmhpractice.scheduleapp.authorization
 
-import com.vnmhpractice.scheduleapp.models.*
-import com.vnmhpractice.scheduleapp.networking.ApiRoutes
-import com.vnmhpractice.scheduleapp.networking.safeApiCall
+import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenPair
+import com.vnmhpractice.scheduleapp.data.dtoClasses.User
+import com.vnmhpractice.scheduleapp.data.networking.ApiRoutes
+import com.vnmhpractice.scheduleapp.data.networking.safeApiCall
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -14,7 +15,7 @@ import util.Result
 
 class Auth(private val httpClient: HttpClient) {
     @Serializable
-    data class AuthRequest(
+    private data class AuthRequest(
         val username: String? = null,
         val email: String,
         val password: String

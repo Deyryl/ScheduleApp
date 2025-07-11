@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.networking
+package com.vnmhpractice.scheduleapp.data.networking
 
 object ApiRoutes {
     const val BASE_URL = "https://localhost:8085"

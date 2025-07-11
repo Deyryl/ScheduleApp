@@ -1,6 +1,6 @@
-package com.vnmhpractice.scheduleapp.networking
+package com.vnmhpractice.scheduleapp.data.networking
 
-import com.vnmhpractice.scheduleapp.models.TokenPair
+import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenPair
 import io.ktor.client.*
 import io.ktor.http.*
 import io.ktor.client.call.*
@@ -11,7 +11,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import com.vnmhpractice.scheduleapp.models.TokenStorage
+import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenStorage
 import io.ktor.client.request.*
 
 fun createHttpClient(engine: HttpClientEngine, tokenStorage: TokenStorage): HttpClient {

@@ -35,10 +35,12 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
+            implementation("io.insert-koin:koin-core:4.1.0")
+            implementation("io.insert-koin:koin-androidx-workmanager:4.1.0")
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+            implementation("io.insert-koin:koin-core:4.1.0")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(libs.bundles.ktor)
         }
@@ -46,6 +48,7 @@ kotlin {
             implementation(libs.kotlin.test)
         }
         iosMain.dependencies {
+            implementation("io.insert-koin:koin-core:4.1.0")
             implementation(libs.ktor.client.darwin)
         }
     }

@@ -1,4 +1,4 @@
-package com.vnmhpractice.scheduleapp.networking
+package com.vnmhpractice.scheduleapp.data.networking
 
 import kotlinx.serialization.Serializable
 
