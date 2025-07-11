@@ -27,6 +27,11 @@ class MainViewModel : ViewModel() {
         return ProjectData.getProjectById(id)
     }
 
+    fun addNewProject(project: Project) {
+        ProjectData.addProject(project)
+        loadProjects()
+    }
+
     fun saveProjectChanges(project: Project) {
         ProjectData.updateProject(project)
         loadProjects()

@@ -1,6 +1,5 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.navigation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -30,14 +29,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.vnmhpractice.scheduleapp.android.R
-import com.vnmhpractice.scheduleapp.android.data.datasource.projects
 import com.vnmhpractice.scheduleapp.android.ui.components.TopBarText
 import com.vnmhpractice.scheduleapp.android.ui.components.composableAnimated
 import com.vnmhpractice.scheduleapp.android.ui.main.calendar.CalendarScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.MenuScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.account.AccountScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.information.InformationScreen
-import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.EditProjectScreen
+import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ProjectManageScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.ScheduleScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.search.SearchScreen
@@ -95,12 +93,12 @@ fun MainNavGraph(navController: NavHostController) {
             // Окно расписаний и вложенные окна
             composableAnimated(route = "Schedule") {
                 ScheduleScreen(
-                    onAddClick = {},
+                    onAddClick = { navController.navigate("CreateProject") },
                     onProjectClick = { projectId ->
                         navController.navigate("project/$projectId")
                     },
                     onEditClick = { projectId ->
-                        navController.navigate("edit/$projectId")
+                        navController.navigate("manage_project/$projectId")
                     }
                 )
             }
@@ -122,7 +120,7 @@ fun MainNavGraph(navController: NavHostController) {
                 )
             }
             composableAnimated(
-                route = "edit/{projectId}",
+                route = "manage_project/{projectId}",
                 arguments = listOf(
                     navArgument("projectId") {
                         type = NavType.StringType
@@ -131,8 +129,21 @@ fun MainNavGraph(navController: NavHostController) {
                 isHierarchical = true
             ) { backStackEntry ->
                 val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
-                EditProjectScreen(
+                ProjectManageScreen(
                     projectId = projectId,
+                    onCancelClick = { navController.popBackStack() },
+                    onSaveClick = {
+                        navController.navigate("Schedule") {
+                            popUpTo("Schedule") { inclusive = true }
+                        }
+                    }
+                )
+            }
+            composableAnimated(
+                route = "CreateProject",
+                isHierarchical = true
+            ) { 
+                ProjectManageScreen(
                     onCancelClick = { navController.popBackStack() },
                     onSaveClick = {
                         navController.navigate("Schedule") {

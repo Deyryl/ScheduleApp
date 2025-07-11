@@ -1,5 +1,6 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.schedule.project
 
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -35,12 +36,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
 import com.vnmhpractice.scheduleapp.android.data.model.Task
@@ -66,6 +69,7 @@ fun ProjectScreen(
             Header(
                 title = state.project.title,
                 modifier = Modifier.height(40.dp),
+                image = state.project.image,
                 onNavigateToDetails = onNavigateToDetails,
                 onOptionClick = {},
                 onSearchClick = {},
@@ -119,7 +123,7 @@ fun ProjectScreen(
 private fun Header(
     title: String,
     modifier: Modifier = Modifier,
-    @DrawableRes image: Int? = null,
+    image: Uri? = null,
     onNavigateToDetails: () -> Unit = {},
     onOptionClick: () -> Unit = {},
     onSearchClick: () -> Unit = {},
@@ -129,13 +133,21 @@ private fun Header(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(image ?: R.drawable.ic_default),
-            contentDescription = stringResource(R.string.project_image),
-            modifier = Modifier
-                .size(32.dp)
-                .clip(MaterialTheme.shapes.small)
-        )
+        if (image == null) {
+            Icon(
+                painter = painterResource(R.drawable.ic_default_project),
+                contentDescription = stringResource(R.string.lack_of_image),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(32.dp)
+            )
+        } else {
+            AsyncImage(
+                modifier = Modifier.size(32.dp).clip(MaterialTheme.shapes.large),
+                model = image,
+                contentDescription = stringResource(R.string.project_image),
+                contentScale = ContentScale.Crop
+            )
+        }
         Spacer(Modifier.width(10.dp))
         Text(
             text = title,

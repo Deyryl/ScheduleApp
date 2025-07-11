@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,22 +32,26 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.vnmhpractice.scheduleapp.android.R
+import com.vnmhpractice.scheduleapp.android.data.local.AuthData
 import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
+import com.vnmhpractice.scheduleapp.android.data.model.Project
 import com.vnmhpractice.scheduleapp.android.ui.components.PrimaryTextField
 
 @Composable
-fun EditProjectScreen(
-    projectId: String,
+fun ProjectManageScreen(
     onCancelClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
+    projectId: String? = null,
     viewModel: MainViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    val project = viewModel.getProjectById(projectId)
+    val project = projectId?.let { viewModel.getProjectById(projectId) }
 
-    var title by rememberSaveable { mutableStateOf(project!!.title) }
-    var selectedImageUri by rememberSaveable { mutableStateOf(project!!.image) }
+    val initialTitle = project?.title ?: ""
+    val initialImage = project?.image
+    var title by rememberSaveable { mutableStateOf(initialTitle) }
+    var selectedImageUri by rememberSaveable { mutableStateOf(initialImage) }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -71,9 +76,27 @@ fun EditProjectScreen(
                     EditingText(
                         text = "Сохранить",
                         onClick = {
-                            val editProject = project!!.copy(title = title, image = selectedImageUri)
-                            viewModel.saveProjectChanges(editProject)
-                            onSaveClick()
+                            if (title.isNotBlank()) {
+                                val newProject = if (projectId == null) {
+                                    Project(
+                                        title = title,
+                                        image = selectedImageUri,
+                                        members = mutableListOf(AuthData.user),
+                                        isPinned = false
+                                    )
+                                } else {
+                                    project!!.copy(
+                                        title = title,
+                                        image = selectedImageUri
+                                    )
+                                }
+                                if (projectId == null) {
+                                    viewModel.addNewProject(newProject)
+                                } else {
+                                    viewModel.saveProjectChanges(newProject)
+                                }
+                                onSaveClick()
+                            }
                         }
                     )
                 }
@@ -120,7 +143,9 @@ fun EditProjectScreen(
                     onValueChange = { title = it },
                     placeholder = "Название проекта",
                     imeAction = ImeAction.Done,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(dimensionResource(R.dimen.small_padding))
                 )
             }
         }
@@ -147,7 +172,7 @@ private fun EditingText(
 @Composable
 fun EditProjectScreenPreview() {
     ProjectData.initTestData()
-    EditProjectScreen(
+    ProjectManageScreen(
         projectId = ProjectData.getAllProjects().first().id,
         onCancelClick = {},
         onSaveClick = {}
