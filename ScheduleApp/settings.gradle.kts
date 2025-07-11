@@ -22,3 +22,4 @@ rootProject.name = "ScheduleApp"
 include(":androidApp")
 include(":iosApp")
 include(":shared")
+//include(":serverSide")

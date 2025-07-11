@@ -10,7 +10,6 @@ import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import util.NetworkError
 import util.Result
-import
 
 
 class Auth(private val httpClient: HttpClient) {

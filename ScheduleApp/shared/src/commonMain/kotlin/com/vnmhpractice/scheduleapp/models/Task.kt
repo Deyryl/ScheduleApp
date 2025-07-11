@@ -1,5 +1,6 @@
 package com.vnmhpractice.scheduleapp.models
 
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 
