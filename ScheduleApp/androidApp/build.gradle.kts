@@ -50,6 +50,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
+
     debugImplementation(libs.compose.ui.tooling)
 
 

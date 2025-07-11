@@ -1,7 +1,6 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.schedule.main
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
+import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,10 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.data.datasource.projects
 import com.vnmhpractice.scheduleapp.android.data.model.Project
@@ -40,9 +41,9 @@ import com.vnmhpractice.scheduleapp.android.data.model.Project
 fun MainCard(
     project: Project,
     modifier: Modifier = Modifier,
-    onEditClick: () -> Unit = {},
-    onPinClick: () -> Unit = {},
-    onCardClick: () -> Unit = {}
+    onEditClick: () -> Unit,
+    onPinClick: () -> Unit,
+    onCardClick: () -> Unit
 ) {
     val title = if (project.title.length > 16)
         project.title.take(16)+"..."
@@ -60,7 +61,7 @@ fun MainCard(
         Row(
             modifier = Modifier.padding(10.dp)
         ) {
-            ScheduleImage()
+            ScheduleImage(image = project.image)
             Column {
                 Text(
                     text = title,
@@ -70,7 +71,7 @@ fun MainCard(
                 Spacer(Modifier.weight(1f))
                 Text(
                     text = "Участники: ${project.members.size}",
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -98,15 +99,15 @@ fun MainCard(
 @Composable
 private fun ScheduleImage(
     modifier: Modifier = Modifier,
-    @DrawableRes imageRes: Int? = null
-) {// я хуесос
+    image: Uri? = null
+) {
     Box(
         modifier = modifier
             .size(90.dp)
             .clip(MaterialTheme.shapes.medium)
             .padding(end = 10.dp)
     ) {
-        if (imageRes == null) {
+        if (image == null) {
             Icon(
                 painter = painterResource(R.drawable.ic_default_project),
                 contentDescription = stringResource(R.string.lack_of_image),
@@ -114,10 +115,11 @@ private fun ScheduleImage(
                 modifier = Modifier.fillMaxSize()
             )
         } else {
-            Image(
-                painter = painterResource(imageRes),
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = image,
                 contentDescription = stringResource(R.string.project_image),
-                modifier = Modifier.fillMaxSize()
+                contentScale = ContentScale.Crop
             )
         }
     }
@@ -131,6 +133,7 @@ private fun MoreButton(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
+
     Box(
         modifier = modifier.size(32.dp)
     ) {
@@ -154,7 +157,10 @@ private fun MoreButton(
                         style = MaterialTheme.typography.labelLarge
                     )
                 },
-                onClick = onEditClick
+                onClick = {
+                    expanded = false
+                    onEditClick()
+                }
             )
             DropdownMenuItem(
                 text = {
@@ -163,7 +169,10 @@ private fun MoreButton(
                         style = MaterialTheme.typography.labelLarge
                     )
                 },
-                onClick = onPinClick
+                onClick = {
+                    expanded = false
+                    onPinClick()
+                }
             )
         }
     }
@@ -173,5 +182,5 @@ private fun MoreButton(
 @Composable
 fun MainCardPreview() {
     val item = projects[1]
-    MainCard(item)
+    MainCard(item, Modifier, {}, {}, {})
 }

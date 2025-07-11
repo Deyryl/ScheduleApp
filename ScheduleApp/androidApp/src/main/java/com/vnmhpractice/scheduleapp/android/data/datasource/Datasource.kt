@@ -56,7 +56,8 @@ val project2 = Project(
     owner = user3,
     moderators = mutableListOf(user2),
     tasks = mutableListOf(task2),
-    tags = mutableListOf(tag3)
+    tags = mutableListOf(tag3),
+    isPinned = true
 )
 
 val project3 = Project(

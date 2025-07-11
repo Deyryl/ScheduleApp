@@ -1,6 +1,8 @@
 package com.vnmhpractice.scheduleapp.android.ui.main.navigation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,21 +19,20 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.vnmhpractice.scheduleapp.android.R
+import com.vnmhpractice.scheduleapp.android.data.datasource.projects
 import com.vnmhpractice.scheduleapp.android.ui.components.TopBarText
+import com.vnmhpractice.scheduleapp.android.ui.components.composableAnimated
 import com.vnmhpractice.scheduleapp.android.ui.main.calendar.CalendarScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.MenuScreen
 import com.vnmhpractice.scheduleapp.android.ui.main.menu.account.AccountScreen
@@ -85,25 +86,32 @@ fun MainNavGraph(navController: NavHostController) {
             startDestination = "Schedule",
             modifier = Modifier.padding(padding)
         ) {
-            composable(route = "Search") {
+            composableAnimated(
+                route = "Search",
+            ) {
                 SearchScreen()
             }
 
             // Окно расписаний и вложенные окна
-            composable(route = "Schedule") {
+            composableAnimated(route = "Schedule") {
                 ScheduleScreen(
+                    onAddClick = {},
                     onProjectClick = { projectId ->
                         navController.navigate("project/$projectId")
+                    },
+                    onEditClick = { projectId ->
+                        navController.navigate("edit/$projectId")
                     }
                 )
             }
-            composable(
+            composableAnimated(
                 route = "project/{projectId}",
                 arguments = listOf(
                     navArgument("projectId") {
                         type = NavType.StringType
                     }
-                )
+                ),
+                isHierarchical = true
             ) { backStackEntry ->
                 val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
                 ProjectScreen(
@@ -113,24 +121,27 @@ fun MainNavGraph(navController: NavHostController) {
                     }
                 )
             }
-            composable(
-                route = "edit_project/{projectId}",
+            composableAnimated(
+                route = "edit/{projectId}",
                 arguments = listOf(
                     navArgument("projectId") {
                         type = NavType.StringType
                     }
-                )
+                ),
+                isHierarchical = true
             ) { backStackEntry ->
                 val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
                 EditProjectScreen(
                     projectId = projectId,
                     onCancelClick = { navController.popBackStack() },
                     onSaveClick = {
-                        navController.navigate("project_details/$projectId")
+                        navController.navigate("Schedule") {
+                            popUpTo("Schedule") { inclusive = true }
+                        }
                     }
                 )
             }
-            composable(
+            composableAnimated(
                 route = "project_details/{projectId}",
                 arguments = listOf(
                     navArgument("projectId") {
@@ -143,21 +154,21 @@ fun MainNavGraph(navController: NavHostController) {
             }
 
             // Окно календаря и вложенные окна
-            composable(route = "Calendar") {
+            composableAnimated(route = "Calendar") {
                 CalendarScreen()
             }
 
             // Окно меню и вложенные окна
-            composable(route = "Menu") {
+            composableAnimated(route = "Menu") {
                 MenuScreen(
-                    onAccountClick = { navController.navigate(MenuDestination.Account.name) },
-                    onInfoClick = { navController.navigate(MenuDestination.Information.name) }
+                    onAccountClick = { navController.navigate("Account") },
+                    onInfoClick = { navController.navigate("Information") }
                 )
             }
-            composable(route = MenuDestination.Account.name) {
+            composableAnimated(route = "Account", isHierarchical = true) {
                 AccountScreen()
             }
-            composable(route = MenuDestination.Information.name) {
+            composableAnimated(route = "Information", isHierarchical = true) {
                 InformationScreen()
             }
         }
@@ -198,35 +209,41 @@ fun BottomBar(
     navController: NavHostController,
     items: List<BottomNavItem>
 ) {
-    var selectedItemIndex by rememberSaveable { mutableIntStateOf(1) }
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     NavigationBar(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
         windowInsets = NavigationBarDefaults.windowInsets
     ) {
-        items.forEachIndexed { index, item ->
+        items.forEach { item ->
             NavigationBarItem(
-                selected = selectedItemIndex == index,
+                selected = currentRoute == item.route,
                 onClick = {
-                    selectedItemIndex = index
-                    navController.navigate(item.route)
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 icon = {
                     Icon(
                         painter = painterResource(item.icon),
                         contentDescription = stringResource(item.title),
-                        tint =  if (selectedItemIndex == index)
+                        tint = if (currentRoute == item.route)
                             MaterialTheme.colorScheme.primary
                         else
-                            MaterialTheme.colorScheme.onSurfaceVariant
+                            MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(24.dp)
                     )
                 },
                 label = {
                     Text(
                         text = stringResource(item.title),
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (selectedItemIndex == index)
+                        color = if (currentRoute == item.route)
                             MaterialTheme.colorScheme.primary
                         else
                             MaterialTheme.colorScheme.onSurfaceVariant
