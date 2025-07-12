@@ -2,7 +2,6 @@ package com.vnmhpractice.scheduleapp.android.ui.main.schedule.projectDetails
 
 import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,7 +41,6 @@ import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import com.vnmhpractice.scheduleapp.android.data.model.User
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.MainViewModel
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectDropdownMenu
-import com.vnmhpractice.scheduleapp.android.ui.theme.shapes
 import kotlinx.datetime.LocalDateTime
 
 @Composable
