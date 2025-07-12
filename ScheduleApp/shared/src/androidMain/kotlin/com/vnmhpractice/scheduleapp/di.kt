@@ -5,5 +5,6 @@ import org.koin.dsl.module
 import org.koin.android.ext.koin.androidContext
 
 actual val platformModule = module {
+    single<HttpClientEngine> { Android.create() }
     single<TokenStorage> { TokenStorageImpl(androidContext()) }
 }

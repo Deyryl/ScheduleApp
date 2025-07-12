@@ -10,5 +10,4 @@ data class TokenPair(
 interface TokenStorage {
     suspend fun load(): TokenPair? //Достать токены
     suspend fun save(tokenPair: TokenPair) //Загрузить токены в память
-    suspend fun clear() //Очистить токены из памяти
 }

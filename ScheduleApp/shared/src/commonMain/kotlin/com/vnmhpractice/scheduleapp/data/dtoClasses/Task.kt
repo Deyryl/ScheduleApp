@@ -6,11 +6,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Task(
-    val taskID: String,
+    val taskId: String,
     val title: String,
-    val description: String,
+    val description: String?,
     val startTime: LocalDateTime?,
     val endTime: LocalDateTime?,
-    val taskStatus: String,
-    val tags: List<Tag>
+    val taskStatus: TaskStatus,
+    val tags: List<String>?
 )
+
+enum class TaskStatus{
+    IN_PROGRESS, COMPLETED
+}
