@@ -45,7 +45,10 @@ kotlin {
             implementation(libs.bundles.ktor)
         }
         commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
             implementation(libs.kotlin.test)
+
         }
         iosMain.dependencies {
             implementation("io.insert-koin:koin-core:4.1.0")

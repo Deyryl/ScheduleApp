@@ -1,0 +1,13 @@
+package com.vnmhpractice.scheduleapp.domain.domainModels
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class TokenPair(
+    val accessToken: String,
+    val refreshToken: String
+)
+
+interface TokenStorage {
+    suspend fun load(): TokenPair? //Достать токены
+    suspend fun save(tokenPair: TokenPair) //Загрузить токены в память
+}
