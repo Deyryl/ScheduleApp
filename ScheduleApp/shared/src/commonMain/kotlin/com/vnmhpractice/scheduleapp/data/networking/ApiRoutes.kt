@@ -17,5 +17,8 @@ object ApiRoutes {
     object Users {
         const val PROFILE = "$BASE_URL/users/profile"
         const val ALL = "$BASE_URL/users"
+        const val UPDATE = "$BASE_URL/users/update"
+        const val BY_ID = "$BASE_URL/users/id"
+        const val BY_EMAIL = "$BASE_URL/users/email"
     }
 }

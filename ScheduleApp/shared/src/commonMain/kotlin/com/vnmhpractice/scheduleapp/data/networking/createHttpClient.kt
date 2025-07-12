@@ -1,6 +1,6 @@
 package com.vnmhpractice.scheduleapp.data.networking
 
-import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenPair
+import com.vnmhpractice.scheduleapp.data.dtoClasses.TokensDTO
 import io.ktor.client.*
 import io.ktor.http.*
 import io.ktor.client.call.*
@@ -13,6 +13,7 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenStorage
 import io.ktor.client.request.*
+import kotlinx.serialization.Serializable
 
 fun createHttpClient(engine: HttpClientEngine, tokenStorage: TokenStorage): HttpClient {
     return HttpClient(engine) {
@@ -38,15 +39,15 @@ fun createHttpClient(engine: HttpClientEngine, tokenStorage: TokenStorage): Http
                     val response = try {
                         val currentRefreshToken = tokenStorage.load()?.refreshToken ?: return@refreshTokens null
 
-                        val tokenPair = client.post(ApiRoutes.Auth.REFRESH) {
+                        val tokensDTO = client.post(ApiRoutes.Auth.REFRESH) {
                             contentType(ContentType.Application.Json)
                             setBody(RefreshRequest(refreshToken = currentRefreshToken))
-                        }.body<TokenPair>()
+                        }.body<TokensDTO>()
 
-                        tokenStorage.save(tokenPair)
+                        tokenStorage.save(tokensDTO)
                         BearerTokens(
-                            accessToken = tokenPair.accessToken,
-                            refreshToken = tokenPair.refreshToken
+                            accessToken = tokensDTO.accessToken,
+                            refreshToken = tokensDTO.refreshToken
                         )
                     } catch (e: Exception) {
                         println("Invalid token")
@@ -59,3 +60,8 @@ fun createHttpClient(engine: HttpClientEngine, tokenStorage: TokenStorage): Http
         }
     }
 }
+
+@Serializable
+data class RefreshRequest(
+    val refreshToken: String
+)

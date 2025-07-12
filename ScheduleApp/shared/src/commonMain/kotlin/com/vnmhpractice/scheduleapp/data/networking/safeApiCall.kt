@@ -31,3 +31,4 @@ suspend fun <T> safeApiCall(
 } catch (_: Exception) {
     Result.Error(NetworkError.UNKNOWN)
 }
+

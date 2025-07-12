@@ -1,19 +1,23 @@
 package com.scheduleapp.controllers
 
+import com.scheduleapp.database.repository.UserRepository
 import com.scheduleapp.security.AuthService
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/auth")
 class AuthController(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val userRepository: UserRepository
 ) {
     data class AuthRequest(
         @field:NotBlank
@@ -27,6 +31,14 @@ class AuthController(
         val password: String
     )
 
+    data class AuthResponse(
+        val tokenPair: AuthService.TokenPair,
+        val username: String?,
+        val email: String,
+        val imageURL: String?,
+        val projectIds: List<String>?
+    )
+
     data class RefreshRequest(
         val refreshToken: String
     )
@@ -34,21 +46,33 @@ class AuthController(
     @PostMapping("/register")
     fun register(
         @Valid @RequestBody body: AuthRequest
-    ): UserController.UserResponse {
+    ): AuthResponse {
         val userEntity = authService.register(body.username!!, body.email, body.password)
-        return UserController.UserResponse(
+        val tokenPair = authService.login(body.email, body.password)
+        return AuthResponse(
+            tokenPair = tokenPair,
             username = userEntity.username,
             email = userEntity.email,
             imageURL = userEntity.imageURL,
-            projectsIds = userEntity.projectIds
+            projectIds = userEntity.projectIds
         )
     }
 
     @PostMapping("/login")
     fun login(
         @Valid @RequestBody body: AuthRequest
-    ): AuthService.TokenPair {
-        return authService.login(body.email, body.password)
+    ): AuthResponse {
+        val tokenPair = authService.login(body.email, body.password)
+        val userEntity = userRepository.findByEmail(body.email)
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+
+        return AuthResponse(
+            tokenPair = tokenPair,
+            username = userEntity.username,
+            email = userEntity.email,
+            imageURL = userEntity.imageURL,
+            projectIds = userEntity.projectIds
+        )
     }
 
     @PostMapping("/refresh")
