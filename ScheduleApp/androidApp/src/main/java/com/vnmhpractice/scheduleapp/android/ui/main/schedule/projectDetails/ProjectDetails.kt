@@ -2,6 +2,7 @@ package com.vnmhpractice.scheduleapp.android.ui.main.schedule.projectDetails
 
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,12 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.vnmhpractice.scheduleapp.android.R
-import com.vnmhpractice.scheduleapp.android.data.datasource.project1
+import com.vnmhpractice.scheduleapp.android.data.datasource.project2
 import com.vnmhpractice.scheduleapp.android.data.model.Task
 import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import com.vnmhpractice.scheduleapp.android.data.model.User
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.MainViewModel
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectDropdownMenu
+import com.vnmhpractice.scheduleapp.android.ui.theme.shapes
 import kotlinx.datetime.LocalDateTime
 
 @Composable
@@ -71,7 +75,9 @@ fun ProjectDetailsScreen(
             )
             Spacer(Modifier.height(6.dp))
             Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -116,7 +122,9 @@ fun ProjectDetailsScreen(
                     }
                 }
                 items(project.tasks.filter { it.type == TaskType.COMPLETED }.toList()) { task ->
-                    TaskCard(task, Modifier.fillMaxWidth().padding(bottom = 16.dp))
+                    TaskCard(task, Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp))
                 }
             }
         } else {
@@ -146,7 +154,9 @@ private fun Header(
             )
         } else {
             AsyncImage(
-                modifier = Modifier.size(32.dp).clip(MaterialTheme.shapes.large),
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(MaterialTheme.shapes.large),
                 model = image,
                 contentDescription = stringResource(R.string.project_image),
                 contentScale = ContentScale.Crop
@@ -191,7 +201,9 @@ private fun MemberCard(
                 )
             } else {
                 AsyncImage(
-                    modifier = Modifier.size(40.dp).clip(MaterialTheme.shapes.medium),
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(MaterialTheme.shapes.medium),
                     model = member.image,
                     contentDescription = stringResource(R.string.project_image),
                     contentScale = ContentScale.Crop
@@ -231,49 +243,81 @@ private fun TaskCard(
     }
 
     Card(
-        modifier = modifier.height(100.dp),
+        modifier = modifier.height(80.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
-        Row {
-            Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.height(80.dp).padding(4.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 if (task.startTime != null) {
-                    TaskDate()
+                    TaskDate(task.startTime, Modifier.padding(4.dp))
                 }
                 if (task.endTime != null) {
-
+                    TaskDate(task.endTime, Modifier.padding(4.dp))
                 }
+            }
+            Column(
+                modifier = Modifier.padding(8.dp).width(220.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
                 Text(
                     text = description ?: "",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .padding(
-                            start = 10.dp,
-                            end = 10.dp,
-                            bottom = 10.dp
-                        )
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+            Spacer(Modifier.weight(2f))
+            Checkbox(
+                checked = task.type == TaskType.COMPLETED,
+                onCheckedChange = null,
+                modifier = Modifier
+                    .size(32.dp),
+                enabled = false,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = MaterialTheme.colorScheme.surface,
+                    uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    checkmarkColor = MaterialTheme.colorScheme.primary,
+                    disabledCheckedColor = MaterialTheme.colorScheme.surface,
+                    disabledUncheckedColor = MaterialTheme.colorScheme.onSurface
+                )
+            )
+            Spacer(Modifier.weight(1f))
         }
     }
 }
 
 @Composable
-fun TaskDate(time: LocalDateTime) {
-    
+private fun TaskDate(
+    time: LocalDateTime,
+    modifier: Modifier = Modifier
+) {
+    val text = "${time.hour} : " + if (time.minute < 10) "0${time.minute}" else time.minute.toString()
+    Text(
+        text = text,
+        modifier = modifier,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.primary
+    )
 }
 
 @Preview
 @Composable
 fun ProjectScreenPreview() {
-    ProjectDetailsScreen(project1.id, {}, {})
+    ProjectDetailsScreen(project2.id, {}, {})
 }

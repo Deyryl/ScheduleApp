@@ -1,6 +1,7 @@
 package com.vnmhpractice.scheduleapp.android.data.model
 
 import kotlinx.datetime.LocalDateTime
+import java.util.UUID
 
 enum class TaskType {
     IN_PROGRESS,
@@ -8,6 +9,7 @@ enum class TaskType {
 }
 
 data class Task(
+    val taskId: String = UUID.randomUUID().toString(),
     val title: String,
     val description: String?,
     val startTime: LocalDateTime? = null,

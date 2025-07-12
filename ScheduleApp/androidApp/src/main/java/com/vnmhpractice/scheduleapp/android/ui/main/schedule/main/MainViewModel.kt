@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
 import com.vnmhpractice.scheduleapp.android.data.model.Project
+import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,6 +42,23 @@ class MainViewModel : ViewModel() {
         val project = getProjectById(id) ?: return
         val editProject = project.copy(isPinned = !project.isPinned)
         saveProjectChanges(editProject)
+    }
+
+    fun toggleTaskStatus(projectId: String, taskId: String) {
+        val project = getProjectById(projectId) ?: return
+        val taskToUpdate = ProjectData.getTaskById(projectId, taskId) ?: return
+
+        val updatedTask = taskToUpdate.copy(
+            type = if (taskToUpdate.type == TaskType.COMPLETED) TaskType.IN_PROGRESS else TaskType.COMPLETED
+        )
+
+        ProjectData.editTask(project.id, updatedTask)
+
+        val updatedTasks = project.tasks.map { task ->
+            if (task.taskId == taskToUpdate.taskId) updatedTask else task
+        }
+
+        ProjectData.updateProject(project.copy(tasks = updatedTasks.toMutableList()))
     }
 
     private fun sortProjects(projects: List<Project>): List<Project> {

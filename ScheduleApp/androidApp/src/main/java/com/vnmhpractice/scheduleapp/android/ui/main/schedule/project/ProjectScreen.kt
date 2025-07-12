@@ -2,6 +2,7 @@ package com.vnmhpractice.scheduleapp.android.ui.main.schedule.project
 
 import android.net.Uri
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -47,12 +51,14 @@ import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
 import com.vnmhpractice.scheduleapp.android.data.model.Task
 import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.ProjectViewModel
+import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun ProjectScreen(
     projectId: String,
+    onTaskClick: () -> Unit,
+    onNavigateToDetails: () -> Unit,
     modifier: Modifier = Modifier,
-    onNavigateToDetails: () -> Unit = {},
 ) {
     val viewModel: ProjectViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
@@ -83,6 +89,18 @@ fun ProjectScreen(
                 items(state.project.tasks.filter { it.type != TaskType.IN_PROGRESS }) { task ->
                     TaskCard(
                         task = task,
+                        onTaskClick = onTaskClick,
+                        onCheckedChange = {
+                            val newTaskType =   if (task.type == TaskType.COMPLETED)
+                                                    TaskType.IN_PROGRESS
+                                                else
+                                                    TaskType.COMPLETED
+//                            task.let {
+//                                viewModel.updateEditingTask(
+//                                    title = it.title, it
+//                                )
+//                            }
+                        },
                         modifier = Modifier
                             .height(100.dp)
                             .fillMaxWidth()
@@ -218,15 +236,29 @@ fun ProjectDropdownMenu(
     }
 }
 
+@Composable
+private fun TaskDate(
+    time: LocalDateTime,
+    modifier: Modifier = Modifier
+) {
+    val text = "${time.hour} : " + if (time.minute < 10) "0${time.minute}" else time.minute.toString()
+    Text(
+        text = text,
+        modifier = modifier,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.primary
+    )
+}
 
 @Composable
 private fun TaskCard(
     task: Task,
+    onTaskClick: () -> Unit,
+    onCheckedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,
-    onTaskClick: () -> Unit = {}
 ) {
     val title = if (task.title.length > 24) task.title.take(24)+"..."
-                else task.title
+    else task.title
     val description = task.description?.length?.let {
         if (it > 60)
             task.description.take(60)+"..."
@@ -235,33 +267,61 @@ private fun TaskCard(
     }
 
     Card(
-        modifier = modifier,
+        modifier = modifier.height(80.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        onClick = onTaskClick
+        onClick = onTaskClick,
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
-        Row {
-            Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.height(80.dp).padding(4.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (task.startTime != null) {
+                    TaskDate(task.startTime, Modifier.padding(4.dp))
+                }
+                if (task.endTime != null) {
+                    TaskDate(task.endTime, Modifier.padding(4.dp))
+                }
+            }
+            Column(
+                modifier = Modifier.padding(8.dp).width(220.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
                 Text(
                     text = description ?: "",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .padding(
-                            start = 10.dp,
-                            end = 10.dp,
-                            bottom = 10.dp
-                        )
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+            Spacer(Modifier.weight(2f))
+            Checkbox(
+                checked = task.type == TaskType.COMPLETED,
+                onCheckedChange = onCheckedChange,
+                modifier = Modifier
+                    .size(32.dp),
+                colors = CheckboxDefaults.colors(
+                    checkedColor = MaterialTheme.colorScheme.surface,
+                    uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    checkmarkColor = MaterialTheme.colorScheme.primary,
+                    disabledCheckedColor = MaterialTheme.colorScheme.surface,
+                    disabledUncheckedColor = MaterialTheme.colorScheme.onSurface
+                )
+            )
+            Spacer(Modifier.weight(1f))
         }
     }
 }
@@ -270,5 +330,5 @@ private fun TaskCard(
 @Composable
 fun ProjectScreenPreview() {
     ProjectData.initTestData()
-    ProjectScreen(projectId = "1")
+    ProjectScreen(projectId = "1", {}, {})
 }

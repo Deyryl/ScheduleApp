@@ -24,6 +24,7 @@ class ProjectViewModel : ViewModel() {
     }
 
     fun updateEditingTask(
+        taskId: String,
         title: String = _editingTask.value?.title ?: "",
         description: String? = _editingTask.value?.description,
         startTime: LocalDateTime? = _editingTask.value?.startTime,

@@ -119,6 +119,7 @@ fun MainNavGraph(
                 val projectId = backStackEntry.arguments?.getString("projectId") ?: ""
                 ProjectScreen(
                     projectId = projectId,
+                    onTaskClick = {},
                     onNavigateToDetails = {
                         navController.navigate("ProjectDetails/$projectId")
                     }

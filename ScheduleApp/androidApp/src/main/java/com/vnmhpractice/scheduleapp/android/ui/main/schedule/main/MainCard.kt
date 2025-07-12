@@ -56,7 +56,8 @@ fun MainCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        onClick = onCardClick
+        onClick = onCardClick,
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(
             modifier = Modifier.padding(10.dp)

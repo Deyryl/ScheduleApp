@@ -21,6 +21,7 @@ val task1 = Task(
     title = "Create wireframes",
     description = "Sketch main screen and detail view",
     startTime = LocalDateTime(2025, 7, 13, 20, 30),
+    endTime = LocalDateTime(2025, 7, 13, 22, 0),
     type = TaskType.IN_PROGRESS
 )
 
@@ -40,13 +41,21 @@ val task3 = Task(
     type = TaskType.IN_PROGRESS
 )
 
+val task4 = Task(
+    title = "Create wireframes",
+    description = "Sketch main screen and detail view",
+    startTime = LocalDateTime(2025, 7, 13, 20, 30),
+    endTime = LocalDateTime(2025, 7, 13, 22, 0),
+    type = TaskType.COMPLETED
+)
+
 val project1 = Project(
     id = "0",
     title = "Design Prototype",
     members = mutableListOf(user1, user2),
     owner = user1,
     moderators = mutableListOf(user2),
-    tasks = mutableListOf(task1, task3),
+    tasks = mutableListOf(task1, task3, task4),
     tags = mutableListOf(tag1, tag2)
 )
 
@@ -56,7 +65,7 @@ val project2 = Project(
     members = mutableListOf(user2, user3),
     owner = user3,
     moderators = mutableListOf(user2),
-    tasks = mutableListOf(task2),
+    tasks = mutableListOf(task1, task2, task4),
     tags = mutableListOf(tag3),
     isPinned = true
 )
