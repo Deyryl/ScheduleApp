@@ -45,6 +45,7 @@ import coil.compose.AsyncImage
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.data.local.ProjectData
 import com.vnmhpractice.scheduleapp.android.data.model.Task
+import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.ProjectViewModel
 
 @Composable
@@ -79,7 +80,7 @@ fun ProjectScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(state.project.tasks.filter { it.type != "COMPLETED" }) { task ->
+                items(state.project.tasks.filter { it.type != TaskType.IN_PROGRESS }) { task ->
                     TaskCard(
                         task = task,
                         modifier = Modifier

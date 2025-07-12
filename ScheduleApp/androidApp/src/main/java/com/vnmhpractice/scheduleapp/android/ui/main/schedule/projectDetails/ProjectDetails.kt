@@ -35,9 +35,11 @@ import coil.compose.AsyncImage
 import com.vnmhpractice.scheduleapp.android.R
 import com.vnmhpractice.scheduleapp.android.data.datasource.project1
 import com.vnmhpractice.scheduleapp.android.data.model.Task
+import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import com.vnmhpractice.scheduleapp.android.data.model.User
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.main.MainViewModel
 import com.vnmhpractice.scheduleapp.android.ui.main.schedule.project.ProjectDropdownMenu
+import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun ProjectDetailsScreen(
@@ -113,7 +115,7 @@ fun ProjectDetailsScreen(
                         Spacer(Modifier.height(10.dp))
                     }
                 }
-                items(project.tasks.filter { it.type == "COMPLETED" }.toList()) { task ->
+                items(project.tasks.filter { it.type == TaskType.COMPLETED }.toList()) { task ->
                     TaskCard(task, Modifier.fillMaxWidth().padding(bottom = 16.dp))
                 }
             }
@@ -229,7 +231,7 @@ private fun TaskCard(
     }
 
     Card(
-        modifier = modifier,
+        modifier = modifier.height(100.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -237,6 +239,12 @@ private fun TaskCard(
     ) {
         Row {
             Column {
+                if (task.startTime != null) {
+                    TaskDate()
+                }
+                if (task.endTime != null) {
+
+                }
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyMedium,
@@ -257,6 +265,11 @@ private fun TaskCard(
             }
         }
     }
+}
+
+@Composable
+fun TaskDate(time: LocalDateTime) {
+    
 }
 
 @Preview

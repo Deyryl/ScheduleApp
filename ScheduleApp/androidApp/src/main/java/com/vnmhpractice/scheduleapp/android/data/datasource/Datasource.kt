@@ -4,6 +4,8 @@ import com.vnmhpractice.scheduleapp.android.data.model.Tag
 import com.vnmhpractice.scheduleapp.android.data.model.Task
 import com.vnmhpractice.scheduleapp.android.data.model.User
 import com.vnmhpractice.scheduleapp.android.data.model.Project
+import com.vnmhpractice.scheduleapp.android.data.model.TaskType
+import kotlinx.datetime.LocalDateTime
 
 // Данные для примера
 
@@ -18,25 +20,24 @@ val tag3 = Tag(id = "2", title = "Backend", description = null)
 val task1 = Task(
     title = "Create wireframes",
     description = "Sketch main screen and detail view",
-    startTime = "2025-07-10T09:00",
-    endTime = "2025-07-10T12:00",
-    type = "COMPLETED"
+    startTime = LocalDateTime(2025, 7, 13, 20, 30),
+    type = TaskType.IN_PROGRESS
 )
 
 val task2 = Task(
     title = "Set up backend",
     description = "Initialize Spring Boot project and configure database",
-    startTime = "2025-07-11T10:00",
-    endTime = "2025-07-11T16:00",
-    type = "IN_PROGRESS"
+    startTime = null,
+    endTime = LocalDateTime(2025, 7, 11, 20, 30),
+    type = TaskType.COMPLETED
 )
 
 val task3 = Task(
     title = "Fix login bug",
     description = null,
-    startTime = null,
+    startTime = LocalDateTime(2025, 7, 20, 10, 0),
     endTime = null,
-    type = "IN_PROGRESS"
+    type = TaskType.IN_PROGRESS
 )
 
 val project1 = Project(

@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import com.vnmhpractice.scheduleapp.android.data.model.Project
 import com.vnmhpractice.scheduleapp.android.data.model.Tag
 import com.vnmhpractice.scheduleapp.android.data.model.Task
+import com.vnmhpractice.scheduleapp.android.data.model.TaskType
 import com.vnmhpractice.scheduleapp.android.data.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.datetime.LocalDateTime
 
 class ProjectViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ProjectUiState())
@@ -24,9 +26,9 @@ class ProjectViewModel : ViewModel() {
     fun updateEditingTask(
         title: String = _editingTask.value?.title ?: "",
         description: String? = _editingTask.value?.description,
-        startTime: String? = _editingTask.value?.startTime,
-        endTime: String? = _editingTask.value?.endTime,
-        type: String = _editingTask.value?.type ?: "default"
+        startTime: LocalDateTime? = _editingTask.value?.startTime,
+        endTime: LocalDateTime? = _editingTask.value?.endTime,
+        type: TaskType = TaskType.IN_PROGRESS
     ) {
         _editingTask.update { current ->
             current?.copy(
