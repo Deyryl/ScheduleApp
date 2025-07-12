@@ -14,31 +14,37 @@ struct MySchedulesView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach($viewModel.projects) { $project in
-                    ProjectCard(project: $project)
-                        .listRowSeparator(.hidden)
-                        .onTapGesture {
-                            print(project.title.count)
+                ForEach($viewModel.sortedProjects) { $project in
+                    NavigationLink {
+                        ProjectDetailView(project: $project)
+                            .navigationBarBackButtonHidden()
+                    } label: {
+                        ProjectCard(project: $project) { project in
+                            viewModel.save(project: project)
                         }
+                    }
+                    
+                    .listRowSeparator(.hidden)
+                    .transition(.slide)
                 }
-                
+            }
+            .navigationTitle("Мои проекты")
+            .listStyle(.plain)
+            .animation(.easeInOut, value: viewModel.sortedProjects)
+            .overlay(alignment: .bottom) {
                 Button("+ Добавить") {
                     viewModel.project = Project(title: "")
                 }
                 .font(.system(size: 25))
-                .frame(maxWidth: .infinity)
-                .listRowSeparator(.hidden)
-                .foregroundStyle(.accent)
                 .buttonStyle(.bordered)
+                .padding(.bottom, 50)
                 .fullScreenCover(item: $viewModel.project) { project in
-                    ProjectEditView(project) { project in
-                        viewModel.save(project)
+                    ProjectEditView(project: project) { project in
+                        viewModel.save(project: project)
                     }
                 }
             }
-            .navigationTitle("Мои расписания")
             .tint(.accent)
-            .listStyle(.plain)
         }
     }
 }

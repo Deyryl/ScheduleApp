@@ -53,7 +53,7 @@ struct SearchView: View {
                 .animation(.easeInOut(duration: 0.4), value: viewModel.inputText.isEmpty)
             }
             .navigationTitle("Поиск")
-            .searchable(text: $viewModel.inputText, prompt: "Расписания, теги, задачи")
+            .searchable(text: $viewModel.inputText, prompt: "Проекты, теги, задачи")
             .onSubmit(of: .search) {
                 viewModel.addItem()
             }

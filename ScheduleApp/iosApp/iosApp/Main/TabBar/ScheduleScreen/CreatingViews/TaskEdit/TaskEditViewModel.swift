@@ -35,21 +35,14 @@ extension TaskEditView {
     class ViewModel {
         var title: String = ""
         var description: String = ""
-        var timeType: TimeType = .range
+        var timeType: Timing = .range
         var startDate: Date?
         var endDate: Date?
         var tag: Tag?
         //MARK: CODE TO COMPLETE
         var tags: [Tag] = [Tag(title: "Penis", description: "afdafadfdaafdafadfdaafdafadfdaafdafadfdaafdafadfdaafdafadfda", color: .purple)]
         
-//        init(title: String, description: String, timeType: TimeType, startDate: Date? = nil, endDate: Date? = nil, tags: [Tag]) {
-//            self.title = title
-//            self.description = description
-//            self.timeType = timeType
-//            self.startDate = startDate
-//            self.endDate = endDate
-//            self.tags = tags
-//        }
+//        
         
         func saveTask() {
             
@@ -63,10 +56,10 @@ extension TaskEditView {
             }
         }
     }
-    
-    enum TimeType: String, CaseIterable  {
-        case deadline = "Дедлайн"
-        case endsAt = "Выполнить после..."
-        case range = "Диапазон"
-    }
+}
+
+enum Timing: String, CaseIterable  {
+    case deadline = "Дедлайн"
+    case endsAt = "Выполнить после..."
+    case range = "Диапазон"
 }

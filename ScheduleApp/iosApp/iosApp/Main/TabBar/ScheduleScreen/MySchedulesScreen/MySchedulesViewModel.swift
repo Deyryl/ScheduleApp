@@ -9,27 +9,32 @@
 import Foundation
 import SwiftUI
 
-struct Project: Identifiable {
-    var id = UUID()
-    var title: String
-    var image: Image?
-    var isPinned: Bool = false
-    var isSounded: Bool = false
-}
-
 extension MySchedulesView {
     
     @Observable
     class ViewModel {
         var project: Project?
         
-        var projects: [Project] = [
+        private var projects: [Project] = [
             Project(title: "Кейс №5891011121314", image: Image("Bird")),
             Project(title: "Кейс №6"),
         ]
         
+        var sortedProjects: [Project] {
+            get {
+                projects.sorted { ($0.isPinned && !$1.isPinned) ||  ($0.title < $1.title)}
+            }
+            set {
+                projects = newValue
+            }
+        }
+        
         func save(project: Project) {
-            
+            if let index = projects.firstIndex(where: {$0.id == project.id}) {
+                projects[index] = project
+            } else {
+                projects.append(project)
+            }
         }
     }
 }

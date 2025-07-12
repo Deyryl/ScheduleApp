@@ -28,7 +28,7 @@ struct TaskEditView: View {
                             .font(.system(size: 12))
                             .foregroundStyle(.secondary)
                         Picker("Диапазон", selection: $viewModel.timeType) {
-                            ForEach(TimeType.allCases, id: \.self) { type in
+                            ForEach(Timing.allCases, id: \.self) { type in
                                 Text(type.rawValue)
                                     .tag(type)
                             }

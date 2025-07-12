@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ProjectCard: View {
     @Binding var project: Project
+    @State private var changingProject: Project?
+    var saveOnChange: (Project) -> Void
     
     var body: some View {
         ZStack {
@@ -21,16 +23,14 @@ struct ProjectCard: View {
                 if let image = project.image {
                     image
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
                         .frame(width: 90, height: 90)
                         .clipShape(.rect(cornerRadius: 10))
                         .padding(.horizontal, 8)
                 } else {
                     VStack {
-                        Image(systemName: "photo.badge.plus")
+                        Image(systemName: "photo")
                             .font(.system(size: 50))
-                        Text("No Picture")
-                            .font(.system(size: 12))
                     }
                     .foregroundStyle(.secondary)
                     .frame(width: 90, height: 90)
@@ -46,7 +46,7 @@ struct ProjectCard: View {
                             if project.isPinned {
                                 Image(systemName: project.isPinned ? "pin" : "")
                                     .font(.system(size: 10))
-                                    .transition(.asymmetric(insertion: .opacity, removal: .opacity))
+                                    .contentTransition(.symbolEffect(.replace))
                             }
                         }
                         .padding(.top, 10)
@@ -57,15 +57,24 @@ struct ProjectCard: View {
                             Button(project.isPinned ? "Открепить" : "Закрепить", systemImage: project.isPinned ? "pin" : "pin.slash") {
                                     project.isPinned.toggle()
                             }
+                            
                             Button("\(project.isSounded ? "Выкл." : "Вкл." ) уведомления", systemImage: project.isSounded ? "speaker.wave.3" : "speaker.slash") {
                                 project.isSounded.toggle()
                             }
+                            
+                            Button("Изменить", systemImage: "square.and.pencil") {
+                                changingProject = project
+                            }
                         }
+                        .menuStyle(.borderlessButton)
                     }
                 }
             }
             .animation(.default, value: project.isPinned)
             .frame(maxWidth: 360, maxHeight: 110)
+            .fullScreenCover(item: $changingProject) { project in
+                ProjectEditView(project: project, save: saveOnChange)
+            }
         }
         .padding(.bottom, 10)
     }
