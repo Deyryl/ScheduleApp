@@ -37,9 +37,11 @@ kotlin {
         androidMain.dependencies {
             implementation("io.insert-koin:koin-core:4.1.0")
             implementation("io.insert-koin:koin-androidx-workmanager:4.1.0")
+            implementation("androidx.core:core-ktx:1.13.1")
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            implementation(kotlin("stdlib"))
             implementation("io.insert-koin:koin-core:4.1.0")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
             implementation(libs.bundles.ktor)

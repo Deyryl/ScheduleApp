@@ -1,5 +1,5 @@
 
-package scheduleapp.domain.test
+package scheduleapp.test
 
 import com.vnmhpractice.scheduleapp.data.dtoClasses.AuthRequest
 import com.vnmhpractice.scheduleapp.domain.domainModels.*

@@ -6,9 +6,9 @@ import com.vnmhpractice.scheduleapp.data.networking.ApiServiceImpl
 import com.vnmhpractice.scheduleapp.data.networking.createHttpClient
 import com.vnmhpractice.scheduleapp.domain.domainModels.TokenStorage
 import com.vnmhpractice.scheduleapp.domain.repositories.UserRepository
-import com.vnmhpractice.scheduleapp.domain.useCases.GetUserByEmailUseCase
-import com.vnmhpractice.scheduleapp.domain.useCases.GetUserByIdUseCase
-import com.vnmhpractice.scheduleapp.domain.useCases.UpdateUserUseCase
+//import com.vnmhpractice.scheduleapp.domain.useCases.GetUserByEmailUseCase
+//import com.vnmhpractice.scheduleapp.domain.useCases.GetUserByIdUseCase
+//import com.vnmhpractice.scheduleapp.domain.useCases.UpdateUserUseCase
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import org.koin.core.context.startKoin
@@ -31,9 +31,9 @@ val commonModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
 
     //domain
-    factory { GetUserByIdUseCase(get()) }
-    factory { GetUserByEmailUseCase(get()) }
-    factory { UpdateUserUseCase(get()) }
+//    factory { GetUserByIdUseCase(get()) }
+//    factory { GetUserByEmailUseCase(get()) }
+//    factory { UpdateUserUseCase(get()) }
 }
 
 expect val platformModule: Module

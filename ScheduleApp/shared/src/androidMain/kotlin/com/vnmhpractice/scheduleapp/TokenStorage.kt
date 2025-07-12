@@ -1,7 +1,7 @@
 package com.vnmhpractice.scheduleapp
 import android.content.Context
-import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenPair
-import com.vnmhpractice.scheduleapp.data.dtoClasses.TokenStorage
+import com.vnmhpractice.scheduleapp.domain.domainModels.TokenPair
+import com.vnmhpractice.scheduleapp.domain.domainModels.TokenStorage
 
 class SharedPrefsTokenStorage(
     context: Context
@@ -14,14 +14,14 @@ class SharedPrefsTokenStorage(
         private const val KEY_REFRESH = "refresh_token"
     }
 
-    override fun save(pair: TokenPair) {
+    override suspend fun save(pair: TokenPair) {
         prefs.edit()
             .putString(KEY_ACCESS, pair.accessToken)
             .putString(KEY_REFRESH, pair.refreshToken)
             .apply()
     }
 
-    override fun load(): TokenPair? {
+    override suspend  fun load(): TokenPair? {
         val access = prefs.getString(KEY_ACCESS, null)
         val refresh = prefs.getString(KEY_REFRESH, null)
         return if (access != null && refresh != null) {

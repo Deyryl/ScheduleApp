@@ -12,11 +12,13 @@ class RegisterUser(
     private val repository: UserRepository
 ) {
     suspend operator fun invoke(username: String, email: String, password: String, repeatPassword: String): LoginData? {
-        require(password == repeatPassword) { "Ошибка регистрации" }
+        if (password != repeatPassword) {
+            throw IllegalArgumentException("Ошибка регистрации")
+        }
         return repository
             .registerUser(AuthRequest(username, email, password))
             .onError {
-                throw IllegalArgumentException(message = "Ошибка регистрации")
+                throw IllegalArgumentException("Ошибка регистрации")
             }
             .map { it.toDomain() }
             .let { result ->
@@ -35,7 +37,7 @@ class LoginUser(
         return repository
             .registerUser(AuthRequest(null, email, password))
             .onError {
-                throw IllegalArgumentException(message = "Неверные данные")
+                throw IllegalArgumentException("Неверные данные")
             }
             .map { it.toDomain() }
             .let { result ->
