@@ -29,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.vnmhpractice.scheduleapp.android.R
+import com.vnmhpractice.scheduleapp.android.data.datastore.DataStoreManager
 import com.vnmhpractice.scheduleapp.android.ui.components.TopBarText
 import com.vnmhpractice.scheduleapp.android.ui.components.composableAnimated
 import com.vnmhpractice.scheduleapp.android.ui.main.calendar.CalendarScreen
@@ -42,7 +43,10 @@ import com.vnmhpractice.scheduleapp.android.ui.main.schedule.projectDetails.Proj
 import com.vnmhpractice.scheduleapp.android.ui.main.search.SearchScreen
 
 @Composable
-fun MainNavGraph(navController: NavHostController) {
+fun MainNavGraph(
+    dataStoreManager: DataStoreManager,
+    navController: NavHostController
+) {
     val mainDestinations = mapOf(
         "Search" to stringResource(R.string.search),
         "Schedule" to stringResource(R.string.my_schedule),
@@ -178,6 +182,7 @@ fun MainNavGraph(navController: NavHostController) {
             // Окно меню и вложенные окна
             composableAnimated(route = "Menu") {
                 MenuScreen(
+                    dataStoreManager = dataStoreManager,
                     onAccountClick = { navController.navigate("Account") },
                     onInfoClick = { navController.navigate("Information") }
                 )

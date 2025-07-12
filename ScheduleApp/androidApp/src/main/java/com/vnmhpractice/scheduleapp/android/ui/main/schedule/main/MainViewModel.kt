@@ -28,7 +28,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun addNewProject(project: Project) {
-        ProjectData.addProject(project)
+        ProjectData.addProject(project.copy(owner = project.members.first()))
         loadProjects()
     }
 
